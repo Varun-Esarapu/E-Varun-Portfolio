@@ -4,6 +4,8 @@ import "./globals.css"; // THIS IS THE CRITICAL LIFELINE
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import Spotlight from "@/components/ui/Spotlight";
+import Chatbot from "@/components/ui/Chatbot";
+import CustomCursor from "@/components/ui/CustomCursor";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -34,10 +36,12 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className={inter.className}>
+        <CustomCursor />
         <Spotlight />
         <Navbar />
         <main className="w-full">{children}</main>
         <Footer />
+        <Chatbot />
       </body>
     </html>
   );

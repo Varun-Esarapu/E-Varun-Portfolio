@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, animate } from "framer-motion";
 import GridPattern from "@/components/ui/GridPattern";
+import MagneticButton from "@/components/ui/MagneticButton";
 
 export default function Hero() {
   const [text1, setText1] = useState("");
@@ -105,28 +106,26 @@ export default function Hero() {
             Engineering scalable backend systems, intelligent machine learning models, and robust digital architecture.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4">
+          <div className="flex flex-col sm:flex-row gap-4 relative z-20">
             {/* PRIMARY: Ghost Gold to Solid Gold */}
-            <a 
+            <MagneticButton 
               href="#projects" 
-              onClick={(e) => handleScroll(e, 'projects')}
-              className="inline-block bg-transparent border border-[#D4AF37]/50 text-[#D4AF37] font-bold tracking-[0.15em] uppercase text-xs px-10 py-5 rounded-md hover:bg-[#D4AF37] hover:text-[#0F0C0A] transition-all duration-300 text-center shadow-[0_0_15px_rgba(212,175,55,0.05)] hover:shadow-[0_0_20px_rgba(212,175,55,0.2)]"
+              onClick={(e: any) => handleScroll(e, 'projects')}
+              className="w-full sm:w-auto bg-transparent border border-[#D4AF37]/50 text-[#D4AF37] font-bold tracking-[0.15em] uppercase text-xs px-10 py-5 rounded-md hover:bg-[#D4AF37] hover:text-[#0F0C0A] transition-colors duration-300 shadow-[0_0_15px_rgba(212,175,55,0.05)] hover:shadow-[0_0_20px_rgba(212,175,55,0.2)]"
             >
               View Work
-            </a>
+            </MagneticButton>
             {/* SECONDARY: Dark to Silver/White (No Gold!) */}
-            <a 
+            <MagneticButton 
               href="/Varun_CV.pdf" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="inline-block bg-transparent border border-[#2D2723] text-[#B5B0A1] font-bold tracking-[0.15em] uppercase text-xs px-10 py-5 rounded-md hover:border-[#B5B0A1]/50 hover:text-[#FDFBF7] transition-all duration-300 text-center"
+              className="w-full sm:w-auto bg-transparent border border-[#2D2723] text-[#B5B0A1] font-bold tracking-[0.15em] uppercase text-xs px-10 py-5 rounded-md hover:border-[#B5B0A1]/50 hover:text-[#FDFBF7] transition-colors duration-300"
             >
               Download CV
-            </a>
+            </MagneticButton>
           </div>
 
           {/* Social Icons inside Hero Section */}
-          <div className="mt-16 flex gap-6 items-center text-[#B5B0A1]">
+          <div className="mt-16 flex gap-6 items-center text-[#B5B0A1] relative z-20">
             <a 
               href="https://www.linkedin.com/in/varunesarapu/" 
               target="_blank" 
