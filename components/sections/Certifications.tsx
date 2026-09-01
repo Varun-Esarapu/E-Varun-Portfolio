@@ -21,7 +21,7 @@ export default function Certifications() {
                 whileInView={{ opacity: 1, y: 0 }} 
                 viewport={{ once: true }} 
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="relative overflow-hidden rounded-2xl bg-[#1A1614] border border-[#2D2723] p-8 flex flex-col justify-between h-full hover:border-[#D4AF37]/30 transition-colors group shadow-xl block"
+                className="relative overflow-hidden rounded-2xl bg-[#1A1614] border border-[#2D2723] p-8 md:p-10 hover:border-[#D4AF37]/40 hover:shadow-[0_0_15px_rgba(212,175,55,0.1)] transition-all duration-300 group flex flex-col justify-between"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-[#D4AF37]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 

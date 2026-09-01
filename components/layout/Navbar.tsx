@@ -18,9 +18,10 @@ export default function Navbar() {
 
   const navItems = [
     { name: "Intro", id: "intro" },
-    { name: "About", id: "experience" },
+    { name: "About", id: "about" },
+    { name: "Skills", id: "skills" },
+    { name: "Experience", id: "experience" },
     { name: "Works", id: "projects" },
-    { name: "Certs", id: "certifications" },
     { name: "Say Hello", id: "contact" }
   ];
 

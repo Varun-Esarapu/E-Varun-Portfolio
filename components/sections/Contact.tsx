@@ -37,9 +37,17 @@ export default function Contact() {
                 href="https://www.linkedin.com/in/varunesarapu/" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="w-full sm:w-auto inline-block bg-transparent border border-[#2D2723] text-[#B5B0A1] font-bold tracking-[0.15em] uppercase text-xs px-10 py-5 rounded-md hover:border-[#B5B0A1]/50 hover:text-[#FDFBF7] transition-all duration-300 text-center"
+                className="w-full sm:w-auto inline-block bg-transparent border border-[#2D2723] text-[#B5B0A1] font-bold tracking-[0.15em] uppercase text-xs px-8 py-5 rounded-md hover:border-[#B5B0A1]/50 hover:text-[#FDFBF7] transition-all duration-300 text-center"
               >
-                LinkedIn Profile
+                LinkedIn
+              </a>
+              <a 
+                href="https://github.com/Varun-Esarapu" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="w-full sm:w-auto inline-block bg-transparent border border-[#2D2723] text-[#B5B0A1] font-bold tracking-[0.15em] uppercase text-xs px-8 py-5 rounded-md hover:border-[#B5B0A1]/50 hover:text-[#FDFBF7] transition-all duration-300 text-center"
+              >
+                GitHub
               </a>
             </div>
           </div>
