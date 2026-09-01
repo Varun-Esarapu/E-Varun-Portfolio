@@ -1,9 +1,36 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion, animate } from "framer-motion";
 import GridPattern from "@/components/ui/GridPattern";
 
 export default function Hero() {
+  const [text1, setText1] = useState("");
+  const [text2, setText2] = useState("");
+  const fullText1 = "Building the ";
+  const fullText2 = "future of AI.";
+
+  useEffect(() => {
+    let timeout: NodeJS.Timeout;
+    let currentIndex1 = 0;
+    let currentIndex2 = 0;
+
+    const type = () => {
+      if (currentIndex1 < fullText1.length) {
+        setText1(fullText1.slice(0, currentIndex1 + 1));
+        currentIndex1++;
+        timeout = setTimeout(type, 60);
+      } else if (currentIndex2 < fullText2.length) {
+        setText2(fullText2.slice(0, currentIndex2 + 1));
+        currentIndex2++;
+        timeout = setTimeout(type, 60);
+      }
+    };
+
+    timeout = setTimeout(type, 800); // Wait for initial fade in
+    return () => clearTimeout(timeout);
+  }, []);
+
   const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault();
     const element = document.getElementById(id);
@@ -52,12 +79,27 @@ export default function Hero() {
             </span>
           </div>
 
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl leading-[1.05] font-serif text-[#FDFBF7] tracking-tight mb-8">
-            Building the <br />
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#D4AF37] to-[#C9A66B]">
+          <div className="relative mb-8 min-h-[120px] sm:min-h-[144px] lg:min-h-[168px]">
+            {/* Invisible placeholder to prevent layout shifts */}
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl leading-[1.05] font-serif tracking-tight opacity-0 pointer-events-none select-none">
+              Building the <br />
               future of AI.
-            </span>
-          </h1>
+            </h1>
+            
+            {/* Typing text */}
+            <h1 className="absolute top-0 left-0 text-5xl sm:text-6xl lg:text-7xl leading-[1.05] font-serif text-[#FDFBF7] tracking-tight">
+              {text1}
+              {text1 === fullText1 && <br />}
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#D4AF37] to-[#C9A66B]">
+                {text2}
+              </span>
+              <motion.span
+                animate={{ opacity: [1, 0] }}
+                transition={{ repeat: Infinity, duration: 0.8, ease: "linear" }}
+                className="inline-block w-[3px] h-[0.8em] bg-[#D4AF37] ml-2 align-baseline"
+              />
+            </h1>
+          </div>
           
           <p className="font-sans text-[#B5B0A1] text-base md:text-lg tracking-wide leading-relaxed max-w-2xl mb-10">
             Engineering scalable backend systems, intelligent machine learning models, and robust digital architecture.
