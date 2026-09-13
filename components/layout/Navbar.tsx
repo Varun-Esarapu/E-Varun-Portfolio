@@ -52,6 +52,12 @@ export default function Navbar() {
   const scrollToSection = (id: string) => {
     isClickScrolling.current = true; // Lock the observer
     setActive(id);
+    
+    // Automatically switch back to full narrative mode if in recruiter mode
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent("exit-recruiter-mode"));
+    }
+
     const element = document.getElementById(id);
     
     if (element) {
