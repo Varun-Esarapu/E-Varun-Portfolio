@@ -29,7 +29,7 @@ export async function POST(req: Request) {
 
   try {
     const result = await streamText({
-      model: groq('llama-3.3-70b-versatile'),
+      model: groq('openai/gpt-oss-120b'),
       system: `You are Varun Esarapu's personal AI portfolio assistant.
 Your job is to answer questions from recruiters and visitors about Varun's experience, skills, and projects.
 
