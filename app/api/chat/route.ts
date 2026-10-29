@@ -1,37 +1,16 @@
-import { streamText } from 'ai';
-import { createGroq } from '@ai-sdk/groq';
-
-// Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
 
-// Initialize official Groq client
-const groq = createGroq({
-  apiKey: process.env.GROQ_API_KEY,
-});
-
 export async function POST(req: Request) {
-  const { messages } = await req.json();
-
-  // Normalize messages from frontend to standard CoreMessages
-  const coreMessages = (messages || [])
-    .map((m: any) => {
-      let content = m.content;
-      if (!content) {
-        if (m.text) content = m.text;
-        else if (m.parts) content = m.parts.map((p: any) => p.text || '').join('');
-        else content = "";
-      }
-      return {
-        role: (m.role === 'assistant' ? 'assistant' : 'user') as 'assistant' | 'user',
-        content: String(content || '').trim()
-      };
-    })
-    .filter((m: any) => m.content !== '');
-
   try {
-    const result = await streamText({
-      model: groq('openai/gpt-oss-120b') as any,
-      system: `You are Varun Esarapu's personal AI portfolio assistant.
+    const { messages } = await req.json();
+
+    const apiKey = process.env.GROQ_API_KEY;
+    if (!apiKey) {
+      console.error('GROQ_API_KEY environment variable is not set');
+      return new Response("Chat assistant configuration error. Please ensure GROQ_API_KEY is configured.", { status: 500 });
+    }
+
+    const systemPrompt = `You are Varun Esarapu's personal AI portfolio assistant.
 Your job is to answer questions from recruiters and visitors about Varun's experience, skills, and projects.
 
 Key information about Varun:
@@ -52,22 +31,91 @@ Strict Guardrails:
 - ALWAYS provide the direct URL link in markdown format when asked for his LinkedIn or GitHub, exactly like this: [LinkedIn](https://www.linkedin.com/in/varunesarapu/) WITHOUT any newlines between the brackets and parentheses.
 - If asked to write code, solve math, or act as a general AI, politely decline and steer the conversation back to Varun's portfolio.
 - Keep responses concise (under 3-4 sentences). Recruiters are busy.
-- FORMATTING: Frequently use bold markdown (**text**) to highlight key entities like college names, company names, project names, and specific technologies.`,
-      messages: coreMessages,
+- FORMATTING: Frequently use bold markdown (**text**) to highlight key entities like college names, company names, project names, and specific technologies.`;
+
+    const formattedMessages = [
+      { role: 'system', content: systemPrompt },
+      ...(messages || []).map((m: any) => ({
+        role: m.role === 'assistant' ? 'assistant' : 'user',
+        content: String(m.content || m.text || '')
+      })).filter((m: any) => m.content.trim() !== '')
+    ];
+
+    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        model: 'openai/gpt-oss-120b',
+        stream: true,
+        messages: formattedMessages
+      })
     });
 
-    return result.toTextStreamResponse();
+    if (!response.ok) {
+      const err = await response.text();
+      console.error('Groq direct API error:', response.status, err);
+      return new Response("I'm currently receiving too many requests! Please wait a moment and try again, or email Varun directly at varunesarapu@gmail.com.", { status: 429 });
+    }
+
+    // Stream the SSE text chunks directly to the client
+    const encoder = new TextEncoder();
+    const decoder = new TextDecoder();
+
+    const stream = new ReadableStream({
+      async start(controller) {
+        if (!response.body) {
+          controller.close();
+          return;
+        }
+
+        const reader = response.body.getReader();
+        let buffer = '';
+
+        try {
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+
+            buffer += decoder.decode(value, { stream: true });
+            const lines = buffer.split('\n');
+            buffer = lines.pop() || '';
+
+            for (const line of lines) {
+              const trimmed = line.trim();
+              if (!trimmed || trimmed === 'data: [DONE]') continue;
+              if (trimmed.startsWith('data: ')) {
+                try {
+                  const json = JSON.parse(trimmed.slice(6));
+                  const delta = json.choices?.[0]?.delta?.content;
+                  if (delta) {
+                    controller.enqueue(encoder.encode(delta));
+                  }
+                } catch (e) {
+                  // ignore partial line parsing
+                }
+              }
+            }
+          }
+        } catch (err) {
+          controller.error(err);
+        } finally {
+          controller.close();
+        }
+      }
+    });
+
+    return new Response(stream, {
+      headers: {
+        'Content-Type': 'text/plain; charset=utf-8',
+        'Transfer-Encoding': 'chunked',
+        'Cache-Control': 'no-cache, no-transform'
+      }
+    });
   } catch (error: any) {
-    console.error("AI API Error:", error);
-    
-    // Check if it's a rate limit or quota error
-    const isRateLimit = error.message?.includes('429') || error.message?.includes('quota') || error.message?.includes('rate_limit_exceeded');
-    
-    return new Response(
-      isRateLimit 
-        ? "I'm currently receiving too many requests! Please wait a moment and try again, or email Varun directly at varunesarapu@gmail.com." 
-        : "I encountered an error connecting to my brain. Please try again later.", 
-      { status: isRateLimit ? 429 : 500 }
-    );
+    console.error('Route handler error:', error);
+    return new Response("I encountered an error connecting to my brain. Please try again later.", { status: 500 });
   }
 }
