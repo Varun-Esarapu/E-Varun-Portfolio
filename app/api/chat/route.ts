@@ -1,35 +1,36 @@
 import { streamText } from 'ai';
-import { createOpenAI } from '@ai-sdk/openai';
+import { createGroq } from '@ai-sdk/groq';
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
 
-// Initialize Groq client using the OpenAI compatible endpoint
-const groq = createOpenAI({
-  baseURL: 'https://api.groq.com/openai/v1',
+// Initialize official Groq client
+const groq = createGroq({
   apiKey: process.env.GROQ_API_KEY,
 });
 
 export async function POST(req: Request) {
   const { messages } = await req.json();
 
-  // Normalize messages from newer AI SDK frontend formats to standard CoreMessages
-  const coreMessages = messages.map((m: any) => {
-    let content = m.content;
-    if (!content) {
-      if (m.text) content = m.text;
-      else if (m.parts) content = m.parts.map((p: any) => p.text || '').join('');
-      else content = "";
-    }
-    return {
-      role: m.role || 'user',
-      content: content
-    };
-  }).filter((m: any) => m.content && m.content.trim() !== '');
+  // Normalize messages from frontend to standard CoreMessages
+  const coreMessages = (messages || [])
+    .map((m: any) => {
+      let content = m.content;
+      if (!content) {
+        if (m.text) content = m.text;
+        else if (m.parts) content = m.parts.map((p: any) => p.text || '').join('');
+        else content = "";
+      }
+      return {
+        role: (m.role === 'assistant' ? 'assistant' : 'user') as 'assistant' | 'user',
+        content: String(content || '').trim()
+      };
+    })
+    .filter((m: any) => m.content !== '');
 
   try {
     const result = await streamText({
-      model: groq('openai/gpt-oss-120b'),
+      model: groq('openai/gpt-oss-120b') as any,
       system: `You are Varun Esarapu's personal AI portfolio assistant.
 Your job is to answer questions from recruiters and visitors about Varun's experience, skills, and projects.
 
