@@ -104,13 +104,15 @@ export default function Chatbot() {
         return;
       }
     } catch (error: any) {
-      // Intentionally not using console.error here to prevent Next.js from throwing a dev overlay
       setMessages((prev) => {
         const newMsgs = [...prev];
-        if (newMsgs[newMsgs.length - 1].role === 'assistant' && newMsgs[newMsgs.length - 1].content === '') {
-           newMsgs[newMsgs.length - 1].content = error.message || "An error occurred.";
+        const errorMsg = error.message?.includes('429')
+          ? "I'm currently receiving too many requests! Please wait a moment and try again, or email Varun directly at varunesarapu@gmail.com."
+          : (error.message || "An error occurred.");
+        if (newMsgs[newMsgs.length - 1]?.role === 'assistant' && newMsgs[newMsgs.length - 1].content === '') {
+           newMsgs[newMsgs.length - 1].content = errorMsg;
         } else {
-           newMsgs.push({ role: 'assistant', content: error.message || "An error occurred." });
+           newMsgs.push({ role: 'assistant', content: errorMsg });
         }
         return newMsgs;
       });
