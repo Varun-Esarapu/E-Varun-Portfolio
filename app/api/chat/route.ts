@@ -1,8 +1,14 @@
 import { streamText } from 'ai';
-import { google } from '@ai-sdk/google';
+import { createOpenAI } from '@ai-sdk/openai';
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
+
+// Initialize Groq client using the OpenAI compatible endpoint
+const groq = createOpenAI({
+  baseURL: 'https://api.groq.com/openai/v1',
+  apiKey: process.env.GROQ_API_KEY,
+});
 
 export async function POST(req: Request) {
   const { messages } = await req.json();
@@ -23,7 +29,7 @@ export async function POST(req: Request) {
 
   try {
     const result = await streamText({
-      model: google('gemini-3.5-flash'),
+      model: groq('llama-3.3-70b-versatile'),
       system: `You are Varun Esarapu's personal AI portfolio assistant.
 Your job is to answer questions from recruiters and visitors about Varun's experience, skills, and projects.
 
@@ -54,7 +60,7 @@ Strict Guardrails:
     console.error("AI API Error:", error);
     
     // Check if it's a rate limit or quota error
-    const isRateLimit = error.message?.includes('429') || error.message?.includes('quota') || error.message?.includes('GenerateRequests');
+    const isRateLimit = error.message?.includes('429') || error.message?.includes('quota') || error.message?.includes('rate_limit_exceeded');
     
     return new Response(
       isRateLimit 
