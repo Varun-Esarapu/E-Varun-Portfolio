@@ -1,30 +1,52 @@
-export const projects = [
+export interface Project {
+  id: string;
+  title: string;
+  tech: string[];
+  description: string;
+  link: string;
+  website?: string;
+  huggingface?: string;
+  date?: string;
+  highlight?: string;
+}
+
+export const projects: Project[] = [
+  {
+    id: "auto-stair",
+    title: "Auto-STAIR: Agentic Multi-Hop Document Retrieval",
+    date: "November 2026",
+    highlight: "Agentic RAG / LangGraph",
+    tech: ["LangGraph", "Trie Prefix Validation", "Multi-Hop RAG", "Python"],
+    description: "Engineered a dynamic Table-of-Contents induction and multi-hop retrieval pipeline using LangGraph to navigate complex hierarchical documents without brittle chunking. Implemented zero-shot Trie prefix validation to constrain agentic routing and eliminate hallucinated document paths during multi-step reasoning.",
+    huggingface: "https://huggingface.co/spaces/varun-e/Auto-STAIR",
+    link: "https://github.com/Varun-Esarapu/Auto-STAIR",
+  },
+  {
+    id: "cinematch",
+    title: "Cinematch: Distributed Movie Recommendation",
+    date: "October 2026",
+    highlight: "PySpark & Microservices",
+    tech: ["PySpark 3.5 MLlib", "Django REST Framework", "PostgreSQL 15", "Streamlit", "Python"],
+    description: "Engineered an end-to-end distributed collaborative filtering pipeline on 32M+ MovieLens interaction records using PySpark 3.5 MLlib ALS, delivering sub-15ms inference latency. Architected a decoupled microservice serving boundary using Django REST Framework and PostgreSQL 15 with indexed composite keys, paired with a reactive Streamlit and TMDB Live Graph API frontend.",
+    website: "https://cine-matchai.streamlit.app",
+    link: "https://github.com/Varun-Esarapu/movie_rec",
+  },
   {
     id: "vehicle-service",
     title: "Vehicle Service Management System",
+    date: "April 2026",
+    highlight: "Backend API & Workflow Automation",
     tech: ["Django REST Framework", "Python", "SQL", "Streamlit"],
-    description: "Built Backend RESTful APIs to manage vehicles, components, issues, and payments. Designed cost calculation combining labor and component pricing.",
+    description: "Built RESTful backend APIs with Django REST Framework to manage vehicle records, component inventories, service issues, and payment workflows. Implemented state-machine issue lifecycle validation, automated labor-plus-component cost calculation, and a Streamlit dashboard for revenue visualization.",
     link: "https://github.com/Varun-Esarapu/vehicle-mgmt",
   },
   {
     id: "speech-emotion",
-    title: "Real-time Speech Emotion Recognition",
-    tech: ["CNN", "Python", "Librosa", "Raspberry Pi 4", "IoT"],
-    description: "Designed and trained a CNN-based machine learning model for classification. Extracted MFCC features using Librosa and deployed the system on a Raspberry Pi 4 with custom hardware integration (LCD, LEDs) and an IoT dashboard.",
+    title: "Real-Time Speech Emotion Recognition System",
+    date: "October 2025",
+    highlight: "Audio Signal Processing & CNN",
+    tech: ["CNN", "Python", "Librosa", "Audio Processing", "IoT"],
+    description: "Extracted Mel-Frequency Cepstral Coefficients (MFCC) via Librosa with signal normalization and padding to train and optimize a Convolutional Neural Network (CNN) for real-time audio emotion classification.",
     link: "https://github.com/Varun-Esarapu/sbers",
   },
-  {
-    id: "text-emotion",
-    title: "Text Emotion Classification",
-    tech: ["TensorFlow", "Keras", "LSTM", "NLP"],
-    description: "Built an LSTM-based NLP model for emotion classification with 87% accuracy using TensorFlow/Keras. Handled text preprocessing on custom datasets.",
-    link: "https://github.com/Varun-Esarapu/text-emotion-classification",
-  },
-  {
-    id: "movie-recommendation",
-    title: "Personalized Movie Recommendation System",
-    tech: ["Machine Learning", "Python", "TensorFlow"],
-    description: "Engineered a neural collaborative filtering model utilizing a dataset of 100,000 entries, attaining 89.2% prediction accuracy.",
-    link: "https://github.com/Varun-Esarapu/pass/blob/main/main.py",
-  }
 ];

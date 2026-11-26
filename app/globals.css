@@ -1,39 +1,85 @@
 @import "tailwindcss";
 
+@theme {
+  --font-sans: var(--font-sans), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-heading: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-serif), Georgia, serif;
+  --font-mono: var(--font-mono), "IBM Plex Mono", ui-monospace, monospace;
+}
+
+@layer base {
+  :root {
+    --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+    --font-heading: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+    --font-serif: var(--font-serif), Georgia, serif;
+    --font-mono: var(--font-mono), monospace;
+  }
+}
+
 html {
   scroll-behavior: smooth !important;
+  color-scheme: light;
 }
 
 body {
-  /* Deep Espresso/Charcoal Base */
-  background-color: #0F0C0A;
-  color: #FDFBF7;
-  
-  /* Ambient Antique Gold Glow */
-  background-image: 
-    radial-gradient(circle at 15% 0%, rgba(212, 175, 55, 0.05) 0%, transparent 50%),
-    radial-gradient(circle at 85% 100%, rgba(201, 166, 107, 0.05) 0%, transparent 50%);
-  background-attachment: fixed;
+  background-color: #FFFFFF;
+  color: #0A0A0A;
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   position: relative;
+  overflow-x: hidden;
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  z-index: 9999;
-  opacity: 0.03; /* Very subtle */
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+/* Crisp typographic hierarchy with tight negative tracking */
+.font-heading {
+  font-family: var(--font-heading);
+  letter-spacing: -0.035em;
 }
 
-a, a:link, a:visited, a:active {
-  color: inherit !important;
-  text-decoration: none !important;
+.font-sans {
+  font-family: var(--font-sans);
+  letter-spacing: -0.015em;
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+  letter-spacing: 0em;
+}
+
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+/* Clean Poulo Surface Cards */
+.poulo-card {
+  background-color: #F8F8F8;
+  border: 1px solid #EBEBEB;
+  border-radius: 24px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.poulo-card-white {
+  background-color: #FFFFFF;
+  border: 1px solid #EAEAEA;
+  border-radius: 24px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.poulo-card-hover:hover {
+  border-color: #D6D6D6;
+  box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.05);
+  transform: translateY(-2px);
+}
+
+/* Accent Highlight Line / Marker */
+.highlight-lime {
+  background-color: #ADFA1D;
+  color: #0A0A0A;
+}
+
+a {
+  text-decoration: none;
 }
 
 section {

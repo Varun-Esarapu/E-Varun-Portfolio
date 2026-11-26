@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, ExternalLink } from "lucide-react";
+import { ArrowLeft, ExternalLink, Code2 } from "lucide-react";
 import { projects } from "@/data/projects";
 
 // Generate static params for all projects
@@ -23,65 +23,90 @@ export default async function ProjectDetail({
   }
 
   return (
-    <div className="min-h-screen pt-28 pb-16">
+    <div className="min-h-screen pt-28 pb-20 bg-[#FFFFFF]">
       <div className="max-w-4xl mx-auto px-4 sm:px-8">
         
         {/* Back Navigation */}
         <Link 
-          href="/#projects" 
-          className="inline-flex items-center text-[#B5B0A1] hover:text-[#D4AF37] transition-colors duration-300 mb-12 font-sans text-sm tracking-wide group"
+          href="/#works" 
+          className="inline-flex items-center text-[#6F6F6F] hover:text-[#0A0A0A] transition-colors duration-200 mb-10 font-sans text-xs tracking-tight group font-medium"
         >
-          <ArrowLeft size={16} className="mr-2 group-hover:-translate-x-1 transition-transform" />
-          Back to Projects
+          <ArrowLeft size={14} className="mr-2 group-hover:-translate-x-1 transition-transform" />
+          Back to Selected Works
         </Link>
         
-        {/* Project Header */}
-        <div className="border-b border-[#D4AF37]/10 pb-10 mb-10">
-          <div className="flex items-center mb-4">
-            <div className="w-8 h-[2px] bg-[#D4AF37] mr-3"></div>
-            <span className="text-[#D4AF37] text-xs tracking-[0.25em] uppercase font-sans font-bold">
-              Project
+        {/* Project Header Card */}
+        <div className="bg-[#F8F8F8] border border-[#E5E5E5] rounded-3xl p-6 sm:p-10 mb-8">
+          <div className="flex items-center gap-2 mb-4">
+            <span className="font-mono text-xs text-[#0A0A0A] bg-[#ADFA1D] px-2.5 py-0.5 rounded-full font-semibold">
+              SPECIFICATION
             </span>
+            {project.date && (
+              <span className="font-mono text-xs text-[#6F6F6F]">
+                {project.date}
+              </span>
+            )}
           </div>
 
-          <h1 className="text-4xl md:text-5xl font-serif text-[#FDFBF7] tracking-tight mb-8">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-sans font-semibold text-[#0A0A0A] tracking-tight mb-4">
             {project.title}
           </h1>
+
+          <p className="text-[#6F6F6F] font-sans text-base sm:text-lg leading-relaxed mb-8 max-w-2xl">
+            {project.description}
+          </p>
           
+          {/* Tech Tags */}
           <div className="flex flex-wrap gap-2 mb-8">
             {project.tech.map((tech) => (
               <span 
                 key={tech} 
-                className="px-3 py-1.5 bg-[#0F0C0A] border border-[#2D2723] text-[#D4AF37] text-[10px] font-sans uppercase tracking-[0.1em] rounded-full font-bold"
+                className="px-3 py-1 bg-[#FFFFFF] border border-[#E5E5E5] text-[#0A0A0A] text-xs font-mono rounded-full font-medium shadow-2xs"
               >
                 {tech}
               </span>
             ))}
           </div>
 
-          {project.link && (
-            <a
-              href={project.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-transparent border border-[#D4AF37]/50 text-[#D4AF37] font-bold tracking-[0.15em] uppercase text-xs px-8 py-4 rounded-md hover:bg-[#D4AF37] hover:text-[#0F0C0A] transition-all duration-300 shadow-[0_0_15px_rgba(212,175,55,0.05)] hover:shadow-[0_0_20px_rgba(212,175,55,0.2)]"
-            >
-              View on GitHub
-              <ExternalLink size={14} />
-            </a>
-          )}
-        </div>
-        
-        {/* Project Content */}
-        <div className="space-y-8">
-          <div className="relative overflow-hidden rounded-2xl bg-[#1A1614] border border-[#2D2723] p-8 md:p-10">
-            <div className="absolute inset-0 bg-gradient-to-br from-[#D4AF37]/5 to-transparent pointer-events-none" />
-            <div className="relative z-10">
-              <h2 className="text-sm font-sans text-[#B5B0A1] uppercase tracking-[0.2em] mb-6 font-semibold">Overview</h2>
-              <p className="text-[#B5B0A1] font-sans text-base md:text-lg leading-relaxed">
-                {project.description}
-              </p>
-            </div>
+          {/* Action Links */}
+          <div className="flex flex-wrap gap-3">
+            {project.huggingface && (
+              <a
+                href={project.huggingface}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-[#000000] hover:bg-[#1D1D1F] !text-white font-sans font-medium text-xs px-6 py-3 rounded-full transition-all duration-200 shadow-xs cursor-pointer"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
+                <span className="!text-white">Launch HuggingFace Demo</span>
+                <ExternalLink size={13} className="!text-white" />
+              </a>
+            )}
+
+            {project.website && (
+              <a
+                href={project.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-[#000000] hover:bg-[#1D1D1F] !text-white font-sans font-medium text-xs px-6 py-3 rounded-full transition-all duration-200 shadow-xs cursor-pointer"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
+                <span className="!text-white">Launch Live App</span>
+                <ExternalLink size={13} className="!text-white" />
+              </a>
+            )}
+
+            {project.link && (
+              <a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-[#FFFFFF] hover:bg-[#F7F7F7] border border-[#E5E7EB] !text-[#212121] font-sans font-medium text-xs px-6 py-3 rounded-full transition-all duration-200 shadow-2xs cursor-pointer"
+              >
+                <Code2 size={13} className="text-[#6B7280]" />
+                <span className="!text-[#212121]">View Source Code</span>
+              </a>
+            )}
           </div>
         </div>
 

@@ -1,46 +1,177 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { ArrowUp, ArrowUpRight } from "lucide-react";
+
 export default function Footer() {
+  const [time, setTime] = useState("");
+
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      setTime(
+        now.toLocaleTimeString("en-US", {
+          timeZone: "Asia/Kolkata",
+          hour12: true,
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        }) + " IST"
+      );
+    };
+
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
-    <footer className="py-10 border-t border-[#D4AF37]/10 bg-[#0F0C0A]">
-      <div className="max-w-4xl mx-auto px-4 sm:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+    <footer className="border-t border-[#E5E7EB] pt-20 pb-12 bg-white relative overflow-hidden">
+      <div className="max-w-6xl mx-auto px-4 sm:px-8">
         
-        {/* Left Side: Name and Copyright */}
-        <div className="flex flex-col items-center md:items-start gap-2">
-          <span className="font-serif text-xl text-[#FDFBF7] tracking-wide">
-            Esarapu Varun
-          </span>
-          <span className="font-sans text-[10px] tracking-[0.2em] uppercase font-bold text-[#B5B0A1]">
-            © 2026 All rights reserved.
-          </span>
+        {/* Top 4-Column Navigation & Meta Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16 font-sans">
+          {/* Col 1: Identity & Location */}
+          <div>
+            <span className="font-mono text-xs uppercase tracking-wider text-[#6B7280] block mb-4 font-semibold">
+              Location
+            </span>
+            <p className="text-sm font-sans font-medium text-[#212121] leading-relaxed">
+              Bangalore, Karnataka <br />
+              India (560045)
+            </p>
+            <div className="mt-4 flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
+              <span className="font-mono text-xs text-[#000000] font-medium">
+                {time || "Bangalore, India"}
+              </span>
+            </div>
+          </div>
+
+          {/* Col 2: Fast Navigation */}
+          <div>
+            <span className="font-mono text-xs uppercase tracking-wider text-[#6B7280] block mb-4 font-semibold">
+              Navigation
+            </span>
+            <ul className="space-y-2 text-sm text-[#212121] font-medium">
+              {["intro", "about", "projects", "experience", "skills", "education", "contact"].map((sec) => (
+                <li key={sec}>
+                  <a
+                    href={`#${sec}`}
+                    className="hover:underline underline-offset-4 capitalize text-[#212121] hover:text-[#10B981] transition-colors"
+                  >
+                    {sec}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Col 3: Focus Areas */}
+          <div>
+            <span className="font-mono text-xs uppercase tracking-wider text-[#6B7280] block mb-4 font-semibold">
+              Focus & Systems
+            </span>
+            <ul className="space-y-2 text-sm text-[#6B7280]">
+              <li>Agentic Multi-Hop RAG</li>
+              <li>Distributed PySpark MLlib</li>
+              <li>Low-Latency REST APIs</li>
+              <li>Hardware & Edge Optimization</li>
+              <li>Django / FastAPI Architectures</li>
+            </ul>
+          </div>
+
+          {/* Col 4: Verified Profiles & Top Action */}
+          <div>
+            <span className="font-mono text-xs uppercase tracking-wider text-[#6B7280] block mb-4 font-semibold">
+              Verified Profiles
+            </span>
+            <ul className="space-y-2 text-sm text-[#212121] font-medium">
+              <li>
+                <a
+                  href="https://www.linkedin.com/in/varunesarapu/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1 hover:underline underline-offset-4 hover:text-[#10B981]"
+                >
+                  <span>LinkedIn</span>
+                  <ArrowUpRight size={13} />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://github.com/Varun-Esarapu"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1 hover:underline underline-offset-4 hover:text-[#10B981]"
+                >
+                  <span>GitHub</span>
+                  <ArrowUpRight size={13} />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/Varun_CV.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1 hover:underline underline-offset-4 hover:text-[#10B981]"
+                >
+                  <span>Download CV</span>
+                  <ArrowUpRight size={13} />
+                </a>
+              </li>
+            </ul>
+
+            <div className="mt-6">
+              <button
+                onClick={scrollToTop}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#F7F7F7] hover:bg-[#E5E7EB] text-[#212121] border border-[#E5E7EB] text-xs font-sans font-medium transition-colors cursor-pointer"
+              >
+                <span>Return to Top</span>
+                <ArrowUp size={13} />
+              </button>
+            </div>
+          </div>
         </div>
 
-        {/* Right Side: Clean SVG Icons */}
-        <div className="flex gap-6 items-center text-[#B5B0A1]">
-          {/* Email Icon */}
-          <a href="mailto:varunesarapu@gmail.com" className="hover:text-[#D4AF37] hover:-translate-y-1 transition-all duration-300">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-              <rect width="20" height="16" x="2" y="4" rx="2"/>
-              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
-            </svg>
-          </a>
-          
-          {/* LinkedIn Icon */}
-          <a href="https://www.linkedin.com/in/varunesarapu/" target="_blank" rel="noopener noreferrer" className="hover:text-[#D4AF37] hover:-translate-y-1 transition-all duration-300">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-              <rect width="4" height="12" x="2" y="9"/>
-              <circle cx="4" cy="4" r="2"/>
-            </svg>
-          </a>
-
-          {/* GitHub Icon */}
-          <a href="https://github.com/Varun-Esarapu" target="_blank" rel="noopener noreferrer" className="hover:text-[#D4AF37] hover:-translate-y-1 transition-all duration-300">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.02c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A4.8 4.8 0 0 0 8 18v4"/>
-              <path d="M9 18c-4.51 2-5-2-7-2"/>
-            </svg>
-          </a>
+        {/* Guaranteed 100% Fully Visible Wordmark: Vector SVG ensures zero clipping on ANY device */}
+        <div className="pt-10 border-t border-[#E5E7EB] select-none w-full flex items-center justify-center">
+          <svg
+            viewBox="0 0 1200 135"
+            className="w-full h-auto max-h-[160px] text-[#212121]"
+            fill="currentColor"
+            role="img"
+            aria-label="ESARAPU VARUN"
+          >
+            <text
+              x="50%"
+              y="50%"
+              dominantBaseline="central"
+              textAnchor="middle"
+              fontSize="120"
+              fontWeight="800"
+              letterSpacing="-0.04em"
+              className="font-heading uppercase tracking-tight select-none"
+            >
+              ESARAPU VARUN
+            </text>
+          </svg>
         </div>
-        
+
+        {/* Bottom bar */}
+        <div className="mt-8 pt-6 border-t border-[#E5E7EB] flex flex-col sm:flex-row items-center justify-between text-xs font-mono text-[#6B7280] gap-3">
+          <span>Copyright © {new Date().getFullYear()} Esarapu Varun. Engineered for scale.</span>
+          <div className="flex items-center gap-4">
+            <span>Bangalore, KA</span>
+            <span>•</span>
+            <span className="text-[#212121] font-medium">Full-Time Available</span>
+          </div>
+        </div>
+
       </div>
     </footer>
   );

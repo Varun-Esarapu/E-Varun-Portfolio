@@ -1,49 +1,75 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { certifications } from "@/data/certifications";
+import { SectionHeading, Badge } from "@/components/ui/AceternityUI";
+import { Award, ExternalLink, ShieldCheck } from "lucide-react";
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.15 }
-  }
+    transition: { staggerChildren: 0.1 },
+  },
 };
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 15 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
 };
 
 export default function Certifications() {
   return (
-    <section id="certifications" className="py-24 border-b border-[#D4AF37]/10">
-      <div className="max-w-4xl mx-auto px-4 sm:px-8">
-        <motion.div variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-          <motion.h2 variants={itemVariants} className="text-3xl md:text-4xl font-serif text-[#FDFBF7] mb-12 tracking-tight">Certifications.</motion.h2>
+    <section id="certifications" className="py-24 border-b border-[#EBEBEB] relative">
+      <div className="max-w-5xl mx-auto px-4 sm:px-8">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
+          <SectionHeading
+            number="06"
+            subtitle="Verified Credentials"
+            title="Certifications & Accreditations."
+          />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {certifications.map((cert, index) => (
-              <motion.a 
-                key={index} 
-                href={cert.pdfLink || "#"} 
-                target={cert.pdfLink ? "_blank" : "_self"}
-                rel="noopener noreferrer"
-                variants={itemVariants}
-                className="relative overflow-hidden rounded-2xl bg-[#1A1614] border border-[#2D2723] p-8 md:p-10 hover:border-[#D4AF37]/40 hover:shadow-[0_0_15px_rgba(212,175,55,0.1)] hover:-translate-y-1 transition-all duration-300 group flex flex-col justify-between"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-[#D4AF37]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                
-                <h3 className="relative z-10 text-lg font-serif text-[#FDFBF7] mb-8 leading-snug group-hover:text-[#D4AF37] transition-colors">
-                  {cert.title}
-                </h3>
-                
-                <div className="relative z-10 flex justify-between items-end border-t border-[#2D2723] pt-4 mt-auto">
-                  <span className="text-[#B5B0A1] font-sans text-xs font-medium">{cert.issuer}</span>
-                  <span className="text-[#D4AF37] font-sans text-[10px] tracking-widest uppercase font-bold">{cert.date}</span>
-                </div>
-              </motion.a>
+              <motion.div variants={itemVariants} key={index}>
+                <a
+                  href={cert.pdfLink || "#"}
+                  target={cert.pdfLink ? "_blank" : "_self"}
+                  rel="noopener noreferrer"
+                  className="block h-full group"
+                >
+                  <div className="p-7 rounded-[28px] bg-[#F8F8F8] border border-[#EBEBEB] hover:border-[#D6D6D6] h-full flex flex-col justify-between transition-all duration-300 shadow-2xs hover:shadow-[0_12px_32px_-8px_rgba(0,0,0,0.06)]">
+                    <div>
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="p-2.5 rounded-full bg-white border border-[#E5E5E5] flex items-center justify-center shadow-2xs">
+                          <Award className="w-4 h-4 text-[#0A0A0A]" />
+                        </div>
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#E5E5E5] text-xs font-mono text-[#000000]">
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
+                          Verified
+                        </span>
+                      </div>
+
+                      <h3 className="font-heading text-lg font-semibold text-[#0A0A0A] tracking-tight group-hover:underline underline-offset-4 transition-colors leading-snug mb-6">
+                        {cert.title}
+                      </h3>
+                    </div>
+
+                    <div className="pt-4 border-t border-[#EBEBEB] flex items-center justify-between text-xs font-mono text-[#6F6F6F]">
+                      <span>{cert.issuer}</span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-[#0A0A0A] font-semibold">{cert.date}</span>
+                        <ExternalLink size={13} className="text-[#6F6F6F] group-hover:text-[#0A0A0A] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </motion.div>
             ))}
           </div>
         </motion.div>

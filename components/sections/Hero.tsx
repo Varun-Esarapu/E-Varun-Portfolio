@@ -1,15 +1,36 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, animate } from "framer-motion";
-import GridPattern from "@/components/ui/GridPattern";
-import MagneticButton from "@/components/ui/MagneticButton";
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence, animate } from "framer-motion";
+import { ShimmerButton } from "@/components/ui/AceternityUI";
+import { ArrowUpRight, FileText, Sparkles, MapPin, GraduationCap, Briefcase, Code2, Film, Box } from "lucide-react";
+import dynamic from "next/dynamic";
+
+// Dynamically import 3D Caricature Model for SSR safety
+const CaricatureModel = dynamic(() => import("@/components/3d/CaricatureModel"), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-[460px] sm:h-[520px] flex flex-col items-center justify-center bg-transparent">
+      <div className="w-8 h-8 rounded-full border-2 border-[#000000]/20 border-t-[#000000] animate-spin mb-3" />
+      <span className="text-xs font-mono text-[#6B7280]">INITIALIZING 3D SCENE...</span>
+    </div>
+  ),
+});
 
 export default function Hero() {
   const [text1, setText1] = useState("");
   const [text2, setText2] = useState("");
-  const fullText1 = "Building the ";
-  const fullText2 = "future of AI.";
+  const [displayMode, setDisplayMode] = useState<"video" | "3d">("video");
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const fullText1 = "Architecting the ";
+  const fullText2 = "intelligence layer.";
+
+  const handleVideoReplay = () => {
+    if (videoRef.current && videoRef.current.ended) {
+      videoRef.current.currentTime = 0;
+      videoRef.current.play();
+    }
+  };
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
@@ -20,138 +41,244 @@ export default function Hero() {
       if (currentIndex1 < fullText1.length) {
         setText1(fullText1.slice(0, currentIndex1 + 1));
         currentIndex1++;
-        timeout = setTimeout(type, 60);
+        timeout = setTimeout(type, 40);
       } else if (currentIndex2 < fullText2.length) {
         setText2(fullText2.slice(0, currentIndex2 + 1));
         currentIndex2++;
-        timeout = setTimeout(type, 60);
+        timeout = setTimeout(type, 40);
       }
     };
 
-    timeout = setTimeout(type, 800); // Wait for initial fade in
+    timeout = setTimeout(type, 300);
     return () => clearTimeout(timeout);
   }, []);
 
   const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault();
     const element = document.getElementById(id);
-    
-    if (element) {
-      const offset = 30; // Matches the exact offset from your Navbar
-      const targetPosition = element.getBoundingClientRect().top + window.scrollY - offset;
 
-      animate(window.scrollY, targetPosition, {
-        duration: 0.8,
-        ease: [0.16, 1, 0.3, 1], // The exact cinematic easing curve
-        onUpdate: (latest) => window.scrollTo(0, latest),
-        onComplete: () => {
-          window.history.pushState(null, '', `#${id}`);
-        }
-      });
+    if (element) {
+      if (typeof window !== "undefined" && (window as any).__lenis) {
+        (window as any).__lenis.scrollTo(element, { offset: -60, duration: 1.2 });
+        window.history.pushState(null, "", `#${id}`);
+      } else {
+        const offset = 60;
+        const targetPosition =
+          element.getBoundingClientRect().top + window.scrollY - offset;
+
+        animate(window.scrollY, targetPosition, {
+          duration: 0.8,
+          ease: [0.16, 1, 0.3, 1],
+          onUpdate: (latest) => window.scrollTo(0, latest),
+          onComplete: () => {
+            window.history.pushState(null, "", `#${id}`);
+          },
+        });
+      }
     }
   };
 
   return (
-    <section id="intro" className="relative flex flex-col justify-center px-4 sm:px-8 pt-40 pb-20 border-b border-[#D4AF37]/10 min-h-[85vh] overflow-hidden">
-      
-      {/* Ambient Neural Network Glow & Grid */}
-      <GridPattern />
-      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-        <motion.div 
-          animate={{ x: [0, 30, 0], y: [0, -50, 0], opacity: [0.3, 0.5, 0.3] }}
-          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[20%] left-[10%] w-[40vw] h-[40vw] bg-[#D4AF37]/5 rounded-full blur-[120px]"
-        />
-        <motion.div 
-          animate={{ x: [0, -40, 0], y: [0, 40, 0], opacity: [0.2, 0.4, 0.2] }}
-          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          className="absolute bottom-[10%] right-[10%] w-[35vw] h-[35vw] bg-[#C9A66B]/5 rounded-full blur-[100px]"
-        />
-      </div>
-
-      {/* THE FIX: Added 'relative z-10' to keep your text above the glow */}
-      <div className="relative z-10 max-w-4xl mx-auto w-full">
-        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: "easeOut" }}>
+    <section
+      id="intro"
+      className="relative flex flex-col justify-center px-4 sm:px-8 pt-32 md:pt-36 pb-20 border-b border-[#E5E7EB] min-h-[92vh]"
+    >
+      <div className="max-w-6xl mx-auto w-full">
+        {/* BDSN Club & Editorial Dual-Stage Responsive Hero Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
           
-          <div className="flex items-center mb-6">
-            <div className="w-10 h-[2px] bg-[#D4AF37] mr-4"></div>
-            <span className="text-[#D4AF37] text-xs tracking-[0.25em] uppercase font-sans font-bold">
-              Esarapu Varun
-            </span>
-          </div>
+          {/* Column 1: Typography, Narrative & Actions (7 cols) */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-7 flex flex-col items-start"
+          >
+            {/* Top Status Pill: Clean White, Green Dot, Black Text */}
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#F7F7F7] border border-[#E5E7EB] text-xs font-sans text-[#000000] font-medium mb-6">
+              <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
+              <span>Available for Full-Time Roles</span>
+              <span className="text-[#D1D5DB]">•</span>
+              <span className="text-[#6B7280]">Bangalore, KA</span>
+            </div>
 
-          <div className="relative mb-8 min-h-[120px] sm:min-h-[144px] lg:min-h-[168px]">
-            {/* Invisible placeholder to prevent layout shifts */}
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl leading-[1.05] font-serif tracking-tight opacity-0 pointer-events-none select-none">
-              Building the <br />
-              future of AI.
-            </h1>
-            
-            {/* Typing text */}
-            <h1 className="absolute top-0 left-0 text-5xl sm:text-6xl lg:text-7xl leading-[1.05] font-serif text-[#FDFBF7] tracking-tight">
-              {text1}
-              {text1 === fullText1 && <br />}
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#D4AF37] to-[#C9A66B]">
-                {text2}
-              </span>
-              <motion.span
-                animate={{ opacity: [1, 0] }}
-                transition={{ repeat: Infinity, duration: 0.8, ease: "linear" }}
-                className="inline-block w-[3px] h-[0.8em] bg-[#D4AF37] ml-2 align-baseline"
-              />
-            </h1>
-          </div>
-          
-          <p className="font-sans text-[#B5B0A1] text-base md:text-lg tracking-wide leading-relaxed max-w-2xl mb-10">
-            Engineering scalable backend systems, intelligent machine learning models, and robust digital architecture.
-          </p>
+            {/* Display Headline with BDSN Club Scale */}
+            <div className="relative mb-6 min-h-[110px] sm:min-h-[140px] w-full">
+              <h1 className="text-4xl sm:text-5xl lg:text-[56px] leading-[1.08] font-heading font-semibold text-[#000000] tracking-[-0.035em] select-none opacity-0 pointer-events-none">
+                Architecting the <br />
+                intelligence layer.
+              </h1>
 
-          <div className="flex flex-col sm:flex-row gap-4 relative z-20">
-            {/* PRIMARY: Ghost Gold to Solid Gold */}
-            <MagneticButton 
-              href="#projects" 
-              onClick={(e: any) => handleScroll(e, 'projects')}
-              className="w-full sm:w-auto bg-transparent border border-[#D4AF37]/50 text-[#D4AF37] font-bold tracking-[0.15em] uppercase text-xs px-10 py-5 rounded-md hover:bg-[#D4AF37] hover:text-[#0F0C0A] transition-colors duration-300 shadow-[0_0_15px_rgba(212,175,55,0.05)] hover:shadow-[0_0_20px_rgba(212,175,55,0.2)]"
-            >
-              View Work
-            </MagneticButton>
-            {/* SECONDARY: Dark to Silver/White (No Gold!) */}
-            <MagneticButton 
-              href="/Varun_CV.pdf" 
-              className="w-full sm:w-auto bg-transparent border border-[#2D2723] text-[#B5B0A1] font-bold tracking-[0.15em] uppercase text-xs px-10 py-5 rounded-md hover:border-[#B5B0A1]/50 hover:text-[#FDFBF7] transition-colors duration-300"
-            >
-              Download CV
-            </MagneticButton>
-          </div>
+              <h1 className="absolute top-0 left-0 text-4xl sm:text-5xl lg:text-[56px] leading-[1.08] font-heading font-semibold text-[#000000] tracking-[-0.035em]">
+                {text1}
+                {text1 === fullText1 && <br />}
+                <span>{text2}</span>
+                <motion.span
+                  animate={{ opacity: [1, 0] }}
+                  transition={{ repeat: Infinity, duration: 0.7, ease: "linear" }}
+                  className="inline-block w-[3px] h-[0.85em] bg-[#000000] ml-1.5 align-baseline"
+                />
+              </h1>
+            </div>
 
-          {/* Social Icons inside Hero Section */}
-          <div className="mt-16 flex gap-6 items-center text-[#B5B0A1] relative z-20">
-            <a 
-              href="https://www.linkedin.com/in/varunesarapu/" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="hover:text-[#D4AF37] hover:-translate-y-1 transition-all duration-300"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-                <rect width="4" height="12" x="2" y="9"/>
-                <circle cx="4" cy="4" r="2"/>
-              </svg>
-            </a>
-            <a 
-              href="https://github.com/Varun-Esarapu" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="hover:text-[#D4AF37] hover:-translate-y-1 transition-all duration-300"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.02c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A4.8 4.8 0 0 0 8 18v4"/>
-                <path d="M9 18c-4.51 2-5-2-7-2"/>
-              </svg>
-            </a>
-          </div>
+            {/* Lead Copy */}
+            <p className="font-sans text-[#6B7280] text-base sm:text-lg leading-relaxed mb-8 max-w-xl">
+              Specializing in production <span className="text-[#000000] font-medium">agentic retrieval pipelines</span> (LangGraph), distributed <span className="text-[#000000] font-medium">PySpark architectures</span>, and low-latency API microservices.
+            </p>
 
-        </motion.div>
+            {/* BDSN Club Action Buttons (Solid Black + Clean White) */}
+            <div className="flex flex-col sm:flex-row gap-3.5 w-full sm:w-auto mb-10">
+              <ShimmerButton
+                variant="primary"
+                href="#projects"
+                onClick={(e) => handleScroll(e, "projects")}
+              >
+                <span className="!text-white font-medium">Explore Selected Work</span>
+                <ArrowUpRight size={15} className="!text-white" />
+              </ShimmerButton>
+
+              <ShimmerButton
+                variant="secondary"
+                href="/Varun_CV.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FileText size={15} className="text-[#6B7280]" />
+                <span className="!text-[#000000] font-medium">Download Resume (PDF)</span>
+              </ShimmerButton>
+            </div>
+
+            {/* Candidate Metadata Summary Strip */}
+            <div className="w-full pt-6 border-t border-[#E5E7EB] grid grid-cols-2 sm:grid-cols-3 gap-4 text-left">
+              <div>
+                <span className="text-[11px] font-mono uppercase text-[#6B7280] block mb-0.5">
+                  Current Role
+                </span>
+                <span className="text-xs font-sans font-semibold text-[#000000] block">
+                  Jr. AI & ML Engineer
+                </span>
+                <span className="text-[11px] text-[#6B7280]">D Square Consulting Services</span>
+              </div>
+
+              <div>
+                <span className="text-[11px] font-mono uppercase text-[#6B7280] block mb-0.5">
+                  Academic Record
+                </span>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-xs font-sans font-semibold text-[#000000]">
+                    B.E. Graduate
+                  </span>
+                  <span className="px-1.5 py-0.2 rounded bg-[#10B981]/15 text-[#059669] border border-[#10B981]/25 font-mono text-[10px] font-bold">
+                    8.71
+                  </span>
+                </div>
+                <span className="text-[11px] text-[#6B7280]">ECE Specialization</span>
+              </div>
+
+              <div className="col-span-2 sm:col-span-1">
+                <span className="text-[11px] font-mono uppercase text-[#6B7280] block mb-0.5">
+                  Core Stack
+                </span>
+                <span className="text-xs font-mono text-[#000000]">
+                  PyTorch • LangGraph • Spark
+                </span>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Column 2: Editorial Portrait / 3D Avatar Exhibition Stage (5 cols) */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-5 w-full flex flex-col items-center justify-center relative"
+          >
+            {/* Subtle soft backdrop glow */}
+            <div className="absolute inset-0 bg-radial from-[#F3F4F6]/80 via-transparent to-transparent pointer-events-none rounded-full scale-125 -z-10" />
+
+            {/* Mode Switcher Pill */}
+            <div className="flex items-center gap-1 p-1 rounded-full bg-white/95 backdrop-blur-md border border-[#E5E7EB] shadow-2xs mb-4 z-20">
+              <button
+                onClick={() => setDisplayMode("video")}
+                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-sans font-medium transition-all cursor-pointer ${
+                  displayMode === "video"
+                    ? "bg-[#000000] text-white shadow-xs"
+                    : "text-[#6B7280] hover:text-[#000000]"
+                }`}
+              >
+                <Film size={12} />
+                <span>Studio Portrait</span>
+              </button>
+              <button
+                onClick={() => setDisplayMode("3d")}
+                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-sans font-medium transition-all cursor-pointer ${
+                  displayMode === "3d"
+                    ? "bg-[#000000] text-white shadow-xs"
+                    : "text-[#6B7280] hover:text-[#000000]"
+                }`}
+              >
+                <Box size={12} />
+                <span>3D Interactive</span>
+              </button>
+            </div>
+
+            {/* Dynamic Stage View */}
+            <AnimatePresence mode="wait">
+              {displayMode === "video" ? (
+                <motion.div
+                  key="video-portrait"
+                  initial={{ opacity: 0, y: 10, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -10, scale: 0.98 }}
+                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                  className="relative w-full max-w-[360px] sm:max-w-[400px] aspect-[4/5] rounded-[32px] overflow-hidden border border-[#262626] bg-[#0A0A0B] shadow-[0_24px_50px_-15px_rgba(0,0,0,0.14)] group cursor-pointer"
+                  onMouseEnter={handleVideoReplay}
+                  onClick={handleVideoReplay}
+                >
+                  <video
+                    ref={videoRef}
+                    autoPlay
+                    muted
+                    playsInline
+                    preload="auto"
+                    poster="/varun_hero_poster.jpg"
+                    className="w-full h-full object-cover select-none"
+                  >
+                    <source src="/varun_hero_portrait.mp4" type="video/mp4" />
+                  </video>
+
+                  {/* Top Status Tag */}
+                  <div className="absolute top-4 left-4 z-10 pointer-events-none">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-[11px] font-sans font-medium text-white/90 shadow-2xs">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-pulse" />
+                      Editorial Studio Cut
+                    </span>
+                  </div>
+
+                  {/* Bottom subtle aesthetic vignette */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+
+                  <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs font-sans text-white z-10 pointer-events-none">
+                    <span className="font-medium text-white/95 drop-shadow-xs">Esarapu Varun</span>
+                    <span className="font-mono text-[11px] text-white/70 uppercase">AI & Systems</span>
+                  </div>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="3d-avatar"
+                  initial={{ opacity: 0, y: 10, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -10, scale: 0.98 }}
+                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                  className="w-full h-[460px] sm:h-[530px] relative"
+                >
+                  <CaricatureModel />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
+
+        </div>
       </div>
     </section>
   );

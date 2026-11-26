@@ -6,26 +6,67 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const formatMessage = (text: string, isUser: boolean) => {
   if (!text) return null;
-  // Match both **bold** and [text](url), allowing optional whitespace
-  const parts = text.split(/(\*\*.*?\*\*|\[[^\]]+\]\s*\([^)]+\))/g);
-  return parts.map((part, i) => {
-    if (part.startsWith('**') && part.endsWith('**')) {
+
+  const normalized = text.replace(/\[([^\]]+)\]\s+\((https?:\/\/[^\s)]+)\)/g, '[$1]($2)');
+  const tokenRegex = /(\[[^\]]+\]\([^\s)]+\)|\*\*.*?\*\*|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}|https?:\/\/[^\s<]+)/g;
+  const tokens = normalized.split(tokenRegex);
+
+  return tokens.filter(Boolean).map((token, i) => {
+    const linkMatch = token.match(/^\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)$/);
+    if (linkMatch) {
       return (
-        <strong key={i} className={isUser ? "font-bold text-[#0F0C0A]" : "font-semibold text-[#D4AF37]"}>
-          {part.slice(2, -2)}
-        </strong>
+        <a
+          key={i}
+          href={linkMatch[2]}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={isUser ? "underline font-medium text-white" : "text-[#0A0A0A] underline underline-offset-4 hover:text-[#6F6F6F] font-semibold transition-colors cursor-pointer"}
+        >
+          {linkMatch[1]}
+        </a>
       );
-    } else if (part.startsWith('[') && part.includes(']')) {
-      const match = part.match(/\[([^\]]+)\]\s*\(([^)]+)\)/);
-      if (match) {
+    }
+
+    if (token.startsWith("**") && token.endsWith("**") && token.length >= 4) {
+      const inner = token.slice(2, -2);
+      const innerLink = inner.match(/^\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)$/);
+      if (innerLink) {
         return (
-          <a key={i} href={match[2]} target="_blank" rel="noopener noreferrer" className="text-[#D4AF37] underline underline-offset-2 hover:text-white transition-colors font-medium">
-            {match[1]}
+          <a
+            key={i}
+            href={innerLink[2]}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={isUser ? "underline font-medium text-white" : "text-[#0A0A0A] underline underline-offset-4 hover:text-[#6F6F6F] font-semibold transition-colors cursor-pointer"}
+          >
+            {innerLink[1]}
           </a>
         );
       }
+      return (
+        <strong
+          key={i}
+          className={isUser ? "font-semibold text-white" : "font-semibold text-[#0A0A0A]"}
+        >
+          {inner}
+        </strong>
+      );
     }
-    return <span key={i}>{part}</span>;
+
+    const emailMatch = token.match(/^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/);
+    if (emailMatch) {
+      return (
+        <a
+          key={i}
+          href={`mailto:${emailMatch[1]}`}
+          className={isUser ? "underline font-medium text-white" : "text-[#0A0A0A] underline underline-offset-4 font-semibold transition-colors cursor-pointer"}
+        >
+          {emailMatch[1]}
+        </a>
+      );
+    }
+
+    return <span key={i}>{token}</span>;
   });
 };
 
@@ -37,11 +78,8 @@ const getSuggestions = (text: string) => {
   if (lower.includes('backend') || lower.includes('django') || lower.includes('api')) {
     return ["What is his Vehicle Service project?", "What databases does he know?"];
   }
-  if (lower.includes('education') || lower.includes('degree') || lower.includes('hkbk') || lower.includes('college')) {
+  if (lower.includes('education') || lower.includes('degree') || lower.includes('college')) {
     return ["What is his GPA?", "Did he do any extracurriculars?"];
-  }
-  if (lower.includes('experience') || lower.includes('apprentice') || lower.includes('intern') || lower.includes('work')) {
-    return ["What are his top skills?", "Show me his certifications"];
   }
   return ["What are his top projects?", "How do I contact him?"];
 };
@@ -62,60 +100,35 @@ export default function Chatbot() {
     e?.preventDefault();
     const textToSend = presetText || localInput;
     if (!textToSend.trim() || isLoading) return;
-    
-    const userMsg = { role: 'user', content: textToSend };
-    setMessages((prev) => [...prev, userMsg]);
+
+    const userMessage = { role: "user", content: textToSend };
+    setMessages((prev) => [...prev, userMessage]);
     setLocalInput("");
     setIsLoading(true);
 
     try {
-      const res = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: [...messages, userMsg] })
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          messages: [...messages, userMessage],
+        }),
       });
 
-      if (!res.ok) {
-        const errorText = await res.text();
-        throw new Error(errorText || `API Error: ${res.status}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch response");
       }
-      if (!res.body) throw new Error("No response body");
 
-      const reader = res.body.getReader();
-      const decoder = new TextDecoder();
-      let assistantMsg = { role: 'assistant', content: '' };
-      
-      setMessages((prev) => [...prev, assistantMsg]);
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        
-        assistantMsg.content += decoder.decode(value, { stream: true });
-        setMessages((prev) => [...prev.slice(0, -1), { ...assistantMsg }]);
-      }
-      
-      if (!assistantMsg.content) {
-        setMessages((prev) => {
-          const newMsgs = [...prev];
-          newMsgs[newMsgs.length - 1].content = "I'm currently receiving too many requests! Please wait a moment and try again, or email Varun directly at varunesarapu@gmail.com.";
-          return newMsgs;
-        });
-        return;
-      }
-    } catch (error: any) {
-      setMessages((prev) => {
-        const newMsgs = [...prev];
-        const errorMsg = error.message?.includes('429')
-          ? "I'm currently receiving too many requests! Please wait a moment and try again, or email Varun directly at varunesarapu@gmail.com."
-          : (error.message || "An error occurred.");
-        if (newMsgs[newMsgs.length - 1]?.role === 'assistant' && newMsgs[newMsgs.length - 1].content === '') {
-           newMsgs[newMsgs.length - 1].content = errorMsg;
-        } else {
-           newMsgs.push({ role: 'assistant', content: errorMsg });
-        }
-        return newMsgs;
-      });
+      const data = await response.json();
+      setMessages((prev) => [
+        ...prev,
+        { role: "assistant", content: data.reply || "Sorry, I couldn't process that." },
+      ]);
+    } catch (err) {
+      setMessages((prev) => [
+        ...prev,
+        { role: "assistant", content: "Something went wrong. Please try again later." },
+      ]);
     } finally {
       setIsLoading(false);
     }
@@ -129,41 +142,45 @@ export default function Chatbot() {
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="absolute bottom-20 right-0 w-[350px] sm:w-[400px] h-[500px] bg-[#1A1614] border border-[#D4AF37]/20 rounded-2xl shadow-2xl flex flex-col overflow-hidden"
+            className="absolute bottom-20 right-0 w-[350px] sm:w-[400px] h-[520px] bg-white border border-[#E5E5E5] rounded-[28px] shadow-[0_20px_50px_rgba(0,0,0,0.12)] flex flex-col overflow-hidden"
           >
-            <div className="p-4 border-b border-[#D4AF37]/10 bg-[#0F0C0A] flex justify-between items-center">
+            {/* Header */}
+            <div className="p-4 border-b border-[#EBEBEB] bg-[#F8F8F8] flex justify-between items-center">
               <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                <h3 className="text-[#FDFBF7] font-semibold text-sm tracking-wide">Varun's AI Assistant</h3>
+                <div className="w-2.5 h-2.5 rounded-full bg-[#ADFA1D]" />
+                <h3 className="text-[#0A0A0A] font-semibold text-sm tracking-tight font-sans">
+                  Varun's AI Assistant
+                </h3>
               </div>
               <div className="flex items-center gap-3">
                 <button 
                   onClick={() => setMessages([])} 
-                  className="text-[#B5B0A1] hover:text-[#D4AF37] transition-colors text-xs font-medium"
+                  className="text-[#6F6F6F] hover:text-[#0A0A0A] transition-colors text-xs font-medium cursor-pointer"
                   title="Clear Chat"
                 >
                   Clear
                 </button>
-                <button onClick={() => setIsOpen(false)} className="text-[#B5B0A1] hover:text-[#D4AF37] transition-colors">
+                <button onClick={() => setIsOpen(false)} className="text-[#6F6F6F] hover:text-[#0A0A0A] transition-colors cursor-pointer">
                   <X size={18} />
                 </button>
               </div>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-[#D4AF37]/20 scrollbar-track-transparent">
+            {/* Chat message body */}
+            <div className="flex-1 overflow-y-auto p-4 space-y-3 scrollbar-thin scrollbar-thumb-gray-200">
               {messages.length === 0 && (
                 <div className="flex flex-col items-center justify-center mt-6 space-y-4">
-                  <div className="inline-flex flex-col items-center gap-3 p-5 bg-[#2D2723] border border-[#D4AF37]/10 rounded-2xl text-[#B5B0A1] text-sm text-center">
-                    <Bot size={28} className="text-[#D4AF37]" />
-                    <p>Hi! I'm an AI trained on Varun's resume. <br/>Ask me about his skills, experience, or projects!</p>
+                  <div className="inline-flex flex-col items-center gap-3 p-5 bg-[#F8F8F8] border border-[#EBEBEB] rounded-2xl text-[#6F6F6F] text-sm text-center">
+                    <Bot size={26} className="text-[#0A0A0A]" />
+                    <p>Ask anything about Varun's experience, skills, or engineering deployments.</p>
                   </div>
                   
                   <div className="flex flex-wrap gap-2 justify-center mt-4">
-                    {["What is his educational background?", "Tell me about his experience", "What are his top projects?", "How do I contact him?"].map((faq) => (
+                    {["Education", "Industry experience", "Top projects", "Contact details"].map((faq) => (
                       <button
                         key={faq}
                         onClick={() => handleSend(undefined, faq)}
-                        className="px-3 py-1.5 bg-[#1A1614] border border-[#D4AF37]/20 rounded-full text-xs text-[#FDFBF7] hover:bg-[#D4AF37]/10 hover:border-[#D4AF37] transition-all"
+                        className="px-3 py-1.5 bg-white border border-[#E5E5E5] rounded-full text-xs text-[#0A0A0A] font-medium hover:bg-[#F5F5F5] transition-all cursor-pointer shadow-2xs"
                       >
                         {faq}
                       </button>
@@ -173,10 +190,10 @@ export default function Chatbot() {
               )}
               {messages.map((m, idx) => (
                 <div key={idx} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`max-w-[85%] p-3 rounded-xl text-sm leading-relaxed whitespace-pre-wrap ${
+                  <div className={`max-w-[85%] p-3.5 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap ${
                     m.role === 'user' 
-                      ? 'bg-[#D4AF37] text-[#0F0C0A] rounded-br-none font-medium shadow-md' 
-                      : 'bg-[#2D2723] text-[#FDFBF7] rounded-bl-none border border-[#D4AF37]/10'
+                      ? 'bg-[#000000] !text-white rounded-br-none font-medium' 
+                      : 'bg-[#F8F8F8] !text-[#000000] rounded-bl-none border border-[#EBEBEB]'
                   }`}>
                     {formatMessage(m.content, m.role === 'user')}
                   </div>
@@ -193,7 +210,7 @@ export default function Chatbot() {
                     <button
                       key={faq}
                       onClick={() => handleSend(undefined, faq)}
-                      className="px-3 py-1.5 bg-transparent border border-[#D4AF37]/30 rounded-full text-xs text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0F0C0A] transition-all"
+                      className="px-3 py-1 bg-white border border-[#E5E5E5] rounded-full text-xs text-[#000000] font-medium hover:bg-[#000000] hover:!text-white hover:border-[#000000] transition-all cursor-pointer shadow-2xs"
                     >
                       {faq}
                     </button>
@@ -203,30 +220,31 @@ export default function Chatbot() {
 
               {isLoading && messages.length > 0 && messages[messages.length - 1].role === 'user' && (
                 <div className="flex justify-start">
-                  <div className="bg-[#2D2723] text-[#FDFBF7] p-3 rounded-xl rounded-bl-none border border-[#D4AF37]/10 text-sm flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                    <div className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                    <div className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                  <div className="bg-[#F8F8F8] text-[#000000] p-3 rounded-2xl rounded-bl-none border border-[#EBEBEB] text-sm flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-[#000000] rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                    <div className="w-1.5 h-1.5 bg-[#000000] rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                    <div className="w-1.5 h-1.5 bg-[#000000] rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
                   </div>
                 </div>
               )}
               <div ref={messagesEndRef} />
             </div>
 
-            <form onSubmit={handleSend} className="p-4 border-t border-[#D4AF37]/10 bg-[#0F0C0A]">
+            {/* Input bar */}
+            <form onSubmit={handleSend} className="p-4 border-t border-[#EBEBEB] bg-[#F8F8F8]">
               <div className="relative flex items-center">
                 <input
                   value={localInput}
                   onChange={(e) => setLocalInput(e.target.value)}
                   placeholder="Ask about Varun..."
-                  className="w-full bg-[#1A1614] border border-[#2D2723] rounded-full py-3 pl-5 pr-12 text-sm text-[#FDFBF7] focus:outline-none focus:border-[#D4AF37]/50 placeholder:text-[#B5B0A1]/50 transition-colors"
+                  className="w-full bg-white border border-[#E5E5E5] rounded-full py-3 pl-5 pr-12 text-sm text-[#000000] focus:outline-none focus:border-[#000000] placeholder:text-[#6B7280]/60 transition-colors shadow-2xs"
                 />
                 <button
                   type="submit"
                   disabled={isLoading || !localInput.trim()}
-                  className="absolute right-2 p-2 bg-[#D4AF37] text-[#0F0C0A] rounded-full disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#FDFBF7] transition-colors"
+                  className="absolute right-1.5 p-2 bg-[#000000] text-white rounded-full disabled:opacity-30 disabled:cursor-not-allowed hover:bg-[#1D1D1F] transition-colors cursor-pointer"
                 >
-                  <Send size={16} />
+                  <Send size={15} />
                 </button>
               </div>
             </form>
@@ -234,15 +252,17 @@ export default function Chatbot() {
         )}
       </AnimatePresence>
 
+      {/* Floating Launcher Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-14 h-14 bg-[#D4AF37] text-[#0F0C0A] rounded-full shadow-[0_0_25px_rgba(212,175,55,0.3)] flex items-center justify-center hover:scale-105 hover:bg-[#FDFBF7] transition-all duration-300 relative group"
+        className="w-13 h-13 sm:w-14 sm:h-14 bg-[#000000] hover:bg-[#1D1D1F] text-white rounded-full shadow-[0_8px_24px_rgba(0,0,0,0.25)] flex items-center justify-center hover:scale-105 transition-all duration-200 relative group cursor-pointer"
+        aria-label="Open AI Assistant"
       >
-        {isOpen ? <X size={24} /> : <Bot size={24} />}
+        {isOpen ? <X size={22} className="text-white" /> : <Bot size={22} className="text-white" />}
         {!isOpen && (
-          <span className="absolute -top-1 -right-1 flex h-3 w-3">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+          <span className="absolute -top-0.5 -right-0.5 flex h-3 w-3">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#10B981] opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-3 w-3 bg-[#10B981]"></span>
           </span>
         )}
       </button>

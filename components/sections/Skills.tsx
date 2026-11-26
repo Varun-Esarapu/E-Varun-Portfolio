@@ -1,60 +1,107 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
+import { SectionHeading, Badge } from "@/components/ui/AceternityUI";
+import { Code2, Database, Cpu, Cloud, Terminal } from "lucide-react";
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.2 }
-  }
+    transition: { staggerChildren: 0.12 },
+  },
 };
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 15 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
 };
 
 export default function Skills() {
   const skillCategories = [
     {
-      title: "Languages & Databases",
-      skills: ["Python", "C", "SQL", "MySQL", "MongoDB"]
+      title: "Agentic AI & Machine Learning",
+      icon: <Cpu className="w-4 h-4 text-[#0A0A0A]" />,
+      skills: ["LangGraph", "LangChain", "PyTorch", "TensorFlow", "scikit-learn", "PySpark (MLlib)", "Agentic RAG", "Groq", "Librosa"],
+      tag: "Specialty",
     },
     {
-      title: "Frameworks & Backend",
-      skills: ["Django", "Django REST Framework", "RESTful APIs"]
+      title: "Backend, APIs & Cloud Systems",
+      icon: <Database className="w-4 h-4 text-[#0A0A0A]" />,
+      skills: ["FastAPI", "Django (DRF)", "RESTful APIs", "Streamlit", "PostgreSQL", "MySQL", "MongoDB", "Docker", "AWS (EC2, S3)"],
+      tag: "Production",
     },
     {
-      title: "Machine Learning",
-      skills: ["TensorFlow", "Keras", "PyTorch", "Pandas", "NumPy", "scikit-learn"]
+      title: "Languages & Core Systems",
+      icon: <Terminal className="w-4 h-4 text-[#0A0A0A]" />,
+      skills: ["Python", "SQL", "C", "Trie Indexing", "NumPy", "Pandas"],
+      tag: "Foundation",
     },
     {
-      title: "Tools & Cloud",
-      skills: ["Git", "AWS (EC2, S3)"]
-    }
+      title: "Core Competencies & AI Reliability",
+      icon: <Cloud className="w-4 h-4 text-[#0A0A0A]" />,
+      skills: ["Multi-Hop Retrieval", "LLM Evaluation", "HITL Validation", "Distributed Systems", "Recommendation Engines", "Git / GitHub"],
+      tag: "Architecture",
+    },
   ];
 
   return (
-    <section id="skills" className="py-24 border-b border-[#D4AF37]/10">
-      <div className="max-w-4xl mx-auto px-4 sm:px-8">
-        <motion.div variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-          <motion.h2 variants={itemVariants} className="text-3xl md:text-4xl font-serif text-[#FDFBF7] mb-12 tracking-tight">Technical Arsenal.</motion.h2>
+    <section id="skills" className="py-24 border-b border-[#EBEBEB] relative">
+      <div className="max-w-5xl mx-auto px-4 sm:px-8">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
+          <SectionHeading
+            number="04"
+            subtitle="Verified Stack"
+            title="Technical Arsenal & Tooling."
+          />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {skillCategories.map((category, index) => (
-              <motion.div variants={itemVariants} key={index} className="relative p-6 rounded-2xl bg-[#1A1614] border border-[#2D2723] hover:border-[#D4AF37]/30 transition-all group shadow-lg">
-                 <div className="absolute inset-0 bg-gradient-to-br from-[#D4AF37]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl pointer-events-none" />
-                 <h3 className="text-sm font-sans text-[#B5B0A1] uppercase tracking-[0.2em] mb-6 font-semibold relative z-10">
-                   {category.title}
-                 </h3>
-                 <div className="flex flex-wrap gap-2.5 relative z-10">
-                   {category.skills.map((skill) => (
-                     <span key={skill} className="px-4 py-2 bg-[#0F0C0A] border border-[#2D2723] text-[#D4AF37] text-xs font-sans rounded-md hover:border-[#D4AF37] hover:bg-[#D4AF37]/10 transition-all shadow-sm cursor-default">
-                       {skill}
-                     </span>
-                   ))}
-                 </div>
+              <motion.div variants={itemVariants} key={index}>
+                <div className="p-7 rounded-[28px] bg-[#F8F8F8] border border-[#EBEBEB] hover:border-[#D6D6D6] h-full flex flex-col justify-between transition-all duration-300">
+                  <div>
+                    {/* Header with category icon and badge */}
+                    <div className="flex items-center justify-between mb-6">
+                      <div className="flex items-center gap-3">
+                        <div className="p-2.5 rounded-full bg-white border border-[#E5E5E5] shadow-2xs">
+                          {category.icon}
+                        </div>
+                        <h3 className="font-heading text-lg font-semibold text-[#0A0A0A] tracking-tight">
+                          {category.title}
+                        </h3>
+                      </div>
+                      <span className="px-3 py-1 rounded-full bg-white border border-[#E5E5E5] text-xs font-mono text-[#6F6F6F]">
+                        {category.tag}
+                      </span>
+                    </div>
+
+                    {/* Skill chips in clean white pills */}
+                    <div className="flex flex-wrap gap-2 pt-1">
+                      {category.skills.map((skill) => (
+                        <span
+                          key={skill}
+                          className="px-3.5 py-1.5 bg-white border border-[#E5E5E5] text-[#0A0A0A] hover:border-[#0A0A0A] text-xs font-sans font-medium tracking-tight rounded-full transition-colors duration-200 cursor-default shadow-2xs"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Micro metric footer */}
+                  <div className="mt-8 pt-4 border-t border-[#EBEBEB] flex items-center justify-between text-xs font-mono text-[#6F6F6F]">
+                    <span>Proficiency: Production Ready</span>
+                    <span className="text-[#000000] flex items-center gap-1.5 font-semibold">
+                      <span className="w-2 h-2 rounded-full bg-[#10B981]" />
+                      High Confidence
+                    </span>
+                  </div>
+                </div>
               </motion.div>
             ))}
           </div>

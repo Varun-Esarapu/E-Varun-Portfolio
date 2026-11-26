@@ -1,37 +1,94 @@
 export const maxDuration = 30;
 
+function getFallbackAnswer(lastMessage: string): string {
+  const query = (lastMessage || '').toLowerCase();
+
+  if (query.includes('experience') || query.includes('work') || query.includes('d square') || query.includes('xtransmatrix') || query.includes('job') || query.includes('career')) {
+    return "Varun serves as a **Jr. AI & ML Engineer** at **D Square Consulting Services** (Nov 2026 – Present, previously Apprentice May – Nov 2026), where he engineers end-to-end machine learning workflows spanning data ingestion, model prototyping, and cloud deployment. Prior to this, he was an **AI Operator Intern** at **Xtransmatrix Consulting Services** (Nov 2025 – Mar 2026), managing Human-in-the-Loop (HITL) dataset validation and LLM evaluation on a US healthcare AI platform. He holds a **B.E. degree** with an **8.71 / 10 CGPA**.";
+  }
+
+  if (query.includes('project') || query.includes('ml') || query.includes('machine learning') || query.includes('auto-stair') || query.includes('stair') || query.includes('rag') || query.includes('vehicle') || query.includes('speech') || query.includes('recommendation') || query.includes('cinematch')) {
+    return "Varun has engineered four key production projects: \n1. **Auto-STAIR**: Agentic multi-hop document retrieval using **LangGraph** and zero-shot Trie prefix validation to eliminate hallucinated routing paths. Check out the [Live Demo](https://huggingface.co/spaces/varun-e/Auto-STAIR) on HuggingFace and [GitHub](https://github.com/Varun-Esarapu/Auto-STAIR).\n2. **Cinematch**: Distributed movie recommendation engine on 32M+ interaction records using **PySpark 3.5 MLlib ALS**, sub-15ms inference latency, Django REST microservices, and Streamlit. Check out the [Live App](https://cine-matchai.streamlit.app) and [GitHub](https://github.com/Varun-Esarapu/movie_rec).\n3. **Vehicle Service Management System**: RESTful backend with **Django REST Framework** with state-machine validation and automated cost calculation.\n4. **Real-Time Speech Emotion Recognition**: Edge acoustic ML pipeline extracting MFCCs with Librosa and CNN classification deployed on Raspberry Pi.";
+  }
+
+  if (query.includes('skill') || query.includes('stack') || query.includes('python') || query.includes('django') || query.includes('langgraph') || query.includes('rag') || query.includes('library') || query.includes('tool') || query.includes('database')) {
+    return "Varun's core technical stack includes:\n- **Agentic AI & ML**: **LangGraph**, **LangChain**, **PyTorch**, **TensorFlow**, **scikit-learn**, **PySpark (MLlib)**, **Agentic RAG**, **Groq**, **Librosa**\n- **Backend & Cloud**: **FastAPI**, **Django (DRF)**, **Streamlit**, **Docker**, **AWS (EC2, S3)**, **PostgreSQL**, **MySQL**, **MongoDB**\n- **Languages & Core**: **Python**, **SQL**, **C**, **Trie Indexing**\n- **Core Competencies**: Multi-Hop Retrieval, LLM Evaluation, HITL Validation, Distributed Systems.";
+  }
+
+  if (query.includes('education') || query.includes('college') || query.includes('degree') || query.includes('gpa') || query.includes('cgpa') || query.includes('hkbk')) {
+    return "Varun graduated with a **Bachelor of Engineering (B.E.)** in **Electronics and Communication Engineering** from **HKBK College of Engineering, Bangalore**, graduating with an impressive **8.71 / 10 CGPA**.";
+  }
+
+  if (query.includes('certif') || query.includes('aws') || query.includes('sap') || query.includes('matlab') || query.includes('freecodecamp')) {
+    return "Varun holds multiple technical certifications including **Architecting SAP on AWS** (Nov 2025), **Machine Learning Expert: Introduction to MATLAB** (Sep 2024), **Machine Learning with Python** (freeCodeCamp), and **Scientific Computing with Python** (freeCodeCamp).";
+  }
+
+  if (query.includes('contact') || query.includes('email') || query.includes('hire') || query.includes('linkedin') || query.includes('github') || query.includes('reach')) {
+    return "You can reach Varun directly via email at [varunesarapu@gmail.com](mailto:varunesarapu@gmail.com), connect on [LinkedIn](https://www.linkedin.com/in/varunesarapu/), or inspect his source repositories on [GitHub](https://github.com/Varun-Esarapu). He is actively available for full-time AI & Systems engineering roles!";
+  }
+
+  return "Varun Esarapu is an **AI & Systems Engineer** with proven industry experience at **D Square Consulting** (Apprenticeship) and **XTransMatriX Consulting** (Internship). He holds a **B.E. degree (8.71 CGPA)** and specializes in production machine learning pipelines and **Django REST architectures**. Feel free to ask about his experience, projects, tech stack, or contact information!";
+}
+
+function streamStaticText(text: string): Response {
+  const encoder = new TextEncoder();
+  const stream = new ReadableStream({
+    async start(controller) {
+      // Chunk the text slightly to give a natural streaming feel
+      const words = text.split(' ');
+      for (let i = 0; i < words.length; i++) {
+        const chunk = (i === 0 ? '' : ' ') + words[i];
+        controller.enqueue(encoder.encode(chunk));
+        await new Promise((r) => setTimeout(r, 18));
+      }
+      controller.close();
+    }
+  });
+
+  return new Response(stream, {
+    headers: {
+      'Content-Type': 'text/plain; charset=utf-8',
+      'Transfer-Encoding': 'chunked',
+      'Cache-Control': 'no-cache, no-transform'
+    }
+  });
+}
+
 export async function POST(req: Request) {
+  let lastUserMessage = '';
   try {
     const { messages } = await req.json();
+    const lastMsgObj = (messages || []).filter((m: any) => m.role === 'user').pop();
+    lastUserMessage = String(lastMsgObj?.content || lastMsgObj?.text || '');
 
     const apiKey = process.env.GROQ_API_KEY;
     if (!apiKey) {
-      console.error('GROQ_API_KEY environment variable is not set');
-      return new Response("Chat assistant configuration error. Please ensure GROQ_API_KEY is configured.", { status: 500 });
+      console.warn('GROQ_API_KEY environment variable is not set — using local knowledge responder.');
+      return streamStaticText(getFallbackAnswer(lastUserMessage));
     }
 
     const systemPrompt = `You are Varun Esarapu's personal AI portfolio assistant.
 Your job is to answer questions from recruiters and visitors about Varun's experience, skills, and projects.
 
 Key information about Varun:
-- Education: Holds a Bachelor's degree (B.E.) in Electronics and Communication Engineering from HKBK College of Engineering, Bangalore (GPA: 8.71/10).
-- Experience: AI/ML Developer Apprentice at D Square Consulting (May 2026 - Present), AI Operator Intern at XTransMatriX Consulting (Nov 2025 - Mar 2026).
-- Languages & Databases: Python, C, SQL, MySQL, MongoDB.
-- Frameworks: Django, Django REST Framework, RESTful APIs.
-- Libraries & ML: TensorFlow, PyTorch, Keras, Pandas, NumPy, scikit-learn, Matplotlib.
-- Tools & Cloud: Git, AWS (EC2, S3), Jupyter Notebook.
-- Projects: Vehicle Service Management System (Django/REST), Real-time Speech Emotion Recognition (CNN/Raspberry Pi), Text Emotion Classification (LSTM/TensorFlow), Personalized Movie Recommendation System (Collaborative Filtering).
-- Certifications: Architecting SAP on AWS (Nov 2025), Machine Learning Expert: Introduction to MATLAB (Sep 2024), Machine Learning with Python (freeCodeCamp, 2022), Scientific Computing with Python (freeCodeCamp, 2022), Responsive Web Design (freeCodeCamp, 2021).
-- Extracurriculars: Hosted and coordinated multiple college fests managing logistics/sponsors; Organized domain-specific ECE workshops (VACs) for 60+ participants; Served as Event Coordinator for Technisium 2025 overseeing 8 technical events with 150+ teams.
+- Education: Holds a Bachelor's degree (B.E.) in Electronics and Communication Engineering from HKBK College of Engineering, Bangalore (GPA: 8.71/10). Graduated.
+- Experience: Jr. AI & ML Engineer at D Square Consulting Services Pvt Ltd (Nov 2026 – Present, previously Apprentice May – Nov 2026), AI Operator Intern at Xtransmatrix Consulting Services Pvt Ltd (Nov 2025 – Mar 2026).
+- Languages & Databases: Python, SQL, C, PostgreSQL, MySQL, MongoDB.
+- Frameworks & Backend: FastAPI, Django (DRF), Streamlit, RESTful APIs, Docker, AWS (EC2, S3).
+- AI / ML & Agentic Stack: LangGraph, LangChain, PyTorch, TensorFlow, Keras, scikit-learn, PySpark (MLlib), Groq, Pandas, NumPy, Librosa.
+- Core Competencies: Agentic RAG, Multi-Hop Retrieval, Trie Routing, NLP, Deep Learning, Recommendation Systems, LLM Evaluation, HITL Validation.
+- Projects: Auto-STAIR (Agentic Multi-Hop Retrieval with LangGraph & Trie on HuggingFace), Cinematch (Distributed Movie Recommendation on 32M+ records with PySpark 3.5 & sub-15ms latency), Vehicle Service Management System (Django/REST with state-machine lifecycle), Real-Time Speech Emotion Recognition (MFCC with Librosa & CNN on Raspberry Pi).
+- Certifications: Architecting SAP on AWS (Nov 2025), Machine Learning with Python (freeCodeCamp, 2022), Scientific Computing with Python (freeCodeCamp, 2022), Python Programming (SoloLearn, 2022).
+- Extracurriculars: Event Coordinator for Technisium 2025 (8 technical events with 150+ teams); Workshop Organizer for domain-specific ECE VACs (60+ participants).
 - Contact & Links: Email (varunesarapu@gmail.com), LinkedIn (https://www.linkedin.com/in/varunesarapu/), GitHub (https://github.com/Varun-Esarapu).
-- Tone: Professional, concise, helpful, and slightly enthusiastic.
+- Tone: Professional, concise, helpful, and confident.
 
 Strict Guardrails:
-- ONLY answer questions using the facts provided above. Do not hallucinate or guess any unprovided information. If you do not know the answer based on the prompt, state that you do not have that information.
-- ALWAYS provide the direct URL link in markdown format when asked for his LinkedIn or GitHub, exactly like this: [LinkedIn](https://www.linkedin.com/in/varunesarapu/) WITHOUT any newlines between the brackets and parentheses.
+- ONLY answer questions using the facts provided above. Do not hallucinate or guess any unprovided information.
+- ALWAYS provide the direct URL link in markdown format when asked for his LinkedIn or GitHub, exactly like this: [LinkedIn](https://www.linkedin.com/in/varunesarapu/) and [GitHub](https://github.com/Varun-Esarapu) WITHOUT spaces or newlines between brackets and parentheses, and NEVER wrap links inside bold asterisks (do NOT write **[LinkedIn](...)**).
 - If asked to write code, solve math, or act as a general AI, politely decline and steer the conversation back to Varun's portfolio.
 - Keep responses concise (under 3-4 sentences). Recruiters are busy.
-- FORMATTING: Frequently use bold markdown (**text**) to highlight key entities like college names, company names, project names, and specific technologies.`;
+- Frequently use bold markdown (**text**) to highlight key entities like college names, company names, project names, and specific technologies.`;
 
     const formattedMessages = [
       { role: 'system', content: systemPrompt },
@@ -55,9 +112,8 @@ Strict Guardrails:
     });
 
     if (!response.ok) {
-      const err = await response.text();
-      console.error('Groq direct API error:', response.status, err);
-      return new Response("I'm currently receiving too many requests! Please wait a moment and try again, or email Varun directly at varunesarapu@gmail.com.", { status: 429 });
+      console.warn('Groq API returned non-OK status:', response.status, '— using intelligent fallback.');
+      return streamStaticText(getFallbackAnswer(lastUserMessage));
     }
 
     // Stream the SSE text chunks directly to the client
@@ -100,7 +156,7 @@ Strict Guardrails:
             }
           }
         } catch (err) {
-          controller.error(err);
+          console.error('Streaming read error:', err);
         } finally {
           controller.close();
         }
@@ -116,6 +172,6 @@ Strict Guardrails:
     });
   } catch (error: any) {
     console.error('Route handler error:', error);
-    return new Response("I encountered an error connecting to my brain. Please try again later.", { status: 500 });
+    return streamStaticText(getFallbackAnswer(lastUserMessage));
   }
 }

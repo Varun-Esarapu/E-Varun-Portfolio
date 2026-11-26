@@ -11,12 +11,11 @@ import Projects from "@/components/sections/Projects";
 import Certifications from "@/components/sections/Certifications";
 import Contact from "@/components/sections/Contact";
 import RecruiterHUD from "@/components/ui/RecruiterHUD";
-import { Briefcase, Eye } from "lucide-react";
+import { Briefcase, Eye, Sparkles } from "lucide-react";
 
 export default function Home() {
   const [isRecruiterMode, setIsRecruiterMode] = useState(false);
 
-  // If recruiter clicks any navbar item, automatically exit Recruiter Mode
   useEffect(() => {
     const handleExit = () => setIsRecruiterMode(false);
     window.addEventListener("exit-recruiter-mode", handleExit);
@@ -29,24 +28,29 @@ export default function Home() {
 
   return (
     <>
-      {/* Floating Recruiter Mode Toggle Switch (Top-Right, completely independent of Navbar) */}
-      <div className="fixed top-6 right-4 sm:right-8 z-40">
+      {/* Floating Recruiter Mode Toggle Switch (BDSN Minimal Pill) */}
+      <div className="fixed top-5 right-4 sm:right-8 z-40">
         <button
           onClick={() => setIsRecruiterMode(!isRecruiterMode)}
-          className={`flex items-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full text-[11px] font-sans font-bold tracking-wider uppercase backdrop-blur-xl transition-all shadow-2xl border ${
+          className={`flex items-center gap-2.5 px-4 py-2 rounded-full text-xs font-sans font-medium tracking-tight backdrop-blur-md transition-all duration-200 shadow-xs border cursor-pointer select-none active:scale-[0.98] ${
             isRecruiterMode
-              ? "bg-[#D4AF37] text-[#0F0C0A] border-[#D4AF37] shadow-[0_0_20px_rgba(212,175,55,0.3)]"
-              : "bg-[#0F0C0A]/85 text-[#B5B0A1] hover:text-[#D4AF37] border-[#2D2723] hover:border-[#D4AF37]/50"
+              ? "bg-[#000000] !text-white border-[#000000]"
+              : "bg-white/95 !text-[#000000] hover:bg-[#F7F7F7] border-[#E5E7EB]"
           }`}
           title="Toggle 60-Second Executive Recruiter Mode"
         >
-          {isRecruiterMode ? <Eye size={13} /> : <Briefcase size={13} />}
+          {isRecruiterMode ? (
+            <Eye size={13} className="!text-white" />
+          ) : (
+            <Briefcase size={13} className="text-[#000000]" />
+          )}
           <span className="hidden sm:inline">
-            {isRecruiterMode ? "Full Portfolio" : "Recruiter 60s Scan"}
+            {isRecruiterMode ? "Exit 60s Scan" : "Recruiter 60s Scan"}
           </span>
           <span className="sm:hidden">
             {isRecruiterMode ? "Full" : "60s"}
           </span>
+          <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
         </button>
       </div>
 
@@ -58,7 +62,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
+            transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
           >
             <RecruiterHUD onExit={() => setIsRecruiterMode(false)} />
           </motion.div>
@@ -68,15 +72,15 @@ export default function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="max-w-4xl mx-auto w-full"
+            transition={{ duration: 0.35 }}
+            className="max-w-5xl mx-auto w-full"
           >
             <Hero />
             <About />
-            <Skills />
-            <Experience />
-            <Education />
             <Projects />
+            <Experience />
+            <Skills />
+            <Education />
             <Certifications />
             <Contact />
           </motion.div>

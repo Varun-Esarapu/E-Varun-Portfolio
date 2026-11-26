@@ -2,52 +2,96 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { experience, ExperienceItem } from "@/data/experience";
+import { SectionHeading, Badge } from "@/components/ui/AceternityUI";
+import { Briefcase, Calendar, ChevronRight } from "lucide-react";
 import React, { useRef } from "react";
 
-const ExperienceCard = ({ job, index }: { job: ExperienceItem; index: number }) => {
+const ExperienceCard = ({
+  job,
+  index,
+}: {
+  job: ExperienceItem;
+  index: number;
+}) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: cardRef,
-    offset: ["0 1", "1.2 1"]
+    offset: ["0 1", "1.15 1"],
   });
 
-  const scaleProgress = useTransform(scrollYProgress, [0, 1], [0.95, 1]);
-  const opacityProgress = useTransform(scrollYProgress, [0, 1], [0.5, 1]);
+  const scaleProgress = useTransform(scrollYProgress, [0, 1], [0.97, 1]);
+  const opacityProgress = useTransform(scrollYProgress, [0, 1], [0.65, 1]);
 
   return (
-    <motion.div 
+    <motion.div
       ref={cardRef}
       style={{ scale: scaleProgress, opacity: opacityProgress }}
-      className="relative overflow-hidden rounded-2xl bg-[#1A1614] border border-[#2D2723] p-8 md:p-10 hover:border-[#D4AF37]/40 hover:shadow-[0_0_15px_rgba(212,175,55,0.1)] transition-all duration-300 group"
+      className="w-full"
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-[#D4AF37]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-0" />
-      
-      <div className="relative z-10 flex flex-col md:flex-row gap-6 md:gap-12">
-        <div className="md:w-1/3 shrink-0 flex flex-col items-start gap-4">
-          <span className="text-[#D4AF37] font-sans text-xs tracking-[0.15em] uppercase font-bold">{job.date}</span>
-          <div className="flex flex-col gap-5 w-full">
-            <h3 className="text-xl font-serif text-[#FDFBF7] leading-snug">{job.company}</h3>
-            {/* Themed Logo - Blend trick: Wrapper matches card BG to allow mix-blend-screen to strip the black box */}
-            <div className={`${job.company.includes("D Square") ? "w-56 md:w-64" : "w-28 md:w-32 mx-auto"} relative group-hover:scale-105 transition-transform duration-500 mt-2 flex justify-center bg-[#1A1614]`}>
-              <img 
-                src={job.logo} 
-                alt={`${job.company} Logo`} 
-                className="w-full h-auto object-contain invert grayscale sepia-[0.4] opacity-80 group-hover:opacity-100 group-hover:sepia-0 mix-blend-screen transition-all duration-500" 
-              />
+      <div className="p-7 md:p-9 rounded-[28px] bg-[#F8F8F8] border border-[#EBEBEB] hover:border-[#D6D6D6] transition-all duration-300">
+        <div className="flex flex-col md:flex-row gap-6 md:gap-10">
+          {/* Left Column: Date, Company, Themed Logo */}
+          <div className="md:w-1/3 shrink-0 flex flex-col items-start gap-4">
+            <span className="font-mono text-xs text-[#0A0A0A] bg-white px-3 py-1.5 rounded-full border border-[#E5E5E5] font-medium flex items-center gap-1.5 shadow-2xs">
+              <Calendar className="w-3 h-3 text-[#6F6F6F]" />
+              {job.date}
+            </span>
+
+            <div className="flex flex-col gap-3 w-full">
+              <h3 className="text-xl font-heading font-semibold text-[#0A0A0A] tracking-[-0.03em] leading-snug">
+                {job.company}
+              </h3>
+
+              {/* Logo Container with clean light styling */}
+              <div
+                className={`${
+                  job.company.includes("D Square")
+                    ? "w-48 sm:w-56"
+                    : "w-28 sm:w-32"
+                } relative group-hover:scale-105 transition-transform duration-500 mt-1 flex items-center bg-white p-3 rounded-2xl border border-[#E5E5E5] shadow-2xs`}
+              >
+                <img
+                  src={job.logo}
+                  alt={`${job.company} Logo`}
+                  className="w-full h-auto object-contain grayscale contrast-110 opacity-80 group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-500"
+                />
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="md:w-2/3 mt-2 md:mt-0">
-          <h4 className="text-lg font-sans text-[#FDFBF7] mb-6 font-medium tracking-wide">{job.title}</h4>
-          <ul className="space-y-3">
-            {job.description.map((desc: string, i: number) => (
-              <li key={i} className="text-[#B5B0A1] font-sans leading-relaxed flex gap-3 text-sm">
-                <span className="text-[#D4AF37] mt-1 text-xs">▹</span>
-                <span>{desc}</span>
-              </li>
-            ))}
-          </ul>
+          {/* Right Column: Role Title and Quantifiable Deliverables */}
+          <div className="md:w-2/3 md:border-l md:border-[#EBEBEB] md:pl-8 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <Briefcase className="w-4 h-4 text-[#0A0A0A]" />
+                <h4 className="text-lg font-heading font-semibold text-[#0A0A0A] tracking-tight">
+                  {job.title}
+                </h4>
+              </div>
+
+              <ul className="space-y-3">
+                {job.description.map((desc: string, i: number) => (
+                  <li
+                    key={i}
+                    className="text-[#6F6F6F] font-sans leading-relaxed flex items-start gap-3 text-sm"
+                  >
+                    <span className="text-[#0A0A0A] mt-1 shrink-0 font-mono text-xs">
+                      ▹
+                    </span>
+                    <span>{desc}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="mt-6 pt-4 border-t border-[#EBEBEB] flex items-center justify-between text-xs font-mono text-[#6F6F6F]">
+              <span>Role: {job.company.includes("D Square") ? "Jr. AI & ML Engineer" : "AI Operator Intern"}</span>
+              <span className="text-[#000000] font-semibold flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
+                {job.company.includes("D Square") ? "Active Engineer" : "Completed"}
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </motion.div>
@@ -56,12 +100,21 @@ const ExperienceCard = ({ job, index }: { job: ExperienceItem; index: number }) 
 
 export default function Experience() {
   return (
-    <section id="experience" className="py-24 border-b border-[#D4AF37]/10 overflow-hidden">
-      <div className="max-w-4xl mx-auto px-4 sm:px-8">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
-          <h2 className="text-3xl md:text-4xl font-serif text-[#FDFBF7] mb-12 tracking-tight">Experience.</h2>
+    <section id="experience" className="py-24 border-b border-[#EBEBEB] overflow-hidden">
+      <div className="max-w-5xl mx-auto px-4 sm:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <SectionHeading
+            number="03"
+            subtitle="Industry Track Record"
+            title="Professional Experience."
+          />
 
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-5">
             {experience.map((job, index) => (
               <ExperienceCard key={index} job={job} index={index} />
             ))}
