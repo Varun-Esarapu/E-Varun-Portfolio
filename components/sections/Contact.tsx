@@ -28,7 +28,7 @@ export default function Contact() {
               <div className="inline-flex mb-5">
                 <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#10B981]/15 text-[#059669] border border-[#10B981]/30 font-sans text-xs font-semibold">
                   <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
-                  Let's Collaborate
+                  Let&apos;s Collaborate
                 </span>
               </div>
 
@@ -38,7 +38,7 @@ export default function Contact() {
               </h2>
 
               <p className="font-sans text-[#6F6F6F] text-base md:text-lg leading-relaxed mb-10 max-w-xl mx-auto">
-                I am actively evaluating full-time AI/ML, backend engineering, and systems development opportunities. Whether you want to discuss my neural network pipelines or explore an open role, I'd love to connect.
+                I am actively evaluating full-time AI/ML, backend engineering, and systems development opportunities. Whether you want to discuss my neural network pipelines or explore an open role, I&apos;d love to connect.
               </p>
 
               {/* Action Buttons */}

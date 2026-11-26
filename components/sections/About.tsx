@@ -50,7 +50,7 @@ export default function About() {
                 I am an <span className="text-[#0A0A0A] font-semibold">Electronics and Communication Engineering</span> graduate specializing in applied artificial intelligence and scalable backend architecture.
               </p>
               <p>
-                Having studied circuits, signal processing, and computer organization, I don't treat software as black boxes. That low-level foundation informs how I design APIs, profile bottlenecks, and optimize deep learning inference.
+                Having studied circuits, signal processing, and computer organization, I don&apos;t treat software as black boxes. That low-level foundation informs how I design APIs, profile bottlenecks, and optimize deep learning inference.
               </p>
               <p>
                 Rather than writing one-off Jupyter notebooks, my focus is on <span className="text-[#0A0A0A] font-semibold">production-grade software engineering</span>: container-friendly pipelines, strict schema validation, and real-time streaming interfaces.
