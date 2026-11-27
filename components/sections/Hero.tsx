@@ -200,7 +200,7 @@ export default function Hero() {
               className="absolute -inset-10 sm:-inset-16 rounded-full bg-[radial-gradient(circle_at_center,rgba(253,230,138,0.22)_0%,rgba(16,185,129,0.15)_50%,transparent_75%)] blur-3xl pointer-events-none -z-10"
             />
 
-            {/* Borderless Floating Portrait Container: seamlessly blends #F6F4EE, zero harsh border */}
+            {/* Floating Portrait Stage with 3D Perspective - Borderless, Zero Card Box */}
             <motion.div
               style={{
                 y: floatY,
@@ -214,35 +214,22 @@ export default function Hero() {
               initial={{ opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="relative w-full max-w-[360px] sm:max-w-[400px] aspect-[4/5] rounded-[32px] overflow-hidden bg-[#F6F4EE] shadow-[0_24px_50px_-15px_rgba(202,181,150,0.32)] group cursor-pointer select-none"
+              className="relative w-full max-w-[360px] sm:max-w-[400px] aspect-[4/5] flex items-center justify-center select-none cursor-pointer"
               onMouseEnter={handleVideoReplay}
               onClick={handleVideoReplay}
             >
-              <video
-                ref={videoRef}
-                autoPlay
-                muted
-                playsInline
-                preload="auto"
-                poster="/varun_portrait_poster.jpg"
-                className="w-full h-full object-cover select-none"
-              >
-                <source src="/varun_portrait.mp4" type="video/mp4" />
-              </video>
-
-              {/* Top Status Tag: Clean Alabaster Minimalist Pill */}
-              <div className="absolute top-4 left-4 z-10 pointer-events-none">
-                <span className="inline-flex items-center px-3 py-1 rounded-full bg-white/80 backdrop-blur-md border border-[#E5E7EB] text-[11px] font-sans font-medium text-[#0A0A0A] shadow-xs">
-                  Editorial Studio Cut
-                </span>
-              </div>
-
-              {/* Bottom subtle aesthetic blend */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#F6F4EE]/60 via-transparent to-transparent pointer-events-none" />
-
-              <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs font-sans text-[#0A0A0A] z-10 pointer-events-none">
-                <span className="font-semibold text-[#0A0A0A] drop-shadow-2xs">Esarapu Varun</span>
-                <span className="font-sans text-[11px] font-medium text-[#555555] uppercase tracking-wider">AI & Systems</span>
+              <div className="relative w-full h-full overflow-hidden [mask-image:radial-gradient(ellipse_at_center,black_65%,transparent_98%)] [-webkit-mask-image:radial-gradient(ellipse_at_center,black_65%,transparent_98%)]">
+                <video
+                  ref={videoRef}
+                  autoPlay
+                  muted
+                  playsInline
+                  preload="auto"
+                  poster="/varun_portrait_poster.jpg"
+                  className="w-full h-full object-cover select-none"
+                >
+                  <source src="/varun_portrait.mp4" type="video/mp4" />
+                </video>
               </div>
             </motion.div>
           </div>
