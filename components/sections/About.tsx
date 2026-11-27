@@ -62,8 +62,7 @@ export default function About() {
               <div className="w-full p-6 sm:p-7 rounded-[28px] bg-[#F8F8F8] border border-[#EBEBEB] hover:border-[#D6D6D6] transition-all duration-300 shadow-2xs flex flex-col justify-between">
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#E5E5E5] text-[11px] font-mono font-medium text-[#0A0A0A] shadow-2xs">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#5CA904] animate-pulse" />
+                    <span className="inline-flex items-center px-3 py-1 rounded-full bg-white border border-[#E5E5E5] text-[11px] font-mono font-medium text-[#0A0A0A] shadow-2xs">
                       SYSTEMS ARCHITECTURE
                     </span>
                     <Cpu className="w-4 h-4 text-[#6F6F6F]" />
@@ -121,8 +120,7 @@ export default function About() {
 
                 <div className="mt-6 pt-4 border-t border-[#EBEBEB] flex items-center justify-between text-[11px] font-mono text-[#6F6F6F]">
                   <span>FOUNDATION → PRODUCTION</span>
-                  <span className="text-[#0A0A0A] font-semibold flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#5CA904]" />
+                  <span className="text-[#0A0A0A] font-semibold">
                     VERIFIED PIPELINES
                   </span>
                 </div>

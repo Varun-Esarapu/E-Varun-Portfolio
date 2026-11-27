@@ -54,8 +54,7 @@ export default function RecruiterHUD({ onExit }: RecruiterHUDProps) {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-10 pb-6 border-b border-[#EBEBEB]">
         <div>
           <div className="flex items-center gap-2 mb-2">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#10B981]/15 text-[#059669] border border-[#10B981]/30 font-sans text-xs font-semibold">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-pulse" />
+            <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#10B981]/15 text-[#059669] border border-[#10B981]/30 font-sans text-xs font-semibold">
               60-Second Executive Recruiter HUD
             </span>
           </div>

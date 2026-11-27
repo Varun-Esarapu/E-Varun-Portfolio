@@ -96,7 +96,6 @@ const ProjectCard = ({
                     className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#000000] hover:bg-[#1D1D1F] !text-white font-sans font-medium text-xs shadow-2xs transition-all duration-200 cursor-pointer"
                     title="Open Live HuggingFace Demo"
                   >
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
                     <span>Demo</span>
                     <ArrowUpRight size={13} className="!text-white" />
                   </a>
@@ -110,7 +109,6 @@ const ProjectCard = ({
                     className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#000000] hover:bg-[#1D1D1F] !text-white font-sans font-medium text-xs shadow-2xs transition-all duration-200 cursor-pointer"
                     title="Open Live Web App"
                   >
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
                     <span>Live</span>
                     <ArrowUpRight size={13} className="!text-white" />
                   </a>

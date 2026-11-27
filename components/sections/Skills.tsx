@@ -96,8 +96,7 @@ export default function Skills() {
                   {/* Micro metric footer */}
                   <div className="mt-8 pt-4 border-t border-[#EBEBEB] flex items-center justify-between text-xs font-mono text-[#6F6F6F]">
                     <span>Proficiency: Production Ready</span>
-                    <span className="text-[#000000] flex items-center gap-1.5 font-semibold">
-                      <span className="w-2 h-2 rounded-full bg-[#10B981]" />
+                    <span className="text-[#000000] font-semibold">
                       High Confidence
                     </span>
                   </div>

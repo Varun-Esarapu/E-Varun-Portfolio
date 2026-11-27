@@ -60,7 +60,6 @@ export default function ProjectDetailView({ project }: { project: Project }) {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-[#000000] hover:bg-[#1D1D1F] !text-white font-sans font-medium text-xs px-6 py-3 rounded-full transition-all duration-200 shadow-xs cursor-pointer"
               >
-                <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
                 <span className="!text-white">Launch HuggingFace Demo</span>
                 <ExternalLink size={13} className="!text-white" />
               </a>
@@ -73,7 +72,6 @@ export default function ProjectDetailView({ project }: { project: Project }) {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-[#000000] hover:bg-[#1D1D1F] !text-white font-sans font-medium text-xs px-6 py-3 rounded-full transition-all duration-200 shadow-xs cursor-pointer"
               >
-                <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
                 <span className="!text-white">Launch Live App</span>
                 <ExternalLink size={13} className="!text-white" />
               </a>

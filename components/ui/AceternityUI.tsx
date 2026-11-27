@@ -14,7 +14,6 @@ export function Badge({
   children,
   variant = "green",
   className = "",
-  dot = false,
 }: BadgeProps) {
   const variantStyles = {
     green: "bg-[#5CA904]/12 !text-[#488603] font-medium border border-[#5CA904]/25",
@@ -26,14 +25,8 @@ export function Badge({
 
   return (
     <span
-      className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-sans tracking-tight transition-all select-none ${variantStyles[variant]} ${className}`}
+      className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-sans tracking-tight transition-all select-none ${variantStyles[variant]} ${className}`}
     >
-      {dot && (
-        <span className="relative flex h-2 w-2">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#5CA904] opacity-75" />
-          <span className="relative inline-flex rounded-full h-2 w-2 bg-[#5CA904]" />
-        </span>
-      )}
       {children}
     </span>
   );

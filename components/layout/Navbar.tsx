@@ -117,10 +117,7 @@ export default function Navbar() {
                   transition={{ type: "spring", stiffness: 380, damping: 30 }}
                 />
               )}
-              <span className="relative z-20 flex items-center gap-1.5">
-                {active === item.id && (
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
-                )}
+              <span className="relative z-20 flex items-center">
                 {item.name}
               </span>
             </button>

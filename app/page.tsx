@@ -50,7 +50,6 @@ export default function Home() {
           <span className="sm:hidden">
             {isRecruiterMode ? "Full" : "60s"}
           </span>
-          <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
         </button>
       </div>
 

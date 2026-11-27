@@ -86,8 +86,7 @@ const ExperienceCard = ({
 
             <div className="mt-6 pt-4 border-t border-[#EBEBEB] flex items-center justify-between text-xs font-mono text-[#6F6F6F]">
               <span>Role: {job.company.includes("D Square") ? "Jr. AI & ML Engineer" : "AI Operator Intern"}</span>
-              <span className="text-[#000000] font-semibold flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-[#5CA904] animate-pulse" />
+              <span className="text-[#000000] font-semibold">
                 {job.company.includes("D Square") ? "Active Engineer" : "Completed"}
               </span>
             </div>

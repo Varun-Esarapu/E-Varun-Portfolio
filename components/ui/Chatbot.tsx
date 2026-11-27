@@ -119,10 +119,10 @@ export default function Chatbot() {
         throw new Error("Failed to fetch response");
       }
 
-      const data = await response.json();
+      const replyText = await response.text();
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: data.reply || "Sorry, I couldn't process that." },
+        { role: "assistant", content: replyText || "Sorry, I couldn't process that." },
       ]);
     } catch (err) {
       setMessages((prev) => [
@@ -147,7 +147,7 @@ export default function Chatbot() {
             {/* Header */}
             <div className="p-4 border-b border-[#EBEBEB] bg-[#F8F8F8] flex justify-between items-center">
               <div className="flex items-center gap-2">
-                <div className="w-2.5 h-2.5 rounded-full bg-[#ADFA1D]" />
+                <Bot size={18} className="text-[#0A0A0A]" />
                 <h3 className="text-[#0A0A0A] font-semibold text-sm tracking-tight font-sans">
                   Varun's AI Assistant
                 </h3>
@@ -259,12 +259,6 @@ export default function Chatbot() {
         aria-label="Open AI Assistant"
       >
         {isOpen ? <X size={22} className="text-white" /> : <Bot size={22} className="text-white" />}
-        {!isOpen && (
-          <span className="absolute -top-0.5 -right-0.5 flex h-3 w-3">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#10B981] opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-3 w-3 bg-[#10B981]"></span>
-          </span>
-        )}
       </button>
     </div>
   );
