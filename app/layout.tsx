@@ -45,7 +45,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${jakarta.variable} ${ibmMono.variable} ${playfair.variable}`}>
-      <body className="font-sans antialiased bg-[#FFFFFF] text-[#000000] selection:bg-[#10B981]/20 selection:text-[#000000]">
+      <body className="font-sans antialiased bg-[#FFFFFF] text-[#000000] selection:bg-[#5CA904]/20 selection:text-[#000000]">
         <SmoothScroll>
           <Navbar />
           <main className="relative z-10">{children}</main>

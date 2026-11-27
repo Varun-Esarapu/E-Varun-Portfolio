@@ -28,7 +28,7 @@ export default function Education() {
                     <Calendar className="w-3 h-3 text-[#6F6F6F]" />
                     Dec 2022 – Jul 2026
                   </span>
-                  <span className="text-xs font-sans font-semibold flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#10B981]/15 text-[#059669] border border-[#10B981]/30">
+                  <span className="text-xs font-sans font-semibold flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#5CA904]/15 text-[#488603] border border-[#5CA904]/30">
                     Graduated (B.E.)
                   </span>
                 </div>

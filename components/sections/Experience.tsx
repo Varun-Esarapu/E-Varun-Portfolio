@@ -28,7 +28,7 @@ const ExperienceCard = ({
       style={{ scale: scaleProgress, opacity: opacityProgress }}
       className="w-full"
     >
-      <div className="p-7 md:p-9 rounded-[28px] bg-[#F8F8F8] border border-[#EBEBEB] hover:border-[#D6D6D6] transition-all duration-300">
+      <div className="p-7 md:p-9 rounded-[28px] bg-[#F8F8F8] border border-[#EBEBEB] hover:border-[#D6D6D6] transition-all duration-300 group">
         <div className="flex flex-col md:flex-row gap-6 md:gap-10">
           {/* Left Column: Date, Company, Themed Logo */}
           <div className="md:w-1/3 shrink-0 flex flex-col items-start gap-4">
@@ -42,18 +42,18 @@ const ExperienceCard = ({
                 {job.company}
               </h3>
 
-              {/* Logo Container with clean light styling */}
+              {/* Logo Container with clean light styling & interactive color reveal */}
               <div
                 className={`${
                   job.company.includes("D Square")
                     ? "w-48 sm:w-56"
                     : "w-28 sm:w-32"
-                } relative group-hover:scale-105 transition-transform duration-500 mt-1 flex items-center bg-white p-3 rounded-2xl border border-[#E5E5E5] shadow-2xs`}
+                } relative mt-1 flex items-center justify-center bg-white p-3.5 rounded-2xl border border-[#E5E5E5] shadow-2xs hover:shadow-md hover:border-[#5CA904]/40 transition-all duration-300 group/logo cursor-pointer`}
               >
                 <img
                   src={job.logo}
                   alt={`${job.company} Logo`}
-                  className="w-full h-auto object-contain grayscale contrast-110 opacity-80 group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-500"
+                  className="w-full h-auto object-contain grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 group-hover/logo:grayscale-0 group-hover/logo:opacity-100 hover:grayscale-0 hover:opacity-100 transition-all duration-400 ease-out"
                 />
               </div>
             </div>
@@ -87,7 +87,7 @@ const ExperienceCard = ({
             <div className="mt-6 pt-4 border-t border-[#EBEBEB] flex items-center justify-between text-xs font-mono text-[#6F6F6F]">
               <span>Role: {job.company.includes("D Square") ? "Jr. AI & ML Engineer" : "AI Operator Intern"}</span>
               <span className="text-[#000000] font-semibold flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
+                <span className="w-2 h-2 rounded-full bg-[#5CA904] animate-pulse" />
                 {job.company.includes("D Square") ? "Active Engineer" : "Completed"}
               </span>
             </div>

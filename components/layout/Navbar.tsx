@@ -88,7 +88,7 @@ export default function Navbar() {
     <>
       {/* Top fluid Emerald Green scroll progress line */}
       <motion.div
-        className="fixed top-0 left-0 right-0 h-[2.5px] bg-[#10B981] origin-left z-[100]"
+        className="fixed top-0 left-0 right-0 h-[2.5px] bg-[#5CA904] origin-left z-[100]"
         style={{ scaleX }}
       />
 

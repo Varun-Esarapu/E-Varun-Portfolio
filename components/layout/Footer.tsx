@@ -45,7 +45,7 @@ export default function Footer() {
               India (560045)
             </p>
             <div className="mt-4 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
+              <span className="w-2 h-2 rounded-full bg-[#5CA904] animate-pulse" />
               <span className="font-mono text-xs text-[#000000] font-medium">
                 {time || "Bangalore, India"}
               </span>

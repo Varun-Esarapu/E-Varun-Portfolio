@@ -26,8 +26,8 @@ export default function Contact() {
           <div className="p-8 sm:p-14 md:p-16 text-center rounded-[32px] bg-[#F8F8F8] border border-[#EBEBEB] relative overflow-hidden">
             <div className="relative z-10 max-w-2xl mx-auto">
               <div className="inline-flex mb-5">
-                <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#10B981]/15 text-[#059669] border border-[#10B981]/30 font-sans text-xs font-semibold">
-                  <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
+                <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#5CA904]/15 text-[#488603] border border-[#5CA904]/30 font-sans text-xs font-semibold">
+                  <span className="w-2 h-2 rounded-full bg-[#5CA904] animate-pulse" />
                   Let&apos;s Collaborate
                 </span>
               </div>

@@ -17,8 +17,8 @@ export function Badge({
   dot = false,
 }: BadgeProps) {
   const variantStyles = {
-    green: "bg-[#10B981]/10 !text-[#059669] font-medium border border-[#10B981]/25",
-    lime: "bg-[#10B981]/10 !text-[#059669] font-medium border border-[#10B981]/25",
+    green: "bg-[#5CA904]/12 !text-[#488603] font-medium border border-[#5CA904]/25",
+    lime: "bg-[#5CA904]/12 !text-[#488603] font-medium border border-[#5CA904]/25",
     black: "bg-[#000000] !text-white font-medium border border-[#000000]",
     muted: "bg-[#F7F7F7] !text-[#6B7280] border border-[#E5E7EB] font-medium",
     white: "bg-white !text-[#000000] border border-[#E5E7EB] font-medium shadow-2xs",
@@ -30,8 +30,8 @@ export function Badge({
     >
       {dot && (
         <span className="relative flex h-2 w-2">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#10B981] opacity-75" />
-          <span className="relative inline-flex rounded-full h-2 w-2 bg-[#10B981]" />
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#5CA904] opacity-75" />
+          <span className="relative inline-flex rounded-full h-2 w-2 bg-[#5CA904]" />
         </span>
       )}
       {children}
@@ -69,7 +69,7 @@ export function ShimmerButton({
       "bg-[#FFFFFF] hover:bg-[#F7F7F7] !text-[#000000] border border-[#E5E7EB] shadow-2xs",
     // Vibrant Green accent
     accent:
-      "bg-[#10B981] hover:bg-[#059669] !text-white shadow-xs font-semibold border border-[#10B981]",
+      "bg-[#5CA904] hover:bg-[#488603] !text-white shadow-xs font-semibold border border-[#5CA904]",
     // Subtle transparent outline
     outline:
       "bg-transparent hover:bg-[#F3F4F6] !text-[#000000] border border-[#E5E7EB]",
@@ -117,7 +117,7 @@ export function SectionHeading({
     <div className={`mb-12 md:mb-16 ${className}`}>
       <div className="flex items-center gap-2.5 mb-3">
         {number && (
-          <span className="font-mono text-xs text-[#059669] bg-[#10B981]/10 px-2 py-0.5 rounded-full font-semibold border border-[#10B981]/25">
+          <span className="font-mono text-xs text-[#488603] bg-[#5CA904]/12 px-2 py-0.5 rounded-full font-semibold border border-[#5CA904]/25">
             {number}
           </span>
         )}

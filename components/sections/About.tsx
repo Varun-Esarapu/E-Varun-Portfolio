@@ -63,7 +63,7 @@ export default function About() {
                 <div>
                   <div className="flex items-center justify-between mb-4">
                     <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#E5E5E5] text-[11px] font-mono font-medium text-[#0A0A0A] shadow-2xs">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-pulse" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#5CA904] animate-pulse" />
                       SYSTEMS ARCHITECTURE
                     </span>
                     <Cpu className="w-4 h-4 text-[#6F6F6F]" />
@@ -112,7 +112,7 @@ export default function About() {
                         <Zap className="w-4 h-4 text-[#0A0A0A]" />
                         <span className="text-xs font-sans font-medium text-[#0A0A0A]">Microservice Serving</span>
                       </div>
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-[#10B981]/15 text-[#059669] font-bold border border-[#10B981]/25">
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-[#5CA904]/15 text-[#488603] font-bold border border-[#5CA904]/25">
                         &lt;15ms LATENCY
                       </span>
                     </div>
@@ -122,7 +122,7 @@ export default function About() {
                 <div className="mt-6 pt-4 border-t border-[#EBEBEB] flex items-center justify-between text-[11px] font-mono text-[#6F6F6F]">
                   <span>FOUNDATION → PRODUCTION</span>
                   <span className="text-[#0A0A0A] font-semibold flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#5CA904]" />
                     VERIFIED PIPELINES
                   </span>
                 </div>

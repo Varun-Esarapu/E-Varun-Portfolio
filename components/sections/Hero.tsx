@@ -96,7 +96,7 @@ export default function Hero() {
           >
             {/* Top Status Pill: Clean White, Green Dot, Black Text */}
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#F7F7F7] border border-[#E5E7EB] text-xs font-sans text-[#000000] font-medium mb-6">
-              <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
+              <span className="w-2 h-2 rounded-full bg-[#5CA904] animate-pulse" />
               <span>Available for Full-Time Roles</span>
               <span className="text-[#D1D5DB]">•</span>
               <span className="text-[#6B7280]">Bangalore, KA</span>
@@ -168,7 +168,7 @@ export default function Hero() {
                   <span className="text-xs font-sans font-semibold text-[#000000]">
                     B.E. Graduate
                   </span>
-                  <span className="px-1.5 py-0.2 rounded bg-[#10B981]/15 text-[#059669] border border-[#10B981]/25 font-mono text-[10px] font-bold">
+                  <span className="px-1.5 py-0.2 rounded bg-[#5CA904]/15 text-[#488603] border border-[#5CA904]/25 font-mono text-[10px] font-bold">
                     8.71
                   </span>
                 </div>
@@ -250,7 +250,7 @@ export default function Hero() {
                   {/* Top Status Tag */}
                   <div className="absolute top-4 left-4 z-10 pointer-events-none">
                     <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-[11px] font-sans font-medium text-white/90 shadow-2xs">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-pulse" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#5CA904] animate-pulse" />
                       Editorial Studio Cut
                     </span>
                   </div>
