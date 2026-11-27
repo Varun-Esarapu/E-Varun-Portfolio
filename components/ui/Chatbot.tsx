@@ -7,22 +7,37 @@ import { motion, AnimatePresence } from 'framer-motion';
 const formatMessage = (text: string, isUser: boolean) => {
   if (!text) return null;
 
-  const normalized = text.replace(/\[([^\]]+)\]\s+\((https?:\/\/[^\s)]+)\)/g, '[$1]($2)');
+  // Auto-normalize LinkedIn and GitHub to show Varun's exact usernames as clickable links
+  const normalized = text
+    .replace(/LinkedIn:\s*\[?LinkedIn\]?(\(https?:\/\/[^\s)]+\))?/gi, 'LinkedIn: [varunesarapu](https://www.linkedin.com/in/varunesarapu/)')
+    .replace(/GitHub:\s*\[?GitHub\]?(\(https?:\/\/[^\s)]+\))?/gi, 'GitHub: [Varun-Esarapu](https://github.com/Varun-Esarapu)')
+    .replace(/\[([^\]]+)\]\s+\((https?:\/\/[^\s)]+)\)/g, '[$1]($2)');
+
   const tokenRegex = /(\[[^\]]+\]\([^\s)]+\)|\*\*.*?\*\*|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}|https?:\/\/[^\s<]+)/g;
   const tokens = normalized.split(tokenRegex);
 
   return tokens.filter(Boolean).map((token, i) => {
     const linkMatch = token.match(/^\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)$/);
     if (linkMatch) {
+      let label = linkMatch[1];
+      const url = linkMatch[2];
+
+      // Smart format: display clean exact usernames for LinkedIn and GitHub
+      if (label.toLowerCase() === 'linkedin' || url.includes('linkedin.com')) {
+        label = 'varunesarapu';
+      } else if (label.toLowerCase() === 'github' || url.includes('github.com')) {
+        label = 'Varun-Esarapu';
+      }
+
       return (
         <a
           key={i}
-          href={linkMatch[2]}
+          href={url}
           target="_blank"
           rel="noopener noreferrer"
-          className={isUser ? "underline font-medium text-white" : "text-[#0A0A0A] underline underline-offset-4 hover:text-[#6F6F6F] font-semibold transition-colors cursor-pointer"}
+          className={isUser ? "underline font-medium text-white" : "text-[#0A0A0A] underline underline-offset-4 hover:text-[#000000] font-semibold transition-colors cursor-pointer"}
         >
-          {linkMatch[1]}
+          {label}
         </a>
       );
     }
@@ -31,15 +46,23 @@ const formatMessage = (text: string, isUser: boolean) => {
       const inner = token.slice(2, -2);
       const innerLink = inner.match(/^\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)$/);
       if (innerLink) {
+        let label = innerLink[1];
+        const url = innerLink[2];
+        if (label.toLowerCase() === 'linkedin' || url.includes('linkedin.com')) {
+          label = 'varunesarapu';
+        } else if (label.toLowerCase() === 'github' || url.includes('github.com')) {
+          label = 'Varun-Esarapu';
+        }
+
         return (
           <a
             key={i}
-            href={innerLink[2]}
+            href={url}
             target="_blank"
             rel="noopener noreferrer"
-            className={isUser ? "underline font-medium text-white" : "text-[#0A0A0A] underline underline-offset-4 hover:text-[#6F6F6F] font-semibold transition-colors cursor-pointer"}
+            className={isUser ? "underline font-medium text-white" : "text-[#0A0A0A] underline underline-offset-4 hover:text-[#000000] font-semibold transition-colors cursor-pointer"}
           >
-            {innerLink[1]}
+            {label}
           </a>
         );
       }
@@ -89,17 +112,27 @@ export default function Chatbot() {
   const [localInput, setLocalInput] = useState("");
   const [messages, setMessages] = useState<{role: string, content: string}[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const typingTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages, isOpen]);
+  }, [messages, isOpen, isTyping]);
+
+  useEffect(() => {
+    return () => {
+      if (typingTimerRef.current) clearInterval(typingTimerRef.current);
+    };
+  }, []);
 
   const handleSend = async (e?: React.FormEvent, presetText?: string) => {
     e?.preventDefault();
     const textToSend = presetText || localInput;
-    if (!textToSend.trim() || isLoading) return;
+    if (!textToSend.trim() || isLoading || isTyping) return;
+
+    if (typingTimerRef.current) clearInterval(typingTimerRef.current);
 
     const userMessage = { role: "user", content: textToSend };
     setMessages((prev) => [...prev, userMessage]);
@@ -120,17 +153,42 @@ export default function Chatbot() {
       }
 
       const replyText = await response.text();
-      setMessages((prev) => [
-        ...prev,
-        { role: "assistant", content: replyText || "Sorry, I couldn't process that." },
-      ]);
+      const safeReply = replyText || "Sorry, I couldn't process that.";
+
+      setIsLoading(false);
+      setIsTyping(true);
+      setMessages((prev) => [...prev, { role: "assistant", content: "" }]);
+
+      let currentPos = 0;
+      const step = safeReply.length > 300 ? 3 : 2;
+      const speed = 14;
+
+      typingTimerRef.current = setInterval(() => {
+        currentPos += step;
+        if (currentPos >= safeReply.length) {
+          if (typingTimerRef.current) clearInterval(typingTimerRef.current);
+          setMessages((prev) => {
+            const updated = [...prev];
+            updated[updated.length - 1] = { role: "assistant", content: safeReply };
+            return updated;
+          });
+          setIsTyping(false);
+        } else {
+          const slice = safeReply.slice(0, currentPos);
+          setMessages((prev) => {
+            const updated = [...prev];
+            updated[updated.length - 1] = { role: "assistant", content: slice };
+            return updated;
+          });
+        }
+      }, speed);
     } catch (err) {
+      setIsLoading(false);
+      setIsTyping(false);
       setMessages((prev) => [
         ...prev,
         { role: "assistant", content: "Something went wrong. Please try again later." },
       ]);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -154,7 +212,11 @@ export default function Chatbot() {
               </div>
               <div className="flex items-center gap-3">
                 <button 
-                  onClick={() => setMessages([])} 
+                  onClick={() => {
+                    if (typingTimerRef.current) clearInterval(typingTimerRef.current);
+                    setIsTyping(false);
+                    setMessages([]);
+                  }} 
                   className="text-[#6F6F6F] hover:text-[#0A0A0A] transition-colors text-xs font-medium cursor-pointer"
                   title="Clear Chat"
                 >
@@ -196,11 +258,14 @@ export default function Chatbot() {
                       : 'bg-[#F8F8F8] !text-[#000000] rounded-bl-none border border-[#EBEBEB]'
                   }`}>
                     {formatMessage(m.content, m.role === 'user')}
+                    {isTyping && idx === messages.length - 1 && m.role === 'assistant' && (
+                      <span className="inline-block w-1.5 h-3.5 bg-[#000000] ml-1 align-middle animate-pulse" />
+                    )}
                   </div>
                 </div>
               ))}
               
-              {!isLoading && messages.length > 0 && messages[messages.length - 1].role === 'assistant' && (
+              {!isLoading && !isTyping && messages.length > 0 && messages[messages.length - 1].role === 'assistant' && (
                 <motion.div 
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}

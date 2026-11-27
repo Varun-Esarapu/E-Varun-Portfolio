@@ -32,7 +32,7 @@ const ExperienceCard = ({
         <div className="flex flex-col md:flex-row gap-6 md:gap-10">
           {/* Left Column: Date, Company, Themed Logo */}
           <div className="md:w-1/3 shrink-0 flex flex-col items-start gap-4">
-            <span className="font-mono text-xs text-[#0A0A0A] bg-white px-3 py-1.5 rounded-full border border-[#E5E5E5] font-medium flex items-center gap-1.5 shadow-2xs">
+            <span className="font-sans text-xs text-[#0A0A0A] bg-white px-3 py-1.5 rounded-full border border-[#E5E5E5] font-medium flex items-center gap-1.5 shadow-2xs">
               <Calendar className="w-3 h-3 text-[#6F6F6F]" />
               {job.date}
             </span>
@@ -48,7 +48,7 @@ const ExperienceCard = ({
                   job.company.includes("D Square")
                     ? "w-48 sm:w-56"
                     : "w-28 sm:w-32"
-                } relative mt-1 flex items-center justify-center bg-white p-3.5 rounded-2xl border border-[#E5E5E5] shadow-2xs hover:shadow-md hover:border-[#5CA904]/40 transition-all duration-300 group/logo cursor-pointer`}
+                } relative mt-1 flex items-center justify-center bg-white p-3.5 rounded-2xl border border-[#E5E5E5] shadow-2xs hover:shadow-md hover:border-[#ADFA1D] transition-all duration-300 group/logo cursor-pointer`}
               >
                 <img
                   src={job.logo}
@@ -75,7 +75,7 @@ const ExperienceCard = ({
                     key={i}
                     className="text-[#6F6F6F] font-sans leading-relaxed flex items-start gap-3 text-sm"
                   >
-                    <span className="text-[#0A0A0A] mt-1 shrink-0 font-mono text-xs">
+                    <span className="text-[#0A0A0A] mt-1 shrink-0 font-sans text-xs">
                       ▹
                     </span>
                     <span>{desc}</span>
@@ -84,7 +84,7 @@ const ExperienceCard = ({
               </ul>
             </div>
 
-            <div className="mt-6 pt-4 border-t border-[#EBEBEB] flex items-center justify-between text-xs font-mono text-[#6F6F6F]">
+            <div className="mt-6 pt-4 border-t border-[#EBEBEB] flex items-center justify-between text-xs font-sans text-[#6F6F6F]">
               <span>Role: {job.company.includes("D Square") ? "Jr. AI & ML Engineer" : "AI Operator Intern"}</span>
               <span className="text-[#000000] font-semibold">
                 {job.company.includes("D Square") ? "Active Engineer" : "Completed"}

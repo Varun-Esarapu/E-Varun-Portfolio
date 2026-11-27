@@ -24,7 +24,7 @@ function getFallbackAnswer(lastMessage: string): string {
   }
 
   if (query.includes('contact') || query.includes('email') || query.includes('hire') || query.includes('linkedin') || query.includes('github') || query.includes('reach')) {
-    return "You can reach Varun directly via email at [varunesarapu@gmail.com](mailto:varunesarapu@gmail.com), connect on [LinkedIn](https://www.linkedin.com/in/varunesarapu/), or inspect his source repositories on [GitHub](https://github.com/Varun-Esarapu). He is actively available for full-time AI & Systems engineering roles!";
+    return "You can reach Varun directly via:\nEmail: [varunesarapu@gmail.com](mailto:varunesarapu@gmail.com)\nLinkedIn: [varunesarapu](https://www.linkedin.com/in/varunesarapu/)\nGitHub: [Varun-Esarapu](https://github.com/Varun-Esarapu)\n\nHe is actively available for full-time AI & Systems engineering roles!";
   }
 
   return "Varun Esarapu is an **AI & Systems Engineer** with proven industry experience at **D Square Consulting** (Apprenticeship) and **XTransMatriX Consulting** (Internship). He holds a **B.E. degree (8.71 CGPA)** and specializes in production machine learning pipelines and **Django REST architectures**. Feel free to ask about his experience, projects, tech stack, or contact information!";
@@ -80,12 +80,19 @@ Key information about Varun:
 - Projects: Auto-STAIR (Agentic Multi-Hop Retrieval with LangGraph & Trie on HuggingFace), Cinematch (Distributed Movie Recommendation on 32M+ records with PySpark 3.5 & sub-15ms latency), Vehicle Service Management System (Django/REST with state-machine lifecycle), Real-Time Speech Emotion Recognition (MFCC with Librosa & CNN on Raspberry Pi).
 - Certifications: Architecting SAP on AWS (Nov 2025), Machine Learning with Python (freeCodeCamp, 2022), Scientific Computing with Python (freeCodeCamp, 2022), Python Programming (SoloLearn, 2022).
 - Extracurriculars: Event Coordinator for Technisium 2025 (8 technical events with 150+ teams); Workshop Organizer for domain-specific ECE VACs (60+ participants).
-- Contact & Links: Email (varunesarapu@gmail.com), LinkedIn (https://www.linkedin.com/in/varunesarapu/), GitHub (https://github.com/Varun-Esarapu).
+- Contact & Links:
+  - Email: varunesarapu@gmail.com
+  - LinkedIn: https://www.linkedin.com/in/varunesarapu/ (username: varunesarapu)
+  - GitHub: https://github.com/Varun-Esarapu (username: Varun-Esarapu)
 - Tone: Professional, concise, helpful, and confident.
 
 Strict Guardrails:
 - ONLY answer questions using the facts provided above. Do not hallucinate or guess any unprovided information.
-- ALWAYS provide the direct URL link in markdown format when asked for his LinkedIn or GitHub, exactly like this: [LinkedIn](https://www.linkedin.com/in/varunesarapu/) and [GitHub](https://github.com/Varun-Esarapu) WITHOUT spaces or newlines between brackets and parentheses, and NEVER wrap links inside bold asterisks (do NOT write **[LinkedIn](...)**).
+- ALWAYS format contact links using his exact username as the anchor text:
+  Email: varunesarapu@gmail.com
+  LinkedIn: [varunesarapu](https://www.linkedin.com/in/varunesarapu/)
+  GitHub: [Varun-Esarapu](https://github.com/Varun-Esarapu)
+  NEVER write "LinkedIn: LinkedIn" or "GitHub: GitHub" — always make it "LinkedIn: [varunesarapu](...)" and "GitHub: [Varun-Esarapu](...)".
 - If asked to write code, solve math, or act as a general AI, politely decline and steer the conversation back to Varun's portfolio.
 - Keep responses concise (under 3-4 sentences). Recruiters are busy.
 - Frequently use bold markdown (**text**) to highlight key entities like college names, company names, project names, and specific technologies.`;

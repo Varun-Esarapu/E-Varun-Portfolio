@@ -62,7 +62,7 @@ export default function About() {
               <div className="w-full p-6 sm:p-7 rounded-[28px] bg-[#F8F8F8] border border-[#EBEBEB] hover:border-[#D6D6D6] transition-all duration-300 shadow-2xs flex flex-col justify-between">
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <span className="inline-flex items-center px-3 py-1 rounded-full bg-white border border-[#E5E5E5] text-[11px] font-mono font-medium text-[#0A0A0A] shadow-2xs">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full bg-white border border-[#E5E5E5] text-[11px] font-sans font-semibold text-[#0A0A0A] shadow-2xs">
                       SYSTEMS ARCHITECTURE
                     </span>
                     <Cpu className="w-4 h-4 text-[#6F6F6F]" />
@@ -81,8 +81,8 @@ export default function About() {
                         <Cpu className="w-4 h-4 text-[#0A0A0A]" />
                         <span className="text-xs font-sans font-medium text-[#0A0A0A]">Silicon Fundamentals</span>
                       </div>
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-[#F4F4F5] text-[#0A0A0A] font-semibold border border-[#E4E4E7]">
-                        ECE SILICON BASE
+                      <span className="text-[11px] font-sans px-2.5 py-0.5 rounded-full bg-[#F4F4F5] text-[#1D1D1F] font-medium border border-[#E4E4E7]">
+                        ECE Silicon Base
                       </span>
                     </div>
 
@@ -91,8 +91,8 @@ export default function About() {
                         <Network className="w-4 h-4 text-[#0A0A0A]" />
                         <span className="text-xs font-sans font-medium text-[#0A0A0A]">Autonomous Agent Routing</span>
                       </div>
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-[#F4F4F5] text-[#0A0A0A] font-semibold border border-[#E4E4E7]">
-                        LANGGRAPH MULTI-HOP
+                      <span className="text-[11px] font-sans px-2.5 py-0.5 rounded-full bg-[#F4F4F5] text-[#1D1D1F] font-medium border border-[#E4E4E7]">
+                        LangGraph Multi-Hop
                       </span>
                     </div>
 
@@ -101,8 +101,8 @@ export default function About() {
                         <Layers className="w-4 h-4 text-[#0A0A0A]" />
                         <span className="text-xs font-sans font-medium text-[#0A0A0A]">Distributed Recommendation</span>
                       </div>
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-[#F4F4F5] text-[#0A0A0A] font-semibold border border-[#E4E4E7]">
-                        PYSPARK 32M+ SCALE
+                      <span className="text-[11px] font-sans px-2.5 py-0.5 rounded-full bg-[#F4F4F5] text-[#1D1D1F] font-medium border border-[#E4E4E7]">
+                        PySpark 32M+ Scale
                       </span>
                     </div>
 
@@ -111,17 +111,17 @@ export default function About() {
                         <Zap className="w-4 h-4 text-[#0A0A0A]" />
                         <span className="text-xs font-sans font-medium text-[#0A0A0A]">Microservice Serving</span>
                       </div>
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-[#5CA904]/15 text-[#488603] font-bold border border-[#5CA904]/25">
-                        &lt;15ms LATENCY
+                      <span className="text-[11px] font-sans px-2.5 py-0.5 rounded-full bg-[#ADFA1D] text-[#0A0A0A] font-semibold border border-[#ADFA1D]/40">
+                        &lt;15ms Latency
                       </span>
                     </div>
                   </div>
                 </div>
 
-                <div className="mt-6 pt-4 border-t border-[#EBEBEB] flex items-center justify-between text-[11px] font-mono text-[#6F6F6F]">
-                  <span>FOUNDATION → PRODUCTION</span>
+                <div className="mt-6 pt-4 border-t border-[#EBEBEB] flex items-center justify-between text-xs font-sans text-[#6F6F6F]">
+                  <span>Foundation → Production</span>
                   <span className="text-[#0A0A0A] font-semibold">
-                    VERIFIED PIPELINES
+                    Verified Pipelines
                   </span>
                 </div>
               </div>

@@ -21,11 +21,11 @@ export default function ProjectDetailView({ project }: { project: Project }) {
         {/* Project Header Card */}
         <div className="bg-[#F8F8F8] border border-[#E5E5E5] rounded-3xl p-6 sm:p-10 mb-8">
           <div className="flex items-center gap-2 mb-4">
-            <span className="font-mono text-xs text-[#0A0A0A] bg-[#ADFA1D] px-2.5 py-0.5 rounded-full font-semibold">
+            <span className="font-sans text-xs text-[#0A0A0A] bg-[#ADFA1D] px-2.5 py-0.5 rounded-full font-semibold">
               SPECIFICATION
             </span>
             {project.date && (
-              <span className="font-mono text-xs text-[#6F6F6F]">
+              <span className="font-sans text-xs text-[#6F6F6F]">
                 {project.date}
               </span>
             )}
@@ -44,7 +44,7 @@ export default function ProjectDetailView({ project }: { project: Project }) {
             {project.tech.map((tech) => (
               <span 
                 key={tech} 
-                className="px-3 py-1 bg-[#FFFFFF] border border-[#E5E5E5] text-[#0A0A0A] text-xs font-mono rounded-full font-medium shadow-2xs"
+                className="px-3 py-1 bg-[#FFFFFF] border border-[#E5E5E5] text-[#0A0A0A] text-xs font-sans rounded-full font-medium shadow-2xs"
               >
                 {tech}
               </span>

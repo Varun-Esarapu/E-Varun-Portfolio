@@ -59,7 +59,7 @@ const ProjectCard = ({
           />
 
           {/* Minimal Index Number */}
-          <span className="font-mono text-xs text-[#0A0A0A] bg-white/95 px-3 py-1 rounded-full absolute bottom-4 left-4 z-20 border border-[#E5E5E5] font-semibold">
+          <span className="font-sans text-xs text-[#0A0A0A] bg-white/95 px-3 py-1 rounded-full absolute bottom-4 left-4 z-20 border border-[#E5E5E5] font-semibold">
             0{index + 1}
           </span>
 
@@ -74,26 +74,24 @@ const ProjectCard = ({
         {/* Content Section */}
         <div className="flex flex-col p-6 sm:p-8 flex-1 justify-between">
           <div>
-            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-3">
-              <div>
-                <h3 className="font-heading text-xl sm:text-2xl font-semibold text-[#0A0A0A] tracking-[-0.03em] leading-snug">
-                  {project.title}
-                </h3>
-                {project.date && (
-                  <span className="text-xs font-mono text-[#6F6F6F] mt-1 block">
-                    {project.date}
-                  </span>
-                )}
-              </div>
+            <div className="mb-4">
+              {project.date && (
+                <span className="text-xs font-sans text-[#6F6F6F] mb-1.5 block">
+                  {project.date}
+                </span>
+              )}
+              <h3 className="font-heading text-xl sm:text-2xl font-semibold text-[#0A0A0A] tracking-[-0.03em] leading-snug mb-3">
+                {project.title}
+              </h3>
 
-              {/* Action Buttons: Live App/Demo, Pipeline Modal & GitHub */}
-              <div className="flex items-center gap-2 shrink-0 flex-wrap">
+              {/* Action Buttons: Live App/Demo, Pipeline Modal & GitHub - cleanly wrapped below title to prevent border overflow */}
+              <div className="flex items-center gap-2 flex-wrap pt-1">
                 {project.huggingface && (
                   <a
                     href={project.huggingface}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#000000] hover:bg-[#1D1D1F] !text-white font-sans font-medium text-xs shadow-2xs transition-all duration-200 cursor-pointer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#000000] hover:bg-[#1D1D1F] !text-white font-sans font-medium text-xs shadow-2xs transition-all duration-200 cursor-pointer"
                     title="Open Live HuggingFace Demo"
                   >
                     <span>Demo</span>
@@ -106,7 +104,7 @@ const ProjectCard = ({
                     href={project.website}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#000000] hover:bg-[#1D1D1F] !text-white font-sans font-medium text-xs shadow-2xs transition-all duration-200 cursor-pointer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#000000] hover:bg-[#1D1D1F] !text-white font-sans font-medium text-xs shadow-2xs transition-all duration-200 cursor-pointer"
                     title="Open Live Web App"
                   >
                     <span>Live</span>
@@ -119,7 +117,7 @@ const ProjectCard = ({
                     e.preventDefault();
                     onOpenArchitecture();
                   }}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white hover:bg-[#F3F4F6] !text-[#000000] border border-[#E5E7EB] text-xs font-sans font-medium transition-all duration-200 shadow-2xs cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white hover:bg-[#F3F4F6] !text-[#000000] border border-[#E5E7EB] text-xs font-sans font-medium transition-all duration-200 shadow-2xs cursor-pointer"
                   title="View System Architecture Diagram"
                 >
                   <Network size={12} className="text-[#6B7280]" />
@@ -131,7 +129,7 @@ const ProjectCard = ({
                     href={project.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white hover:bg-[#F3F4F6] !text-[#000000] border border-[#E5E7EB] text-xs font-sans font-medium transition-all duration-200 shadow-2xs cursor-pointer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white hover:bg-[#F3F4F6] !text-[#000000] border border-[#E5E7EB] text-xs font-sans font-medium transition-all duration-200 shadow-2xs cursor-pointer"
                     title="View Source Repository"
                   >
                     <svg
@@ -165,7 +163,7 @@ const ProjectCard = ({
             {project.tech.map((techItem: string) => (
               <span
                 key={techItem}
-                className="px-2.5 py-1 bg-white border border-[#E5E5E5] text-[#0A0A0A] text-[11px] font-mono rounded-full font-medium"
+                className="px-2.5 py-1 bg-white border border-[#E5E5E5] text-[#0A0A0A] text-[11px] font-sans rounded-full font-medium"
               >
                 {techItem}
               </span>

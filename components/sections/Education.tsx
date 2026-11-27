@@ -24,11 +24,11 @@ export default function Education() {
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-8 border-b border-[#EBEBEB]">
               <div>
                 <div className="flex flex-wrap items-center gap-2.5 mb-3">
-                  <span className="font-mono text-xs text-[#0A0A0A] bg-white px-3 py-1.5 rounded-full border border-[#E5E5E5] font-medium flex items-center gap-1.5 shadow-2xs">
+                  <span className="font-sans text-xs text-[#0A0A0A] bg-white px-3 py-1.5 rounded-full border border-[#E5E5E5] font-medium flex items-center gap-1.5 shadow-2xs">
                     <Calendar className="w-3 h-3 text-[#6F6F6F]" />
                     Dec 2022 – Jul 2026
                   </span>
-                  <span className="text-xs font-sans font-semibold flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#5CA904]/15 text-[#488603] border border-[#5CA904]/30">
+                  <span className="text-xs font-sans font-semibold flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#ADFA1D] text-[#0A0A0A] border border-[#ADFA1D]/40">
                     Graduated (B.E.)
                   </span>
                 </div>
@@ -44,13 +44,13 @@ export default function Education() {
 
               {/* CGPA Bento Stat Box with clean white & electric lime highlight */}
               <div className="shrink-0 p-5 rounded-[22px] bg-white border border-[#E5E5E5] flex flex-col items-center justify-center min-w-[130px] shadow-2xs">
-                <span className="text-[10px] font-mono uppercase tracking-wider text-[#6F6F6F] font-semibold">
+                <span className="text-[11px] font-sans uppercase tracking-wider text-[#6F6F6F] font-semibold">
                   Academic GPA
                 </span>
                 <span className="text-3xl font-heading font-bold text-[#0A0A0A] tracking-tight mt-1">
                   8.71
                 </span>
-                <span className="text-[10px] font-mono text-[#6F6F6F]">
+                <span className="text-[11px] font-sans text-[#6F6F6F]">
                   Scale: 10.0
                 </span>
               </div>
@@ -58,7 +58,7 @@ export default function Education() {
 
             {/* Relevant Coursework Pillars */}
             <div className="pt-6">
-              <span className="text-xs font-mono uppercase tracking-wider text-[#0A0A0A] block mb-3 font-semibold">
+              <span className="text-xs font-sans uppercase tracking-wider text-[#0A0A0A] block mb-3 font-semibold">
                 Core Relevant Coursework & Systems Competencies:
               </span>
               <div className="flex flex-wrap gap-2">

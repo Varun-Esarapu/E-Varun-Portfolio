@@ -1,20 +1,41 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { motion, animate } from "framer-motion";
+import { motion, animate, useScroll, useTransform } from "framer-motion";
 import { ShimmerButton } from "@/components/ui/AceternityUI";
 import { ArrowUpRight, FileText } from "lucide-react";
 
 export default function Hero() {
   const [text1, setText1] = useState("");
   const [text2, setText2] = useState("");
+  const sectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const fullText1 = "Architecting the ";
   const fullText2 = "intelligence layer.";
 
+  // ScrollTrigger Floating Choreography:
+  // Glides smoothly to top-right with 3D perspective and subtle dimming as user scrolls into About
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+
+  const floatY = useTransform(scrollYProgress, [0, 1], [0, -60]);
+  const floatX = useTransform(scrollYProgress, [0, 1], [0, 40]);
+  const floatScale = useTransform(scrollYProgress, [0, 1], [1, 0.9]);
+  const floatRotateY = useTransform(scrollYProgress, [0, 1], [0, -10]);
+  const floatRotateX = useTransform(scrollYProgress, [0, 1], [0, 6]);
+  const floatOpacity = useTransform(scrollYProgress, [0, 0.7, 1], [1, 0.85, 0.35]);
+
+  // Atmospheric Backlight: expands gently on scroll
+  const auraScale = useTransform(scrollYProgress, [0, 1], [1, 1.45]);
+  const auraOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1, 0.25]);
+
   const handleVideoReplay = () => {
-    if (videoRef.current && videoRef.current.ended) {
-      videoRef.current.currentTime = 0;
+    if (videoRef.current) {
+      if (videoRef.current.ended) {
+        videoRef.current.currentTime = 0;
+      }
       videoRef.current.play();
     }
   };
@@ -67,6 +88,7 @@ export default function Hero() {
 
   return (
     <section
+      ref={sectionRef}
       id="intro"
       className="relative flex flex-col justify-center px-4 sm:px-8 pt-32 md:pt-36 pb-20 border-b border-[#E5E7EB] min-h-[92vh]"
     >
@@ -132,7 +154,7 @@ export default function Hero() {
             {/* Candidate Metadata Summary Strip */}
             <div className="w-full pt-6 border-t border-[#E5E7EB] grid grid-cols-2 sm:grid-cols-3 gap-4 text-left">
               <div>
-                <span className="text-[11px] font-mono uppercase text-[#6B7280] block mb-0.5">
+                <span className="text-[11px] font-sans font-medium uppercase tracking-wider text-[#6B7280] block mb-0.5">
                   Current Role
                 </span>
                 <span className="text-xs font-sans font-semibold text-[#000000] block">
@@ -142,14 +164,14 @@ export default function Hero() {
               </div>
 
               <div>
-                <span className="text-[11px] font-mono uppercase text-[#6B7280] block mb-0.5">
+                <span className="text-[11px] font-sans font-medium uppercase tracking-wider text-[#6B7280] block mb-0.5">
                   Academic Record
                 </span>
                 <div className="flex items-center gap-1.5">
                   <span className="text-xs font-sans font-semibold text-[#000000]">
                     B.E. Graduate
                   </span>
-                  <span className="px-1.5 py-0.2 rounded bg-[#5CA904]/15 text-[#488603] border border-[#5CA904]/25 font-mono text-[10px] font-bold">
+                  <span className="px-2 py-0.5 rounded-full bg-[#ADFA1D] text-[#0A0A0A] border border-[#ADFA1D]/40 font-sans text-[11px] font-bold">
                     8.71
                   </span>
                 </div>
@@ -157,28 +179,42 @@ export default function Hero() {
               </div>
 
               <div className="col-span-2 sm:col-span-1">
-                <span className="text-[11px] font-mono uppercase text-[#6B7280] block mb-0.5">
+                <span className="text-[11px] font-sans font-medium uppercase tracking-wider text-[#6B7280] block mb-0.5">
                   Core Stack
                 </span>
-                <span className="text-xs font-mono text-[#000000]">
+                <span className="text-xs font-sans font-medium text-[#000000]">
                   PyTorch • LangGraph • Spark
                 </span>
               </div>
             </div>
           </motion.div>
 
-          {/* Column 2: Editorial Portrait Stage (5 cols) */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          {/* Column 2: Editorial Portrait Stage with 3D Perspective Floating Choreography */}
+          <div
+            style={{ perspective: 1200 }}
             className="lg:col-span-5 w-full flex flex-col items-center justify-center relative"
           >
-            {/* Subtle soft backdrop glow */}
-            <div className="absolute inset-0 bg-radial from-[#F3F4F6]/80 via-transparent to-transparent pointer-events-none rounded-full scale-125 -z-10" />
+            {/* Atmospheric Backlight (The Amaterasu Signature) - expands gently as you scroll */}
+            <motion.div
+              style={{ scale: auraScale, opacity: auraOpacity }}
+              className="absolute -inset-10 sm:-inset-16 rounded-full bg-[radial-gradient(circle_at_center,rgba(253,230,138,0.22)_0%,rgba(16,185,129,0.15)_50%,transparent_75%)] blur-3xl pointer-events-none -z-10"
+            />
 
-            <div
-              className="relative w-full max-w-[360px] sm:max-w-[400px] aspect-[4/5] rounded-[32px] overflow-hidden border border-[#262626] bg-[#0A0A0B] shadow-[0_24px_50px_-15px_rgba(0,0,0,0.14)] group cursor-pointer"
+            {/* Borderless Floating Portrait Container: seamlessly blends #F6F4EE, zero harsh border */}
+            <motion.div
+              style={{
+                y: floatY,
+                x: floatX,
+                scale: floatScale,
+                rotateY: floatRotateY,
+                rotateX: floatRotateX,
+                opacity: floatOpacity,
+                transformStyle: "preserve-3d",
+              }}
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="relative w-full max-w-[360px] sm:max-w-[400px] aspect-[4/5] rounded-[32px] overflow-hidden bg-[#F6F4EE] shadow-[0_24px_50px_-15px_rgba(202,181,150,0.32)] group cursor-pointer select-none"
               onMouseEnter={handleVideoReplay}
               onClick={handleVideoReplay}
             >
@@ -188,28 +224,28 @@ export default function Hero() {
                 muted
                 playsInline
                 preload="auto"
-                poster="/varun_hero_poster.jpg"
+                poster="/varun_portrait_poster.jpg"
                 className="w-full h-full object-cover select-none"
               >
-                <source src="/varun_hero_portrait.mp4" type="video/mp4" />
+                <source src="/varun_portrait.mp4" type="video/mp4" />
               </video>
 
-              {/* Top Status Tag */}
+              {/* Top Status Tag: Clean Alabaster Minimalist Pill */}
               <div className="absolute top-4 left-4 z-10 pointer-events-none">
-                <span className="inline-flex items-center px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-[11px] font-sans font-medium text-white/90 shadow-2xs">
+                <span className="inline-flex items-center px-3 py-1 rounded-full bg-white/80 backdrop-blur-md border border-[#E5E7EB] text-[11px] font-sans font-medium text-[#0A0A0A] shadow-xs">
                   Editorial Studio Cut
                 </span>
               </div>
 
-              {/* Bottom subtle aesthetic vignette */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+              {/* Bottom subtle aesthetic blend */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#F6F4EE]/60 via-transparent to-transparent pointer-events-none" />
 
-              <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs font-sans text-white z-10 pointer-events-none">
-                <span className="font-medium text-white/95 drop-shadow-xs">Esarapu Varun</span>
-                <span className="font-mono text-[11px] text-white/70 uppercase">AI & Systems</span>
+              <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs font-sans text-[#0A0A0A] z-10 pointer-events-none">
+                <span className="font-semibold text-[#0A0A0A] drop-shadow-2xs">Esarapu Varun</span>
+                <span className="font-sans text-[11px] font-medium text-[#555555] uppercase tracking-wider">AI & Systems</span>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
 
         </div>
       </div>

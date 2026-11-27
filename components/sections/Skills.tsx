@@ -75,7 +75,7 @@ export default function Skills() {
                           {category.title}
                         </h3>
                       </div>
-                      <span className="px-3 py-1 rounded-full bg-white border border-[#E5E5E5] text-xs font-mono text-[#6F6F6F]">
+                      <span className="px-3 py-1 rounded-full bg-white border border-[#E5E5E5] text-xs font-sans font-medium text-[#6F6F6F]">
                         {category.tag}
                       </span>
                     </div>
@@ -94,7 +94,7 @@ export default function Skills() {
                   </div>
 
                   {/* Micro metric footer */}
-                  <div className="mt-8 pt-4 border-t border-[#EBEBEB] flex items-center justify-between text-xs font-mono text-[#6F6F6F]">
+                  <div className="mt-8 pt-4 border-t border-[#EBEBEB] flex items-center justify-between text-xs font-sans text-[#6F6F6F]">
                     <span>Proficiency: Production Ready</span>
                     <span className="text-[#000000] font-semibold">
                       High Confidence

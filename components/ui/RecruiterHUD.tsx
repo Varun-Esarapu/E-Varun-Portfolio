@@ -54,7 +54,7 @@ export default function RecruiterHUD({ onExit }: RecruiterHUDProps) {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-10 pb-6 border-b border-[#EBEBEB]">
         <div>
           <div className="flex items-center gap-2 mb-2">
-            <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#10B981]/15 text-[#059669] border border-[#10B981]/30 font-sans text-xs font-semibold">
+            <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#ADFA1D] text-[#0A0A0A] border border-[#ADFA1D]/40 font-sans text-xs font-semibold">
               60-Second Executive Recruiter HUD
             </span>
           </div>
@@ -86,10 +86,10 @@ export default function RecruiterHUD({ onExit }: RecruiterHUDProps) {
         <motion.div variants={cardVariants} className="md:col-span-2">
           <div className="p-7 sm:p-9 rounded-[28px] bg-[#F8F8F8] border border-[#EBEBEB] h-full">
             <div className="flex items-center justify-between gap-4 mb-4">
-              <span className="text-[#0A0A0A] text-xs font-mono uppercase tracking-wider font-semibold flex items-center gap-1.5">
+              <span className="text-[#0A0A0A] text-xs font-sans uppercase tracking-wider font-semibold flex items-center gap-1.5">
                 <GraduationCap size={16} /> Academic & Candidacy Snapshot
               </span>
-              <span className="px-3 py-1 rounded-full bg-[#10B981]/15 text-[#059669] border border-[#10B981]/30 font-sans text-xs font-semibold">
+              <span className="px-3 py-1 rounded-full bg-[#ADFA1D] text-[#0A0A0A] border border-[#ADFA1D]/40 font-sans text-xs font-semibold">
                 Available Immediately
               </span>
             </div>
@@ -104,7 +104,7 @@ export default function RecruiterHUD({ onExit }: RecruiterHUDProps) {
 
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-4 border-t border-[#EBEBEB]">
               <div className="bg-white p-4 rounded-2xl border border-[#E5E5E5] shadow-2xs">
-                <span className="text-[10px] font-mono text-[#6F6F6F] uppercase tracking-wider block font-semibold">
+                <span className="text-[10px] font-sans text-[#6F6F6F] uppercase tracking-wider block font-semibold">
                   Cumulative GPA
                 </span>
                 <span className="text-2xl font-heading font-bold text-[#0A0A0A]">
@@ -112,7 +112,7 @@ export default function RecruiterHUD({ onExit }: RecruiterHUDProps) {
                 </span>
               </div>
               <div className="bg-white p-4 rounded-2xl border border-[#E5E5E5] shadow-2xs">
-                <span className="text-[10px] font-mono text-[#6F6F6F] uppercase tracking-wider block font-semibold">
+                <span className="text-[10px] font-sans text-[#6F6F6F] uppercase tracking-wider block font-semibold">
                   Primary Focus
                 </span>
                 <span className="text-sm font-sans text-[#0A0A0A] font-semibold mt-1 block">
@@ -120,7 +120,7 @@ export default function RecruiterHUD({ onExit }: RecruiterHUDProps) {
                 </span>
               </div>
               <div className="col-span-2 sm:col-span-1 bg-white p-4 rounded-2xl border border-[#E5E5E5] shadow-2xs">
-                <span className="text-[10px] font-mono text-[#6F6F6F] uppercase tracking-wider block font-semibold">
+                <span className="text-[10px] font-sans text-[#6F6F6F] uppercase tracking-wider block font-semibold">
                   Target Roles
                 </span>
                 <span className="text-xs font-sans text-[#0A0A0A] font-semibold mt-1 block">
@@ -135,7 +135,7 @@ export default function RecruiterHUD({ onExit }: RecruiterHUDProps) {
         <motion.div variants={cardVariants}>
           <div className="p-7 sm:p-9 rounded-[28px] bg-[#F8F8F8] border border-[#EBEBEB] h-full flex flex-col justify-between">
             <div>
-              <span className="text-[#0A0A0A] text-xs font-mono uppercase tracking-wider font-semibold flex items-center gap-1.5 mb-4">
+              <span className="text-[#0A0A0A] text-xs font-sans uppercase tracking-wider font-semibold flex items-center gap-1.5 mb-4">
                 <Cpu size={16} /> Engineering Metrics
               </span>
 
@@ -143,7 +143,7 @@ export default function RecruiterHUD({ onExit }: RecruiterHUDProps) {
                 <div>
                   <div className="flex justify-between items-baseline mb-1">
                     <span className="text-xs font-sans text-[#0A0A0A] font-semibold">Auto-STAIR Agentic RAG</span>
-                    <span className="text-sm font-mono text-[#0A0A0A] font-bold bg-[#ADFA1D] px-2 py-0.5 rounded-full">LangGraph</span>
+                    <span className="text-sm font-sans text-[#0A0A0A] font-bold bg-[#ADFA1D] px-2.5 py-0.5 rounded-full">LangGraph</span>
                   </div>
                   <p className="text-[11px] font-sans text-[#6F6F6F] leading-snug">
                     Zero-shot Trie prefix routing eliminating hallucinated retrieval paths during multi-hop reasoning.
@@ -153,7 +153,7 @@ export default function RecruiterHUD({ onExit }: RecruiterHUDProps) {
                 <div className="pt-3 border-t border-[#EBEBEB]">
                   <div className="flex justify-between items-baseline mb-1">
                     <span className="text-xs font-sans text-[#0A0A0A] font-semibold">Cinematch Distributed Model</span>
-                    <span className="text-sm font-mono text-[#0A0A0A] font-bold bg-[#ADFA1D] px-2 py-0.5 rounded-full">&lt;15ms</span>
+                    <span className="text-sm font-sans text-[#0A0A0A] font-bold bg-[#ADFA1D] px-2.5 py-0.5 rounded-full">&lt;15ms</span>
                   </div>
                   <p className="text-[11px] font-sans text-[#6F6F6F] leading-snug">
                     Distributed ALS with PySpark 3.5 on 32M+ MovieLens interactions with sub-15ms inference.
@@ -163,7 +163,7 @@ export default function RecruiterHUD({ onExit }: RecruiterHUDProps) {
                 <div className="pt-3 border-t border-[#EBEBEB]">
                   <div className="flex justify-between items-baseline mb-1">
                     <span className="text-xs font-sans text-[#0A0A0A] font-semibold">Backend Systems</span>
-                    <span className="text-xs font-mono text-[#0A0A0A] font-semibold">FastAPI / DRF</span>
+                    <span className="text-xs font-sans text-[#0A0A0A] font-semibold">FastAPI / DRF</span>
                   </div>
                   <p className="text-[11px] font-sans text-[#6F6F6F] leading-snug">
                     Decoupled microservice architectures, state-machine lifecycle validation, and PostgreSQL 15.
@@ -177,7 +177,7 @@ export default function RecruiterHUD({ onExit }: RecruiterHUDProps) {
         {/* CARD 3: Industry Experience (Spans 2 cols) */}
         <motion.div variants={cardVariants} className="md:col-span-2">
           <div className="p-7 sm:p-9 rounded-[28px] bg-[#F8F8F8] border border-[#EBEBEB] h-full">
-            <span className="text-[#0A0A0A] text-xs font-mono uppercase tracking-wider font-semibold flex items-center gap-1.5 mb-6">
+            <span className="text-[#0A0A0A] text-xs font-sans uppercase tracking-wider font-semibold flex items-center gap-1.5 mb-6">
               <Briefcase size={16} /> Verified Industry Experience
             </span>
 
@@ -203,7 +203,7 @@ export default function RecruiterHUD({ onExit }: RecruiterHUDProps) {
                       ))}
                     </ul>
                   </div>
-                  <span className="text-[11px] font-mono text-[#6F6F6F] shrink-0 font-medium sm:text-right">
+                  <span className="text-[11px] font-sans text-[#6F6F6F] shrink-0 font-medium sm:text-right">
                     {job.date}
                   </span>
                 </div>
@@ -215,20 +215,20 @@ export default function RecruiterHUD({ onExit }: RecruiterHUDProps) {
         {/* CARD 4: Technical Arsenal (Spans 1 col) */}
         <motion.div variants={cardVariants}>
           <div className="p-7 sm:p-9 rounded-[28px] bg-[#F8F8F8] border border-[#EBEBEB] h-full">
-            <span className="text-[#0A0A0A] text-xs font-mono uppercase tracking-wider font-semibold flex items-center gap-1.5 mb-5">
+            <span className="text-[#0A0A0A] text-xs font-sans uppercase tracking-wider font-semibold flex items-center gap-1.5 mb-5">
               <Sparkles size={16} /> Vetted Tech Arsenal
             </span>
 
             <div className="space-y-4">
               <div>
-                <span className="text-[10px] font-mono text-[#6F6F6F] uppercase tracking-wider block font-semibold mb-2">
+                <span className="text-[10px] font-sans text-[#6F6F6F] uppercase tracking-wider block font-semibold mb-2">
                   Languages & Databases
                 </span>
                 <div className="flex flex-wrap gap-1.5">
                   {["Python", "C", "SQL", "MySQL", "MongoDB"].map((s) => (
                     <span
                       key={s}
-                      className="px-2.5 py-1 bg-white border border-[#E5E5E5] text-[#0A0A0A] text-[11px] font-mono rounded-full"
+                      className="px-2.5 py-1 bg-white border border-[#E5E5E5] text-[#0A0A0A] text-[11px] font-sans rounded-full font-medium"
                     >
                       {s}
                     </span>
@@ -237,14 +237,14 @@ export default function RecruiterHUD({ onExit }: RecruiterHUDProps) {
               </div>
 
               <div>
-                <span className="text-[10px] font-mono text-[#6F6F6F] uppercase tracking-wider block font-semibold mb-2">
+                <span className="text-[10px] font-sans text-[#6F6F6F] uppercase tracking-wider block font-semibold mb-2">
                   Frameworks, APIs & Cloud
                 </span>
                 <div className="flex flex-wrap gap-1.5">
                   {["FastAPI", "Django (DRF)", "Streamlit", "Docker", "AWS (EC2, S3)", "Git"].map((s) => (
                     <span
                       key={s}
-                      className="px-2.5 py-1 bg-white border border-[#E5E5E5] text-[#0A0A0A] text-[11px] font-mono rounded-full font-semibold"
+                      className="px-2.5 py-1 bg-white border border-[#E5E5E5] text-[#0A0A0A] text-[11px] font-sans rounded-full font-semibold"
                     >
                       {s}
                     </span>
@@ -253,7 +253,7 @@ export default function RecruiterHUD({ onExit }: RecruiterHUDProps) {
               </div>
 
               <div>
-                <span className="text-[10px] font-mono text-[#6F6F6F] uppercase tracking-wider block font-semibold mb-2">
+                <span className="text-[10px] font-sans text-[#6F6F6F] uppercase tracking-wider block font-semibold mb-2">
                   AI / ML & Agentic Stack
                 </span>
                 <div className="flex flex-wrap gap-1.5">
@@ -261,7 +261,7 @@ export default function RecruiterHUD({ onExit }: RecruiterHUDProps) {
                     (s) => (
                       <span
                         key={s}
-                        className="px-2.5 py-1 bg-white border border-[#E5E5E5] text-[#0A0A0A] text-[11px] font-mono rounded-full"
+                        className="px-2.5 py-1 bg-white border border-[#E5E5E5] text-[#0A0A0A] text-[11px] font-sans rounded-full font-medium"
                       >
                         {s}
                       </span>
@@ -276,7 +276,7 @@ export default function RecruiterHUD({ onExit }: RecruiterHUDProps) {
         {/* CARD 5: Verified Certifications (Spans 2 cols) */}
         <motion.div variants={cardVariants} className="md:col-span-2">
           <div className="p-7 sm:p-9 rounded-[28px] bg-[#F8F8F8] border border-[#EBEBEB] h-full">
-            <span className="text-[#0A0A0A] text-xs font-mono uppercase tracking-wider font-semibold flex items-center gap-1.5 mb-5">
+            <span className="text-[#0A0A0A] text-xs font-sans uppercase tracking-wider font-semibold flex items-center gap-1.5 mb-5">
               <Award size={16} /> Verified Certifications
             </span>
 
@@ -293,7 +293,7 @@ export default function RecruiterHUD({ onExit }: RecruiterHUDProps) {
                     <h4 className="text-xs font-sans font-semibold text-[#0A0A0A] line-clamp-1">
                       {cert.title}
                     </h4>
-                    <span className="text-[10px] font-mono text-[#6F6F6F] block mt-0.5">
+                    <span className="text-[10px] font-sans text-[#6F6F6F] block mt-0.5">
                       {cert.issuer} • {cert.date}
                     </span>
                   </div>
@@ -308,7 +308,7 @@ export default function RecruiterHUD({ onExit }: RecruiterHUDProps) {
         <motion.div variants={cardVariants}>
           <div className="p-7 sm:p-9 rounded-[28px] bg-[#F8F8F8] border border-[#EBEBEB] h-full flex flex-col justify-between">
             <div>
-              <span className="text-[#0A0A0A] text-xs font-mono uppercase tracking-wider font-bold block mb-2">
+              <span className="text-[#0A0A0A] text-xs font-sans uppercase tracking-wider font-bold block mb-2">
                 Action Hub
               </span>
               <h3 className="text-lg font-heading font-semibold text-[#0A0A0A] mb-4">
@@ -320,7 +320,7 @@ export default function RecruiterHUD({ onExit }: RecruiterHUDProps) {
                   onClick={handleCopyEmail}
                   className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-full bg-white border border-[#E5E5E5] hover:border-[#0A0A0A] text-xs text-[#0A0A0A] transition-all cursor-pointer shadow-2xs"
                 >
-                  <span className="font-mono text-[11px] truncate">
+                  <span className="font-sans text-[11px] truncate">
                     varunesarapu@gmail.com
                   </span>
                   <span className="text-[#0A0A0A] shrink-0 ml-2">

@@ -37,7 +37,7 @@ export default function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16 font-sans">
           {/* Col 1: Identity & Location */}
           <div>
-            <span className="font-mono text-xs uppercase tracking-wider text-[#6B7280] block mb-4 font-semibold">
+            <span className="font-sans text-xs uppercase tracking-wider text-[#6B7280] block mb-4 font-semibold">
               Location
             </span>
             <p className="text-sm font-sans font-medium text-[#212121] leading-relaxed">
@@ -45,7 +45,7 @@ export default function Footer() {
               India (560045)
             </p>
             <div className="mt-4 flex items-center gap-2">
-              <span className="font-mono text-xs text-[#000000] font-medium">
+              <span className="font-sans text-xs text-[#000000] font-medium">
                 {time || "Bangalore, India"}
               </span>
             </div>
@@ -53,7 +53,7 @@ export default function Footer() {
 
           {/* Col 2: Fast Navigation */}
           <div>
-            <span className="font-mono text-xs uppercase tracking-wider text-[#6B7280] block mb-4 font-semibold">
+            <span className="font-sans text-xs uppercase tracking-wider text-[#6B7280] block mb-4 font-semibold">
               Navigation
             </span>
             <ul className="space-y-2 text-sm text-[#212121] font-medium">
@@ -61,7 +61,7 @@ export default function Footer() {
                 <li key={sec}>
                   <a
                     href={`#${sec}`}
-                    className="hover:underline underline-offset-4 capitalize text-[#212121] hover:text-[#10B981] transition-colors"
+                    className="hover:underline underline-offset-4 capitalize text-[#212121] hover:text-[#000000] transition-colors"
                   >
                     {sec}
                   </a>
@@ -72,7 +72,7 @@ export default function Footer() {
 
           {/* Col 3: Focus Areas */}
           <div>
-            <span className="font-mono text-xs uppercase tracking-wider text-[#6B7280] block mb-4 font-semibold">
+            <span className="font-sans text-xs uppercase tracking-wider text-[#6B7280] block mb-4 font-semibold">
               Focus & Systems
             </span>
             <ul className="space-y-2 text-sm text-[#6B7280]">
@@ -86,7 +86,7 @@ export default function Footer() {
 
           {/* Col 4: Verified Profiles & Top Action */}
           <div>
-            <span className="font-mono text-xs uppercase tracking-wider text-[#6B7280] block mb-4 font-semibold">
+            <span className="font-sans text-xs uppercase tracking-wider text-[#6B7280] block mb-4 font-semibold">
               Verified Profiles
             </span>
             <ul className="space-y-2 text-sm text-[#212121] font-medium">
@@ -95,7 +95,7 @@ export default function Footer() {
                   href="https://www.linkedin.com/in/varunesarapu/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1 hover:underline underline-offset-4 hover:text-[#10B981]"
+                  className="flex items-center gap-1 hover:underline underline-offset-4 hover:text-[#000000]"
                 >
                   <span>LinkedIn</span>
                   <ArrowUpRight size={13} />
@@ -106,7 +106,7 @@ export default function Footer() {
                   href="https://github.com/Varun-Esarapu"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1 hover:underline underline-offset-4 hover:text-[#10B981]"
+                  className="flex items-center gap-1 hover:underline underline-offset-4 hover:text-[#000000]"
                 >
                   <span>GitHub</span>
                   <ArrowUpRight size={13} />
@@ -117,7 +117,7 @@ export default function Footer() {
                   href="/Varun_CV.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1 hover:underline underline-offset-4 hover:text-[#10B981]"
+                  className="flex items-center gap-1 hover:underline underline-offset-4 hover:text-[#000000]"
                 >
                   <span>Download CV</span>
                   <ArrowUpRight size={13} />
@@ -162,7 +162,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-8 pt-6 border-t border-[#E5E7EB] flex flex-col sm:flex-row items-center justify-between text-xs font-mono text-[#6B7280] gap-3">
+        <div className="mt-8 pt-6 border-t border-[#E5E7EB] flex flex-col sm:flex-row items-center justify-between text-xs font-sans text-[#6B7280] gap-3">
           <span>Copyright © {new Date().getFullYear()} Esarapu Varun. Engineered for scale.</span>
           <div className="flex items-center gap-4">
             <span>Bangalore, KA</span>

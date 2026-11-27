@@ -15,8 +15,8 @@ const ArchBlock = ({ icon: Icon, title }: { icon: any, title: string }) => (
 
 const Arrow = () => (
   <>
-    <div className="hidden md:block text-[#6F6F6F] font-mono text-sm px-1">→</div>
-    <div className="md:hidden text-[#6F6F6F] font-mono text-sm py-1">↓</div>
+    <div className="hidden md:block text-[#6F6F6F] font-sans text-sm px-1">→</div>
+    <div className="md:hidden text-[#6F6F6F] font-sans text-sm py-1">↓</div>
   </>
 );
 
@@ -24,7 +24,7 @@ const architectures: Record<string, React.ReactNode> = {
   "auto-stair": (
     <div className="flex flex-col items-center justify-center p-4 md:p-8 space-y-6 w-full max-w-3xl mx-auto">
       <div className="text-center">
-        <span className="font-mono text-xs text-[#0A0A0A] bg-[#ADFA1D] px-2.5 py-0.5 rounded-full font-semibold">
+        <span className="font-sans text-xs text-[#0A0A0A] bg-[#ADFA1D] px-2.5 py-0.5 rounded-full font-semibold">
           PIPELINE 01
         </span>
         <h4 className="text-[#0A0A0A] font-sans font-semibold text-xl sm:text-2xl mt-2 tracking-tight">Auto-STAIR: Agentic Multi-Hop Retrieval</h4>
@@ -46,7 +46,7 @@ const architectures: Record<string, React.ReactNode> = {
   cinematch: (
     <div className="flex flex-col items-center justify-center p-4 md:p-8 space-y-6 w-full max-w-3xl mx-auto">
       <div className="text-center">
-        <span className="font-mono text-xs text-[#0A0A0A] bg-[#ADFA1D] px-2.5 py-0.5 rounded-full font-semibold">
+        <span className="font-sans text-xs text-[#0A0A0A] bg-[#ADFA1D] px-2.5 py-0.5 rounded-full font-semibold">
           PIPELINE 02
         </span>
         <h4 className="text-[#0A0A0A] font-sans font-semibold text-xl sm:text-2xl mt-2 tracking-tight">Cinematch: Distributed ALS Architecture</h4>
@@ -68,7 +68,7 @@ const architectures: Record<string, React.ReactNode> = {
   "vehicle-service": (
     <div className="flex flex-col items-center justify-center p-4 md:p-8 space-y-6 w-full max-w-3xl mx-auto">
       <div className="text-center">
-        <span className="font-mono text-xs text-[#0A0A0A] bg-[#ADFA1D] px-2.5 py-0.5 rounded-full font-semibold">
+        <span className="font-sans text-xs text-[#0A0A0A] bg-[#ADFA1D] px-2.5 py-0.5 rounded-full font-semibold">
           PIPELINE 03
         </span>
         <h4 className="text-[#0A0A0A] font-sans font-semibold text-xl sm:text-2xl mt-2 tracking-tight">Vehicle Service Management: Transaction Flow</h4>
@@ -90,7 +90,7 @@ const architectures: Record<string, React.ReactNode> = {
   "speech-emotion": (
     <div className="flex flex-col items-center justify-center p-4 md:p-8 space-y-6 w-full max-w-3xl mx-auto">
       <div className="text-center">
-        <span className="font-mono text-xs text-[#0A0A0A] bg-[#ADFA1D] px-2.5 py-0.5 rounded-full font-semibold">
+        <span className="font-sans text-xs text-[#0A0A0A] bg-[#ADFA1D] px-2.5 py-0.5 rounded-full font-semibold">
           PIPELINE 04
         </span>
         <h4 className="text-[#0A0A0A] font-sans font-semibold text-xl sm:text-2xl mt-2 tracking-tight">Speech Emotion: Edge Audio Pipeline</h4>
@@ -112,7 +112,7 @@ const architectures: Record<string, React.ReactNode> = {
   "text-emotion": (
     <div className="flex flex-col items-center justify-center p-4 md:p-8 space-y-6 w-full max-w-3xl mx-auto">
       <div className="text-center">
-        <span className="font-mono text-xs text-[#0A0A0A] bg-[#ADFA1D] px-2.5 py-0.5 rounded-full font-semibold">
+        <span className="font-sans text-xs text-[#0A0A0A] bg-[#ADFA1D] px-2.5 py-0.5 rounded-full font-semibold">
           PIPELINE 05
         </span>
         <h4 className="text-[#0A0A0A] font-sans font-semibold text-xl sm:text-2xl mt-2 tracking-tight">Text Emotion: Sequential NLP Flow</h4>
@@ -134,7 +134,7 @@ const architectures: Record<string, React.ReactNode> = {
   "movie-recommendation": (
     <div className="flex flex-col items-center justify-center p-4 md:p-8 space-y-6 w-full max-w-3xl mx-auto">
       <div className="text-center">
-        <span className="font-mono text-xs text-[#0A0A0A] bg-[#ADFA1D] px-2.5 py-0.5 rounded-full font-semibold">
+        <span className="font-sans text-xs text-[#0A0A0A] bg-[#ADFA1D] px-2.5 py-0.5 rounded-full font-semibold">
           PIPELINE 06
         </span>
         <h4 className="text-[#0A0A0A] font-sans font-semibold text-xl sm:text-2xl mt-2 tracking-tight">Distributed Recommendation System</h4>
@@ -184,7 +184,7 @@ export default function ArchitectureModal({
             className="relative bg-[#FFFFFF] border border-[#E5E5E5] rounded-3xl w-full max-w-4xl overflow-hidden shadow-2xl z-10"
           >
             <div className="p-4 border-b border-[#E5E5E5] flex justify-between items-center bg-[#F8F8F8]">
-              <span className="font-mono text-xs uppercase tracking-wider text-[#6F6F6F] font-semibold pl-2">
+              <span className="font-sans text-xs uppercase tracking-wider text-[#6F6F6F] font-semibold pl-2">
                 Pipeline Specification
               </span>
               <button 

@@ -49,7 +49,7 @@ export default function Certifications() {
                         <div className="p-2.5 rounded-full bg-white border border-[#E5E5E5] flex items-center justify-center shadow-2xs">
                           <Award className="w-4 h-4 text-[#0A0A0A]" />
                         </div>
-                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-white border border-[#E5E5E5] text-xs font-mono text-[#000000]">
+                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-white border border-[#E5E5E5] text-xs font-sans font-medium text-[#0A0A0A]">
                           Verified
                         </span>
                       </div>
@@ -59,7 +59,7 @@ export default function Certifications() {
                       </h3>
                     </div>
 
-                    <div className="pt-4 border-t border-[#EBEBEB] flex items-center justify-between text-xs font-mono text-[#6F6F6F]">
+                    <div className="pt-4 border-t border-[#EBEBEB] flex items-center justify-between text-xs font-sans text-[#6F6F6F]">
                       <span>{cert.issuer}</span>
                       <div className="flex items-center gap-2">
                         <span className="text-[#0A0A0A] font-semibold">{cert.date}</span>
