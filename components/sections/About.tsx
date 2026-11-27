@@ -133,7 +133,8 @@ export default function About() {
             {highlights.map((h, i) => (
               <div
                 key={i}
-                className="p-7 rounded-[24px] bg-[#F8F8F8] border border-[#EBEBEB] hover:border-[#D6D6D6] transition-all duration-300"
+                data-lag={i % 2 === 0 ? "0.15" : "0.25"}
+                className="p-7 rounded-[24px] bg-[#F8F8F8] border border-[#EBEBEB] hover:border-[#0A0A0A]/30 hover:-translate-y-0.5 transition-all duration-300"
               >
                 <div className="flex items-center gap-3.5 mb-3">
                   <div className="p-2.5 rounded-full bg-white border border-[#E5E5E5] shadow-2xs">

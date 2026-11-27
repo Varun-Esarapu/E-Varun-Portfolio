@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Network, Database, Cpu, Activity, Layout, Mic, ShieldCheck, FileText, Smartphone, Server, Layers } from "lucide-react";
 
@@ -164,6 +165,17 @@ export default function ArchitectureModal({
   isOpen: boolean;
   onClose: () => void;
 }) {
+  useEffect(() => {
+    if (isOpen) {
+      window.dispatchEvent(new CustomEvent("lenis-stop"));
+    } else {
+      window.dispatchEvent(new CustomEvent("lenis-start"));
+    }
+    return () => {
+      window.dispatchEvent(new CustomEvent("lenis-start"));
+    };
+  }, [isOpen]);
+
   if (!projectId || !architectures[projectId]) return null;
 
   return (
@@ -178,6 +190,7 @@ export default function ArchitectureModal({
             className="absolute inset-0 bg-[#0A0A0A]/40 backdrop-blur-xs cursor-pointer"
           />
           <motion.div 
+            data-lenis-prevent
             initial={{ opacity: 0, scale: 0.96, y: 16 }} 
             animate={{ opacity: 1, scale: 1, y: 0 }} 
             exit={{ opacity: 0, scale: 0.96, y: 16 }}

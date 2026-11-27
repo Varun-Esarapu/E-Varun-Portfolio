@@ -61,7 +61,7 @@ export default function Footer() {
                 <li key={sec}>
                   <a
                     href={`#${sec}`}
-                    className="hover:underline underline-offset-4 capitalize text-[#212121] hover:text-[#000000] transition-colors"
+                    className="inline-block capitalize text-[#212121] hover:text-[#5CA904] transition-colors"
                   >
                     {sec}
                   </a>
@@ -75,7 +75,7 @@ export default function Footer() {
             <span className="font-sans text-xs uppercase tracking-wider text-[#6B7280] block mb-4 font-semibold">
               Focus & Systems
             </span>
-            <ul className="space-y-2 text-sm text-[#6B7280]">
+            <ul className="space-y-2 text-sm text-[#212121] font-medium">
               <li>Agentic Multi-Hop RAG</li>
               <li>Distributed PySpark MLlib</li>
               <li>Low-Latency REST APIs</li>
@@ -95,7 +95,7 @@ export default function Footer() {
                   href="https://www.linkedin.com/in/varunesarapu/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1 hover:underline underline-offset-4 hover:text-[#000000]"
+                  className="inline-flex items-center gap-1 hover:text-[#5CA904] transition-colors"
                 >
                   <span>LinkedIn</span>
                   <ArrowUpRight size={13} />
@@ -106,7 +106,7 @@ export default function Footer() {
                   href="https://github.com/Varun-Esarapu"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1 hover:underline underline-offset-4 hover:text-[#000000]"
+                  className="inline-flex items-center gap-1 hover:text-[#5CA904] transition-colors"
                 >
                   <span>GitHub</span>
                   <ArrowUpRight size={13} />
@@ -117,7 +117,7 @@ export default function Footer() {
                   href="/Varun_CV.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1 hover:underline underline-offset-4 hover:text-[#000000]"
+                  className="inline-flex items-center gap-1 hover:text-[#5CA904] transition-colors"
                 >
                   <span>Download CV</span>
                   <ArrowUpRight size={13} />

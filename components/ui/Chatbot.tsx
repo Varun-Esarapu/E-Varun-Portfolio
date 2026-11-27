@@ -1,8 +1,50 @@
 "use client";
 
 import { useState, useRef, useEffect } from 'react';
-import { MessageSquare, X, Send, Bot } from 'lucide-react';
+import { MessageSquare, X, Send } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+
+const AISparkIcon = ({ size = 28, className = "" }: { size?: number; className?: string }) => (
+  <motion.svg
+    width={size}
+    height={size}
+    viewBox="0 0 36 36"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+    animate={{ y: [0, -1.5, 0] }}
+    transition={{ duration: 2.6, repeat: Infinity, ease: "easeInOut" }}
+  >
+    <path
+      d="M18 3C19.6 11.2 24.8 16.4 33 18C24.8 19.6 19.6 24.8 18 33C16.4 24.8 11.2 19.6 3 18C11.2 16.4 16.4 11.2 18 3Z"
+      fill="#ADFA1D"
+    />
+    <motion.ellipse
+      cx="14.5"
+      cy="17.2"
+      rx="1.5"
+      ry="1.8"
+      fill="#0A0A0A"
+      animate={{ scaleY: [1, 1, 0.1, 1, 1] }}
+      transition={{ duration: 3.6, repeat: Infinity, times: [0, 0.45, 0.5, 0.55, 1] }}
+    />
+    <motion.ellipse
+      cx="21.5"
+      cy="17.2"
+      rx="1.5"
+      ry="1.8"
+      fill="#0A0A0A"
+      animate={{ scaleY: [1, 1, 0.1, 1, 1] }}
+      transition={{ duration: 3.6, repeat: Infinity, times: [0, 0.45, 0.5, 0.55, 1] }}
+    />
+    <path
+      d="M15.8 20.4C16.5 21.3 19.5 21.3 20.2 20.4"
+      stroke="#0A0A0A"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+    />
+  </motion.svg>
+);
 
 const formatMessage = (text: string, isUser: boolean) => {
   if (!text) return null;
@@ -205,7 +247,7 @@ export default function Chatbot() {
             {/* Header */}
             <div className="p-4 border-b border-[#EBEBEB] bg-[#F8F8F8] flex justify-between items-center">
               <div className="flex items-center gap-2">
-                <Bot size={18} className="text-[#0A0A0A]" />
+                <AISparkIcon size={20} />
                 <h3 className="text-[#0A0A0A] font-semibold text-sm tracking-tight font-sans">
                   Varun's AI Assistant
                 </h3>
@@ -228,12 +270,12 @@ export default function Chatbot() {
               </div>
             </div>
 
-            {/* Chat message body */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-3 scrollbar-thin scrollbar-thumb-gray-200">
+            {/* Chat message body (with Lenis Tricks data-lenis-prevent to isolate inner scrolling) */}
+            <div data-lenis-prevent className="flex-1 overflow-y-auto p-4 space-y-3 scrollbar-thin scrollbar-thumb-gray-200">
               {messages.length === 0 && (
                 <div className="flex flex-col items-center justify-center mt-6 space-y-4">
                   <div className="inline-flex flex-col items-center gap-3 p-5 bg-[#F8F8F8] border border-[#EBEBEB] rounded-2xl text-[#6F6F6F] text-sm text-center">
-                    <Bot size={26} className="text-[#0A0A0A]" />
+                    <AISparkIcon size={32} />
                     <p>Ask anything about Varun's experience, skills, or engineering deployments.</p>
                   </div>
                   
@@ -317,13 +359,20 @@ export default function Chatbot() {
         )}
       </AnimatePresence>
 
-      {/* Floating Launcher Button */}
+      {/* Floating Launcher Button with Custom #ADFA1D / #0A0A0A Animated AI Spark */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-13 h-13 sm:w-14 sm:h-14 bg-[#000000] hover:bg-[#1D1D1F] text-white rounded-full shadow-[0_8px_24px_rgba(0,0,0,0.25)] flex items-center justify-center hover:scale-105 transition-all duration-200 relative group cursor-pointer"
+        className="w-13 h-13 sm:w-14 sm:h-14 bg-[#0A0A0A] hover:bg-[#1D1D1F] text-white rounded-full shadow-[0_8px_24px_rgba(0,0,0,0.25)] border border-[#ADFA1D]/30 flex items-center justify-center hover:scale-105 active:scale-95 transition-all duration-200 relative group cursor-pointer"
         aria-label="Open AI Assistant"
       >
-        {isOpen ? <X size={22} className="text-white" /> : <Bot size={22} className="text-white" />}
+        {!isOpen && (
+          <span className="absolute inset-0 rounded-full bg-[#ADFA1D]/20 animate-ping pointer-events-none" style={{ animationDuration: '2.8s' }} />
+        )}
+        {isOpen ? (
+          <X size={22} className="text-white relative z-10" />
+        ) : (
+          <AISparkIcon size={28} className="relative z-10" />
+        )}
       </button>
     </div>
   );

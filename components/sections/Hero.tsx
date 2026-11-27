@@ -125,12 +125,22 @@ export default function Hero() {
             </div>
 
             {/* Lead Copy */}
-            <p className="font-sans text-[#6B7280] text-base sm:text-lg leading-relaxed mb-8 max-w-xl">
+            <motion.p
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+              className="font-sans text-[#6B7280] text-base sm:text-lg leading-relaxed mb-8 max-w-xl"
+            >
               Specializing in production <span className="text-[#000000] font-medium">agentic retrieval pipelines</span> (LangGraph), distributed <span className="text-[#000000] font-medium">PySpark architectures</span>, and low-latency API microservices.
-            </p>
+            </motion.p>
 
             {/* BDSN Club Action Buttons (Solid Black + Clean White) */}
-            <div className="flex flex-col sm:flex-row gap-3.5 w-full sm:w-auto mb-10">
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              className="flex flex-col sm:flex-row gap-3.5 w-full sm:w-auto mb-10"
+            >
               <ShimmerButton
                 variant="primary"
                 href="#projects"
@@ -149,10 +159,16 @@ export default function Hero() {
                 <FileText size={15} className="text-[#6B7280]" />
                 <span className="!text-[#000000] font-medium">Download Resume (PDF)</span>
               </ShimmerButton>
-            </div>
+            </motion.div>
 
             {/* Candidate Metadata Summary Strip */}
-            <div className="w-full pt-6 border-t border-[#E5E7EB] grid grid-cols-2 sm:grid-cols-3 gap-4 text-left">
+            <motion.div
+              data-lag="0.2"
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              className="w-full pt-6 border-t border-[#E5E7EB] grid grid-cols-2 sm:grid-cols-3 gap-4 text-left"
+            >
               <div>
                 <span className="text-[11px] font-sans font-medium uppercase tracking-wider text-[#6B7280] block mb-0.5">
                   Current Role
@@ -183,10 +199,10 @@ export default function Hero() {
                   Core Stack
                 </span>
                 <span className="text-xs font-sans font-medium text-[#000000]">
-                  PyTorch • LangGraph • Spark
+                  Python • FastAPI • Django • LLMs
                 </span>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
 
           {/* Column 2: Editorial Portrait Stage with 3D Perspective Floating Choreography */}
@@ -196,6 +212,7 @@ export default function Hero() {
           >
             {/* Atmospheric Backlight (The Amaterasu Signature) - expands gently as you scroll */}
             <motion.div
+              data-speed="0.75"
               style={{ scale: auraScale, opacity: auraOpacity }}
               className="absolute -inset-10 sm:-inset-16 rounded-full bg-[radial-gradient(circle_at_center,rgba(253,230,138,0.22)_0%,rgba(16,185,129,0.15)_50%,transparent_75%)] blur-3xl pointer-events-none -z-10"
             />
