@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@700&amp;display=swap');
+      .mono-text { font-family: 'Fira Code', 'IBM Plex Mono', monospace; font-weight: 700; }
+    </style>
+  </defs>
+
+  <!-- Deep Slate Terminal Container -->
+  <rect width="128" height="128" rx="32" fill="#030712"/>
+  <rect x="1" y="1" width="126" height="126" rx="31" fill="none" stroke="#1F2937" stroke-width="2.5"/>
+
+  <!-- Top Terminal Bar (3 Dots) -->
+  <circle cx="28" cy="22" r="3.5" fill="#EF4444"/>
+  <circle cx="42" cy="22" r="3.5" fill="#F59E0B"/>
+  <circle cx="56" cy="22" r="3.5" fill="#10B981"/>
+
+  <!-- Left Bracket '[' in Slate Gray -->
+  <text x="22" y="88" class="mono-text" font-size="64" fill="#64748B">[</text>
+
+  <!-- 'V' in Crisp White -->
+  <text x="49" y="88" class="mono-text" font-size="62" fill="#FFFFFF">V</text>
+
+  <!-- Right Bracket ']' in Electric Emerald -->
+  <text x="88" y="88" class="mono-text" font-size="64" fill="#10B981">]</text>
+</svg>

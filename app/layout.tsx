@@ -36,6 +36,13 @@ export const metadata: Metadata = {
   description: "Portfolio of Esarapu Varun. Production agentic retrieval pipelines (LangGraph), distributed PySpark architectures, and low-latency API systems.",
   keywords: ["AI Engineer", "Machine Learning", "LangGraph", "PySpark", "Backend Developer", "Python", "FastAPI", "Portfolio"],
   authors: [{ name: "Esarapu Varun" }],
+  icons: {
+    icon: [
+      { url: "/favicon-light3.svg", type: "image/svg+xml" },
+    ],
+    shortcut: "/favicon-light3.svg",
+    apple: "/favicon-light3.svg",
+  },
 };
 
 export default function RootLayout({

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Varun Esarapu — Favicon Studio (Light Architectural Series)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: #F6F4EE;
+      color: #1F2937;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      padding: 40px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .header {
+      max-width: 1000px;
+      width: 100%;
+      margin-bottom: 32px;
+      text-align: center;
+    }
+    .header h1 {
+      font-size: 28px;
+      font-weight: 800;
+      color: #0A0A0A;
+      letter-spacing: -0.025em;
+    }
+    .header p {
+      font-size: 14px;
+      color: #6B7280;
+      margin-top: 6px;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      max-width: 1000px;
+      width: 100%;
+      margin-bottom: 40px;
+    }
+    .card {
+      background: #FFFFFF;
+      border: 1px solid #E5E7EB;
+      border-radius: 20px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: all 0.25s ease;
+      position: relative;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+    }
+    .card:hover {
+      border-color: #10B981;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px -10px rgba(16, 185, 129, 0.25);
+    }
+    .card-badge {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: #F3F4F6;
+      color: #4B5563;
+      margin-bottom: 20px;
+    }
+    .card.recommended .card-badge {
+      background: #ECFDF5;
+      color: #059669;
+      border: 1px solid #A7F3D0;
+    }
+    .icon-showcase {
+      width: 110px;
+      height: 110px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      background: #FAF9F5;
+      border-radius: 16px;
+      padding: 12px;
+      border: 1px dashed #E5E7EB;
+    }
+    .icon-showcase img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .card h3 {
+      font-size: 18px;
+      font-weight: 800;
+      color: #0A0A0A;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+    .card p {
+      font-size: 13px;
+      color: #6B7280;
+      line-height: 1.5;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    /* Simulated Browser Tab Bar */
+    .tab-simulator-section {
+      max-width: 1000px;
+      width: 100%;
+      background: #FFFFFF;
+      border: 1px solid #E5E7EB;
+      border-radius: 20px;
+      padding: 28px;
+      margin-bottom: 40px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+    }
+    .tab-simulator-section h2 {
+      font-size: 18px;
+      font-weight: 800;
+      color: #0A0A0A;
+      margin-bottom: 6px;
+    }
+    .tab-simulator-section p {
+      font-size: 13px;
+      color: #6B7280;
+      margin-bottom: 20px;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    .browser-frame {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+      margin-bottom: 20px;
+      border: 1px solid #E5E7EB;
+    }
+    /* Dark Browser Tab (Chrome / Brave Dark Mode) */
+    .browser-top.dark {
+      background: #1F232D;
+      padding: 10px 16px 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid #14171E;
+    }
+    .browser-tab.dark {
+      background: #282E3C;
+      color: #F3F4F6;
+      border-top: 2px solid #10B981;
+    }
+    .browser-dots {
+      display: flex;
+      gap: 6px;
+      margin-right: 8px;
+      margin-bottom: 8px;
+    }
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .dot.r { background: #EF4444; }
+    .dot.y { background: #F59E0B; }
+    .dot.g { background: #10B981; }
+    .browser-tab {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 16px;
+      border-radius: 10px 10px 0 0;
+      font-size: 12px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 600;
+      max-width: 260px;
+    }
+    .tab-icon {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+    .tab-close {
+      margin-left: auto;
+      opacity: 0.6;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .tab-url-bar.dark {
+      background: #282E3C;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      color: #9CA3AF;
+      gap: 8px;
+    }
+    .tab-url-box.dark {
+      background: #1E232E;
+      padding: 5px 14px;
+      border-radius: 6px;
+      flex: 1;
+      color: #E5E7EB;
+    }
+    .tab-url-box.dark span {
+      color: #10B981;
+    }
+
+    /* Light Browser Tab (Chrome / Safari Light Mode) */
+    .browser-top.light {
+      background: #E5E7EB;
+      padding: 10px 16px 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid #D1D5DB;
+    }
+    .browser-tab.light {
+      background: #FFFFFF;
+      color: #111827;
+      border-top: 2px solid #10B981;
+    }
+    .tab-url-bar.light {
+      background: #FFFFFF;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      color: #6B7280;
+      gap: 8px;
+      border-top: 1px solid #F3F4F6;
+    }
+    .tab-url-box.light {
+      background: #F3F4F6;
+      padding: 5px 14px;
+      border-radius: 6px;
+      flex: 1;
+      color: #111827;
+      border: 1px solid #E5E7EB;
+    }
+    .tab-url-box.light span {
+      color: #059669;
+    }
+
+    .btn-apply {
+      width: 100%;
+      cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 11px 16px;
+      border-radius: 10px;
+      border: 1px solid #E5E7EB;
+      background: #F9FAFB;
+      color: #0A0A0A;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-apply:hover {
+      background: #10B981;
+      color: #022C22;
+      border-color: #10B981;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Light Architectural Favicon Studio</h1>
+    <p>Zero dark boxes • Matches the #F6F4EE Alabaster & Emerald Portfolio Palette</p>
+  </div>
+
+  <div class="grid">
+    <!-- Option 1 -->
+    <div class="card recommended">
+      <span class="card-badge">Option 1 • Warm Alabaster Squircle</span>
+      <div class="icon-showcase">
+        <img src="/favicon-light1.svg" alt="Option 1">
+      </div>
+      <h3>The Alabaster Monogram</h3>
+      <p>Matches the portfolio's warm alabaster (#F6F4EE) surface with a bold black 'V' and the signature electric emerald pulse dot.</p>
+      <button class="btn-apply" onclick="setSimulatedTab('light1')">
+        <span>Preview in Browser Tabs</span>
+      </button>
+    </div>
+
+    <!-- Option 2 -->
+    <div class="card">
+      <span class="card-badge">Option 2 • Transparent Floating Glyph</span>
+      <div class="icon-showcase">
+        <img src="/favicon-light2.svg" alt="Option 2">
+      </div>
+      <h3>The Floating Emerald 'V'</h3>
+      <p>100% transparent background with a modern architectural 3D-folded emerald glyph. Floats cleanly in any browser chrome without any enclosing box.</p>
+      <button class="btn-apply" onclick="setSimulatedTab('light2')">
+        <span>Preview in Browser Tabs</span>
+      </button>
+    </div>
+
+    <!-- Option 3 -->
+    <div class="card">
+      <span class="card-badge">Option 3 • Clean Pill Stamp</span>
+      <div class="icon-showcase">
+        <img src="/favicon-light3.svg" alt="Option 3">
+      </div>
+      <h3>The Status Stamp</h3>
+      <p>Crisp white circular pill with a geometric black 'V' and centered emerald radar signal. Matches the "Available for Roles" status badge.</p>
+      <button class="btn-apply" onclick="setSimulatedTab('light3')">
+        <span>Preview in Browser Tabs</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Browser Tab Simulator (Dark & Light) -->
+  <div class="tab-simulator-section">
+    <h2>Live Browser Tab Simulations</h2>
+    <p>See how your chosen favicon renders at real 16×16 scale in both Dark and Light browser themes:</p>
+
+    <!-- 1. Dark Mode Browser Simulation (Chrome / Brave / Edge Dark) -->
+    <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 700; color: #6B7280; margin-bottom: 8px;">
+      THEME A: DARK BROWSER CHROME (BRAVE / CHROME DARK)
+    </div>
+    <div class="browser-frame" style="margin-bottom: 24px;">
+      <div class="browser-top dark">
+        <div class="browser-dots">
+          <div class="dot r"></div>
+          <div class="dot y"></div>
+          <div class="dot g"></div>
+        </div>
+
+        <div class="browser-tab dark">
+          <img src="/favicon-light1.svg" class="tab-icon" id="tabIconDark" alt="favicon">
+          <span>Esarapu Varun — AI & Systems</span>
+          <span class="tab-close">×</span>
+        </div>
+      </div>
+      <div class="tab-url-bar dark">
+        <span>🔒</span>
+        <div class="tab-url-box dark">
+          <span>https://</span>e-varun-portfolio.vercel.app
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Light Mode Browser Simulation (Safari / Chrome Light) -->
+    <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 700; color: #6B7280; margin-bottom: 8px;">
+      THEME B: LIGHT BROWSER CHROME (SAFARI / CHROME LIGHT)
+    </div>
+    <div class="browser-frame">
+      <div class="browser-top light">
+        <div class="browser-dots">
+          <div class="dot r"></div>
+          <div class="dot y"></div>
+          <div class="dot g"></div>
+        </div>
+
+        <div class="browser-tab light">
+          <img src="/favicon-light1.svg" class="tab-icon" id="tabIconLight" alt="favicon">
+          <span>Esarapu Varun — AI & Systems</span>
+          <span class="tab-close">×</span>
+        </div>
+      </div>
+      <div class="tab-url-bar light">
+        <span>🔒</span>
+        <div class="tab-url-box light">
+          <span>https://</span>e-varun-portfolio.vercel.app
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function setSimulatedTab(name) {
+      document.getElementById('tabIconDark').src = `/favicon-${name}.svg`;
+      document.getElementById('tabIconLight').src = `/favicon-${name}.svg`;
+    }
+  </script>
+</body>
+</html>

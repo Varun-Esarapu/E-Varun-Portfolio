@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Varun Esarapu — LinkedIn Banner Studio (Perfected Spacing)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;600;700&family=IBM+Plex+Mono:wght@500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: #08090C;
+      color: #F3F4F6;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 20px 60px;
+    }
+    .header-bar {
+      max-width: 1260px;
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .header-title h1 {
+      font-size: 22px;
+      font-weight: 800;
+      color: #FFFFFF;
+      letter-spacing: -0.025em;
+    }
+    .header-title p {
+      font-size: 13px;
+      color: #10B981;
+      margin-top: 4px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 600;
+    }
+    .tabs-container {
+      max-width: 1260px;
+      width: 100%;
+      display: flex;
+      gap: 10px;
+      background: #111319;
+      padding: 8px;
+      border-radius: 14px;
+      border: 1px solid #1F2430;
+      margin-bottom: 24px;
+    }
+    .tab-btn {
+      flex: 1;
+      background: transparent;
+      border: 1px solid transparent;
+      padding: 12px 18px;
+      border-radius: 10px;
+      color: #9CA3AF;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .tab-btn:hover {
+      color: #FFFFFF;
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .tab-btn.active {
+      background: #1A1F2C;
+      color: #FFFFFF;
+      border-color: rgba(255, 255, 255, 0.12);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+    .tab-btn span.badge {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      color: #D1D5DB;
+    }
+    .tab-btn.active span.badge {
+      background: #10B981;
+      color: #022C22;
+    }
+    .actions-bar {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    button.action-btn {
+      cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 10px 22px;
+      border-radius: 9999px;
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-download {
+      background-color: #10B981;
+      color: #022C22;
+    }
+    .btn-download:hover {
+      background-color: #34D399;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
+    }
+    .btn-outline {
+      background-color: #141720;
+      color: #E5E7EB;
+      border-color: #272E3F;
+    }
+    .btn-outline:hover {
+      background-color: #1E2433;
+      color: #FFFFFF;
+    }
+    .banner-frame {
+      position: relative;
+      width: 100%;
+      max-width: 1260px;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 35px 80px -20px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.1);
+      background: #F6F4EE;
+    }
+    canvas {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1584 / 396;
+    }
+    .mock-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      display: none;
+    }
+    .mock-overlay.active {
+      display: block;
+    }
+    .mock-avatar {
+      position: absolute;
+      bottom: -48px;
+      left: 45px;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 5px solid #08090C;
+      background: #181B22;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.65);
+      overflow: hidden;
+    }
+    .mock-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .mock-label {
+      position: absolute;
+      bottom: 16px;
+      left: 215px;
+      background: rgba(8, 9, 12, 0.92);
+      backdrop-filter: blur(8px);
+      color: #E5E7EB;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 600;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    .style-details {
+      max-width: 1260px;
+      width: 100%;
+      margin-top: 24px;
+      background: #111319;
+      border: 1px solid #1F2430;
+      border-radius: 14px;
+      padding: 20px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+    }
+    .style-info h3 {
+      font-size: 16px;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-bottom: 4px;
+    }
+    .style-info p {
+      font-size: 13px;
+      color: #9CA3AF;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header-bar">
+    <div class="header-title">
+      <h1>LinkedIn Banner Studio (Perfected Spacing & Padding)</h1>
+      <p>Generous PFP Avatar Buffer • Balanced Letterbox Margins • 3168 × 792 2× Retina</p>
+    </div>
+    <div class="actions-bar">
+      <button class="action-btn btn-outline" id="toggleMock">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+        <span>Toggle PFP Safe Zone</span>
+      </button>
+      <button class="action-btn btn-download" id="downloadBtn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+        <span>Download Banner (PNG)</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="tabs-container">
+    <button class="tab-btn active" data-style="1">
+      <span class="badge">Style 1</span>
+      <span>Light Architectural DAG (Perfected Spacing)</span>
+    </button>
+    <button class="tab-btn" data-style="3">
+      <span class="badge">Style 3</span>
+      <span>Dark Terminal & Telemetry (Illuminated)</span>
+    </button>
+    <button class="tab-btn" data-style="2">
+      <span class="badge">Style 2</span>
+      <span>Linear Minimalist (Balanced)</span>
+    </button>
+  </div>
+
+  <div class="banner-frame">
+    <canvas id="bannerCanvas" width="3168" height="792"></canvas>
+    
+    <div class="mock-overlay" id="mockOverlay">
+      <div class="mock-avatar">
+        <img src="/varun_portrait_poster.jpg" alt="PFP" onerror="this.src='/me.jpg'">
+      </div>
+      <div class="mock-label">
+        👈 Generous Avatar Breathing Room (100px Buffer)
+      </div>
+    </div>
+  </div>
+
+  <div class="style-details">
+    <div class="style-info">
+      <h3 id="styleHeading">Style 1: Light Architectural DAG (Perfected Spacing)</h3>
+      <p id="styleDesc">Shifted 100px right to completely clear your circular avatar, with balanced top & bottom vertical margins in LinkedIn's letterbox.</p>
+    </div>
+    <div style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 700; color: #10B981; white-space: nowrap;">
+      ● 3168 × 792 (2× Ultra-DPI)
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('bannerCanvas');
+    const ctx = canvas.getContext('2d');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const toggleMock = document.getElementById('toggleMock');
+    const mockOverlay = document.getElementById('mockOverlay');
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const styleHeading = document.getElementById('styleHeading');
+    const styleDesc = document.getElementById('styleDesc');
+
+    let currentStyle = 1;
+
+    const styleDescriptions = {
+      1: {
+        title: "Style 1: Light Architectural DAG (Perfected Spacing)",
+        desc: "Text pushed to X=570px for full avatar clearance. DAG card resized with 120px top/bottom padding so it floats gracefully inside the letterbox."
+      },
+      3: {
+        title: "Style 3: Dark Terminal & Telemetry (Illuminated & Defined)",
+        desc: "Text pushed to X=570px. Terminal framed with a clean slate border and balanced vertical padding, stopping it from drowning in LinkedIn's dark mode."
+      },
+      2: {
+        title: "Style 2: Linear / Editorial Minimalist (Balanced & Grounded)",
+        desc: "Clean Swiss engineering grid with technical coordinates, deliverables matrix, and ample breathing room."
+      }
+    };
+
+    toggleMock.addEventListener('click', () => {
+      mockOverlay.classList.toggle('active');
+    });
+
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentStyle = parseInt(btn.dataset.style);
+        styleHeading.textContent = styleDescriptions[currentStyle].title;
+        styleDesc.textContent = styleDescriptions[currentStyle].desc;
+        renderBanner();
+      });
+    });
+
+    function setupContext(ctx) {
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
+      ctx.textRendering = 'optimizeLegibility';
+    }
+
+    function renderBanner() {
+      const W = canvas.width;  // 3168
+      const H = canvas.height; // 792
+
+      setupContext(ctx);
+      ctx.clearRect(0, 0, W, H);
+
+      if (currentStyle === 1) {
+        drawStyle1_DAG(W, H);
+      } else if (currentStyle === 3) {
+        drawStyle3_Terminal(W, H);
+      } else if (currentStyle === 2) {
+        drawStyle2_Editorial(W, H);
+      }
+    }
+
+    // =========================================================================
+    // STYLE 1: LIGHT ARCHITECTURAL DAG (SPACED & BALANCED)
+    // =========================================================================
+    function drawStyle1_DAG(W, H) {
+      // 1. Warm Alabaster Canvas
+      ctx.fillStyle = "#F5F3ED";
+      ctx.fillRect(0, 0, W, H);
+
+      // 2. High-Definition Architectural Grid
+      ctx.strokeStyle = "rgba(28, 25, 23, 0.055)";
+      ctx.lineWidth = 1.5;
+      const gridSize = 88;
+      for (let x = 0; x < W; x += gridSize) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, H);
+        ctx.stroke();
+      }
+      for (let y = 0; y < H; y += gridSize) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(W, y);
+        ctx.stroke();
+      }
+
+      // 3. Left Section: Shifted to X = 570px for 100px CLEARANCE around avatar
+      const textX = 570;
+
+      // Status Pill: Sits cleanly at Y = 110
+      drawPill(ctx, textX, 110, 420, 50, "#FFFFFF", "#D1D5DB", 2);
+      ctx.beginPath();
+      ctx.arc(textX + 26, 135, 6, 0, Math.PI * 2);
+      ctx.fillStyle = "#10B981";
+      ctx.fill();
+      ctx.font = "700 20px 'Plus Jakarta Sans', sans-serif";
+      ctx.fillStyle = "#0A0A0A";
+      ctx.fillText("AI & Systems Engineer", textX + 44, 142);
+      ctx.fillStyle = "#9CA3AF";
+      ctx.fillText("•", textX + 288, 142);
+      ctx.fillStyle = "#4B5563";
+      ctx.fillText("Bangalore", textX + 308, 142);
+
+      // Main Headline: Scaled & Tight
+      ctx.font = "900 82px 'Plus Jakarta Sans', sans-serif";
+      ctx.fillStyle = "#0A0A0A";
+      ctx.letterSpacing = "-0.045em";
+      ctx.fillText("Architecting the", textX, 240);
+      ctx.fillText("intelligence layer.", textX, 330);
+
+      // Emerald Accent Bar
+      ctx.fillStyle = "#10B981";
+      ctx.fillRect(textX + 770, 268, 6.5, 66);
+
+      // Sub-Headline
+      ctx.font = "600 26px 'Plus Jakarta Sans', sans-serif";
+      ctx.fillStyle = "#4B5563";
+      ctx.letterSpacing = "-0.015em";
+      ctx.fillText("Production Agentic Retrieval Pipelines & Distributed ML", textX, 395);
+
+      // Core Tech Pills: Lifted up to Y = 450 so it never touches the avatar!
+      const tagY = 450;
+      drawBoldTag(ctx, textX, tagY, "LangGraph StateGraph");
+      drawBoldTag(ctx, textX + 310, tagY, "PySpark 3.5 (MLlib)");
+      drawBoldTag(ctx, textX + 615, tagY, "Sub-15ms Latency");
+
+      // 4. Right Section: Resized with 120px top & bottom margins (no letterbox squeeze)
+      const dagStartX = 1620;
+      const dagY = 120;
+      const dagW = 1460;
+      const dagH = 540;
+
+      // DAG Container Frame
+      ctx.save();
+      ctx.shadowColor = "rgba(0, 0, 0, 0.07)";
+      ctx.shadowBlur = 24;
+      ctx.shadowOffsetY = 6;
+      ctx.fillStyle = "#FFFFFF";
+      ctx.strokeStyle = "#CBD5E1";
+      ctx.lineWidth = 2;
+      roundRect(ctx, dagStartX, dagY, dagW, dagH, 22);
+      ctx.fill();
+      ctx.stroke();
+      ctx.restore();
+
+      // Top Header Bar
+      ctx.font = "700 18px 'IBM Plex Mono', monospace";
+      ctx.fillStyle = "#0F172A";
+      ctx.fillText("SYSTEM ARCHITECTURE // PRODUCTION PIPELINE", dagStartX + 34, dagY + 44);
+
+      // Benchmarks Badge
+      drawPill(ctx, dagStartX + 1180, dagY + 20, 240, 38, "#F1F5F9", "#CBD5E1", 1.8);
+      ctx.font = "700 15px 'IBM Plex Mono', monospace";
+      ctx.fillStyle = "#059669";
+      ctx.fillText("LATENCY: <14.8ms", dagStartX + 1204, dagY + 44);
+
+      // Nodes Tier 1: 4 Stages
+      const nW = 260;
+      const nH = 105;
+      const nY = dagY + 105;
+
+      drawDAGNodeBold(ctx, dagStartX + 34, nY, nW, nH, "01 // INGESTION", "Unstructured Docs", "Streaming / Multi-Modal");
+      drawDAGNodeBold(ctx, dagStartX + 394, nY, nW, nH, "02 // ROUTING", "Trie Prefix Router", "Zero-Shot Deterministic");
+      drawDAGNodeBold(ctx, dagStartX + 754, nY, nW, nH, "03 // AGENTIC CORE", "LangGraph Agent", "Multi-Hop Cycle Reasoning", true);
+      drawDAGNodeBold(ctx, dagStartX + 1114, nY, nW, nH, "04 // SERVING API", "FastAPI / Django REST", "Sub-15ms Validated Payload");
+
+      // Connectors
+      drawThickConnector(ctx, dagStartX + 294, nY + 52, dagStartX + 394, nY + 52);
+      drawThickConnector(ctx, dagStartX + 654, nY + 52, dagStartX + 754, nY + 52);
+      drawThickConnector(ctx, dagStartX + 1014, nY + 52, dagStartX + 1114, nY + 52);
+
+      // Nodes Tier 2: Distributed & Edge
+      const n2Y = dagY + 325;
+      drawDAGNodeBold(ctx, dagStartX + 394, n2Y, 440, 130, "PARALLEL COMPUTE // RECOMMENDER", "PySpark 3.5 MLlib ALS (32M+ Records)", "Matrix Factorization Cluster • sub-15ms SLA", false, true);
+      drawDAGNodeBold(ctx, dagStartX + 914, n2Y, 460, 130, "EDGE HARDWARE // ACOUSTIC ML", "Librosa MFCC + 1D CNN Classifier", "Optimized Silicon Architecture (RPi)");
+
+      drawThickVertical(ctx, dagStartX + 524, nY + 105, dagStartX + 524, n2Y);
+      drawThickVertical(ctx, dagStartX + 884, nY + 105, dagStartX + 884, n2Y);
+
+      // Bottom URL Anchor Pill
+      drawUrlPill(ctx, W, H, "#0A0A0A", "#FFFFFF", "#CBD5E1");
+    }
+
+    // =========================================================================
+    // STYLE 3: DARK TERMINAL & TELEMETRY (ILLUMINATED & SPACED)
+    // =========================================================================
+    function drawStyle3_Terminal(W, H) {
+      // 1. Deep Obsidian Slate Canvas (Distinct from LinkedIn Dark Background)
+      ctx.fillStyle = "#0A0C10";
+      ctx.fillRect(0, 0, W, H);
+
+      // Subtle Cybernetic Dot Grid
+      ctx.fillStyle = "rgba(255, 255, 255, 0.05)";
+      for (let x = 30; x < W; x += 54) {
+        for (let y = 30; y < H; y += 54) {
+          ctx.beginPath();
+          ctx.arc(x, y, 1.4, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      // Outer framing outline so it pops off LinkedIn's dark theme
+      ctx.strokeStyle = "rgba(255, 255, 255, 0.08)";
+      ctx.lineWidth = 2;
+      ctx.strokeRect(30, 30, W - 60, H - 60);
+
+      // Left Section: Shifted to X = 570px for full avatar clearance
+      const textX = 570;
+
+      // Status Pill
+      drawPill(ctx, textX, 110, 390, 48, "#131722", "#2E384D", 2);
+      ctx.beginPath();
+      ctx.arc(textX + 24, 134, 5.5, 0, Math.PI * 2);
+      ctx.fillStyle = "#10B981";
+      ctx.fill();
+      ctx.font = "700 17px 'IBM Plex Mono', monospace";
+      ctx.fillStyle = "#F3F4F6";
+      ctx.fillText("LIVE SYSTEM BENCHMARKS", textX + 40, 140);
+
+      // Headline
+      ctx.font = "900 82px 'Plus Jakarta Sans', sans-serif";
+      ctx.fillStyle = "#FFFFFF";
+      ctx.letterSpacing = "-0.04em";
+      ctx.fillText("Architecting the", textX, 240);
+      ctx.fillText("intelligence layer.", textX, 330);
+
+      // Sub-Headline
+      ctx.font = "600 26px 'Plus Jakarta Sans', sans-serif";
+      ctx.fillStyle = "#94A3B8";
+      ctx.letterSpacing = "-0.015em";
+      ctx.fillText("Low-Latency Microservices & Distributed Machine Learning", textX, 395);
+
+      // Dark Tech Chips: Lifted to Y = 450
+      const chipY = 450;
+      drawDarkTagBold(ctx, textX, chipY, "PySpark 3.5");
+      drawDarkTagBold(ctx, textX + 205, chipY, "LangGraph RAG");
+      drawDarkTagBold(ctx, textX + 430, chipY, "FastAPI / Django");
+      drawDarkTagBold(ctx, textX + 695, chipY, "Sub-15ms SLA");
+
+      // Right Side: Terminal Window with 120px top & bottom padding
+      const termX = 1580;
+      const termY = 120;
+      const termW = 1500;
+      const termH = 540;
+
+      // Ambient backlight glow behind terminal window
+      const glow = ctx.createRadialGradient(termX + termW/2, termY + termH/2, 50, termX + termW/2, termY + termH/2, 600);
+      glow.addColorStop(0, "rgba(16, 185, 129, 0.14)");
+      glow.addColorStop(1, "rgba(16, 185, 129, 0)");
+      ctx.fillStyle = glow;
+      ctx.fillRect(termX - 100, termY - 80, termW + 200, termH + 160);
+
+      // Terminal Box Frame
+      ctx.save();
+      ctx.shadowColor = "rgba(0, 0, 0, 0.7)";
+      ctx.shadowBlur = 40;
+      ctx.shadowOffsetY = 12;
+      ctx.fillStyle = "#030508";
+      ctx.strokeStyle = "#384457";
+      ctx.lineWidth = 2.5;
+      roundRect(ctx, termX, termY, termW, termH, 20);
+      ctx.fill();
+      ctx.stroke();
+      ctx.restore();
+
+      // Top Title Bar
+      ctx.fillStyle = "#0F141F";
+      roundRectTop(ctx, termX, termY, termW, 54, 20);
+      ctx.fill();
+
+      // Window Control Dots
+      ctx.beginPath();
+      ctx.arc(termX + 28, termY + 27, 7, 0, Math.PI * 2);
+      ctx.fillStyle = "#EF4444";
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(termX + 52, termY + 27, 7, 0, Math.PI * 2);
+      ctx.fillStyle = "#F59E0B";
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(termX + 76, termY + 27, 7, 0, Math.PI * 2);
+      ctx.fillStyle = "#10B981";
+      ctx.fill();
+
+      // Terminal Title
+      ctx.font = "600 17px 'Fira Code', monospace";
+      ctx.fillStyle = "#94A3B8";
+      ctx.fillText("varun@systems-cluster: ~/pipeline/agentic-rag (pyspark-v3.5)", termX + 115, termY + 34);
+
+      // Terminal Code Lines
+      const codeX = termX + 36;
+      let lineY = termY + 110;
+      const lineGap = 45;
+
+      drawTermLineBold(ctx, codeX, lineY, "$ python -m varun.pipeline.deploy --cluster=distributed-rag", "#F8FAFC", "#10B981");
+      lineY += lineGap;
+      drawTermLineBold(ctx, codeX, lineY, "[0.012s] TrieRouter: zero-shot prefix match verified -> [agent_node_3]", "#38BDF8");
+      lineY += lineGap;
+      drawTermLineBold(ctx, codeX, lineY, "[0.024s] LangGraph: state graph cycle executed (depth=3, eval=0.00)", "#C084FC");
+      lineY += lineGap;
+      drawTermLineBold(ctx, codeX, lineY, "[0.038s] PySpark ALS: 32M+ interaction matrix factorized | Latency: 14.2ms", "#34D399");
+      lineY += lineGap;
+      drawTermLineBold(ctx, codeX, lineY, "[0.045s] FastAPI: REST payload verified & cached | HTTP 200 OK", "#FCD34D");
+      lineY += lineGap;
+      drawTermLineBold(ctx, codeX, lineY, "✔ Production Pipeline Live | SLA Ceiling: <15ms | Status: OPTIMAL", "#10B981", null, true);
+
+      // Bottom Status Bar
+      ctx.fillStyle = "#0A0D15";
+      roundRectBottom(ctx, termX, termY + termH - 48, termW, 48, 20);
+      ctx.fill();
+      ctx.font = "600 15px 'IBM Plex Mono', monospace";
+      ctx.fillStyle = "#64748B";
+      ctx.fillText("MEMORY: 1.4GB / 32GB • CPU: 4.8% • CLUSTER: SPARK-STANDALONE • REPL: STREAMING", termX + 32, termY + termH - 18);
+
+      drawUrlPill(ctx, W, H, "#FFFFFF", "#0F141F", "#384457");
+    }
+
+    // =========================================================================
+    // STYLE 2: LINEAR EDITORIAL MINIMALIST
+    // =========================================================================
+    function drawStyle2_Editorial(W, H) {
+      ctx.fillStyle = "#F6F4EE";
+      ctx.fillRect(0, 0, W, H);
+
+      ctx.strokeStyle = "rgba(0, 0, 0, 0.12)";
+      ctx.lineWidth = 2;
+      ctx.strokeRect(55, 55, W - 110, H - 110);
+
+      drawCrosshairBold(ctx, 55, 55);
+      drawCrosshairBold(ctx, W - 55, 55);
+      drawCrosshairBold(ctx, 55, H - 55);
+      drawCrosshairBold(ctx, W - 55, H - 55);
+
+      ctx.font = "700 15px 'IBM Plex Mono', monospace";
+      ctx.fillStyle = "#6B7280";
+      ctx.fillText("LOC: 12°58'N 77°35'E // BLR, KA", 90, 95);
+      ctx.fillText("SYS: BDSN-EDITORIAL // AI & SYSTEMS", W - 430, 95);
+
+      const startX = 570;
+
+      ctx.font = "800 23px 'IBM Plex Mono', monospace";
+      ctx.fillStyle = "#059669";
+      ctx.fillText("// ESARAPU VARUN", startX, 160);
+
+      ctx.font = "900 86px 'Plus Jakarta Sans', sans-serif";
+      ctx.fillStyle = "#0A0A0A";
+      ctx.letterSpacing = "-0.045em";
+      ctx.fillText("Architecting the", startX, 255);
+      ctx.fillText("intelligence layer.", startX, 345);
+
+      ctx.font = "600 28px 'Plus Jakarta Sans', sans-serif";
+      ctx.fillStyle = "#374151";
+      ctx.letterSpacing = "-0.015em";
+      ctx.fillText("Production Agentic Retrieval Pipelines • Distributed PySpark Systems", startX, 415);
+
+      const matX = 1860;
+      const matY = 150;
+      const matW = 1150;
+      const matH = 460;
+
+      ctx.fillStyle = "#FFFFFF";
+      ctx.strokeStyle = "#D1D5DB";
+      ctx.lineWidth = 2;
+      roundRect(ctx, matX, matY, matW, matH, 20);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.font = "700 17px 'IBM Plex Mono', monospace";
+      ctx.fillStyle = "#0F172A";
+      ctx.fillText("VERIFIED PRODUCTION DELIVERABLES", matX + 36, matY + 45);
+
+      drawMatrixRow(ctx, matX + 36, matY + 95, "Auto-STAIR", "Agentic Multi-Hop RAG", "LangGraph • Trie Routing • HuggingFace Live");
+      drawMatrixRow(ctx, matX + 36, matY + 185, "Cinematch", "Distributed Recommender", "PySpark 3.5 MLlib ALS (32M+ Records) • sub-15ms");
+      drawMatrixRow(ctx, matX + 36, matY + 275, "Edge Emotion", "Acoustic ML Inference", "Librosa MFCC • 1D CNN • Raspberry Pi Silicon");
+      drawMatrixRow(ctx, matX + 36, matY + 365, "Backend APIs", "High-Throughput Services", "FastAPI • Django REST • Docker • AWS S3/EC2");
+
+      const statY = 530;
+      drawEditorialMetric(ctx, startX, statY, "ROLE", "Jr. AI & ML Engineer", "D Square Consulting");
+      drawEditorialMetric(ctx, startX + 440, statY, "ACADEMIC", "B.E. Graduate (8.71 CGPA)", "ECE Silicon Foundation");
+      drawEditorialMetric(ctx, startX + 880, statY, "LATENCY", "Sub-15ms Inference", "PySpark & FastAPI");
+
+      drawUrlPill(ctx, W, H, "#0A0A0A", "#FFFFFF", "#D1D5DB");
+    }
+
+    // =========================================================================
+    // DRAWING HELPERS
+    // =========================================================================
+    function drawPill(ctx, x, y, w, h, fill, stroke, strokeWidth = 2) {
+      ctx.fillStyle = fill;
+      ctx.strokeStyle = stroke;
+      ctx.lineWidth = strokeWidth;
+      roundRect(ctx, x, y, w, h, h / 2);
+      ctx.fill();
+      ctx.stroke();
+    }
+
+    function drawBoldTag(ctx, x, y, text) {
+      ctx.font = "700 18px 'IBM Plex Mono', monospace";
+      const w = ctx.measureText(text).width + 38;
+      drawPill(ctx, x, y, w, 46, "#FFFFFF", "#CBD5E1", 1.8);
+      ctx.fillStyle = "#0F172A";
+      ctx.fillText(text, x + 19, y + 29);
+    }
+
+    function drawDarkTagBold(ctx, x, y, text) {
+      ctx.font = "700 17px 'IBM Plex Mono', monospace";
+      const w = ctx.measureText(text).width + 38;
+      drawPill(ctx, x, y, w, 46, "#11141F", "#2E384D", 1.8);
+      ctx.fillStyle = "#F1F5F9";
+      ctx.fillText(text, x + 19, y + 29);
+    }
+
+    function drawDAGNodeBold(ctx, x, y, w, h, step, title, desc, isAccent = false, isWide = false) {
+      ctx.fillStyle = isAccent ? "#FEFCE8" : "#FFFFFF";
+      ctx.strokeStyle = isAccent ? "#10B981" : "#CBD5E1";
+      ctx.lineWidth = isAccent ? 2.5 : 1.8;
+      roundRect(ctx, x, y, w, h, 14);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.font = "700 12.5px 'IBM Plex Mono', monospace";
+      ctx.fillStyle = isAccent ? "#059669" : "#64748B";
+      ctx.fillText(step, x + 16, y + 27);
+
+      ctx.font = "800 18.5px 'Plus Jakarta Sans', sans-serif";
+      ctx.fillStyle = "#0A0A0A";
+      ctx.fillText(title, x + 16, y + 56);
+
+      ctx.font = "600 13.5px 'Plus Jakarta Sans', sans-serif";
+      ctx.fillStyle = "#4B5563";
+      ctx.fillText(desc, x + 16, y + 80);
+    }
+
+    function drawThickConnector(ctx, x1, y1, x2, y2) {
+      ctx.strokeStyle = "#64748B";
+      ctx.lineWidth = 2.2;
+      ctx.setLineDash([5, 5]);
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      ctx.fillStyle = "#10B981";
+      ctx.beginPath();
+      ctx.moveTo(x2, y2);
+      ctx.lineTo(x2 - 9, y2 - 5.5);
+      ctx.lineTo(x2 - 9, y2 + 5.5);
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    function drawThickVertical(ctx, x1, y1, x2, y2) {
+      ctx.strokeStyle = "#94A3B8";
+      ctx.lineWidth = 2.2;
+      ctx.setLineDash([5, 5]);
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    function drawCrosshairBold(ctx, x, y) {
+      ctx.strokeStyle = "rgba(0, 0, 0, 0.35)";
+      ctx.lineWidth = 1.8;
+      ctx.beginPath();
+      ctx.moveTo(x - 9, y);
+      ctx.lineTo(x + 9, y);
+      ctx.moveTo(x, y - 9);
+      ctx.lineTo(x, y + 9);
+      ctx.stroke();
+    }
+
+    function drawMatrixRow(ctx, x, y, title, subtitle, desc) {
+      ctx.font = "800 21px 'Plus Jakarta Sans', sans-serif";
+      ctx.fillStyle = "#0A0A0A";
+      ctx.fillText(title, x, y);
+
+      ctx.font = "700 15px 'IBM Plex Mono', monospace";
+      ctx.fillStyle = "#059669";
+      ctx.fillText("• " + subtitle, x + ctx.measureText(title).width + 16, y);
+
+      ctx.font = "600 15px 'Plus Jakarta Sans', sans-serif";
+      ctx.fillStyle = "#4B5563";
+      ctx.fillText(desc, x, y + 28);
+
+      ctx.strokeStyle = "#E5E7EB";
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(x, y + 46);
+      ctx.lineTo(x + 1070, y + 46);
+      ctx.stroke();
+    }
+
+    function drawEditorialMetric(ctx, x, y, label, line1, line2) {
+      ctx.font = "700 15px 'IBM Plex Mono', monospace";
+      ctx.fillStyle = "#94A3B8";
+      ctx.fillText(label, x, y);
+
+      ctx.font = "800 24px 'Plus Jakarta Sans', sans-serif";
+      ctx.fillStyle = "#0A0A0A";
+      ctx.fillText(line1, x, y + 34);
+
+      ctx.font = "600 19px 'Plus Jakarta Sans', sans-serif";
+      ctx.fillStyle = "#4B5563";
+      ctx.fillText(line2, x, y + 64);
+    }
+
+    function drawTermLineBold(ctx, x, y, text, color, prefixColor = null, isBold = false) {
+      ctx.font = `${isBold ? '800' : '600'} 21px 'Fira Code', 'IBM Plex Mono', monospace`;
+      if (prefixColor) {
+        const prefix = text.slice(0, 2);
+        const rest = text.slice(2);
+        ctx.fillStyle = prefixColor;
+        ctx.fillText(prefix, x, y);
+        ctx.fillStyle = color;
+        ctx.fillText(rest, x + ctx.measureText(prefix).width, y);
+      } else {
+        ctx.fillStyle = color;
+        ctx.fillText(text, x, y);
+      }
+    }
+
+    function drawUrlPill(ctx, W, H, textColor, bgColor, strokeColor) {
+      const urlX = W - 500;
+      const urlY = H - 110;
+      drawPill(ctx, urlX, urlY, 430, 54, bgColor, strokeColor, 2);
+      ctx.beginPath();
+      ctx.arc(urlX + 28, urlY + 27, 5, 0, Math.PI * 2);
+      ctx.fillStyle = "#10B981";
+      ctx.fill();
+      ctx.font = "700 21px 'IBM Plex Mono', monospace";
+      ctx.fillStyle = textColor;
+      ctx.fillText("e-varun-portfolio.vercel.app ↗", urlX + 46, urlY + 34);
+    }
+
+    function roundRect(ctx, x, y, width, height, radius) {
+      ctx.beginPath();
+      ctx.moveTo(x + radius, y);
+      ctx.lineTo(x + width - radius, y);
+      ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+      ctx.lineTo(x + width, y + height - radius);
+      ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+      ctx.lineTo(x + radius, y + height);
+      ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+      ctx.lineTo(x, y + radius);
+      ctx.quadraticCurveTo(x, y, x + radius, y);
+      ctx.closePath();
+    }
+
+    function roundRectTop(ctx, x, y, width, height, radius) {
+      ctx.beginPath();
+      ctx.moveTo(x + radius, y);
+      ctx.lineTo(x + width - radius, y);
+      ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+      ctx.lineTo(x + width, y + height);
+      ctx.lineTo(x, y + height);
+      ctx.lineTo(x, y + radius);
+      ctx.quadraticCurveTo(x, y, x + radius, y);
+      ctx.closePath();
+    }
+
+    function roundRectBottom(ctx, x, y, width, height, radius) {
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(x + width, y);
+      ctx.lineTo(x + width, y + height - radius);
+      ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+      ctx.lineTo(x + radius, y + height);
+      ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+      ctx.lineTo(x, y + radius);
+      ctx.quadraticCurveTo(x, y, x + radius, y);
+      ctx.closePath();
+    }
+
+    document.fonts.ready.then(() => {
+      renderBanner();
+    });
+
+    downloadBtn.addEventListener('click', () => {
+      const link = document.createElement('a');
+      link.download = `varun_linkedin_banner_perfected_style_${currentStyle}_3168x792.png`;
+      link.href = canvas.toDataURL('image/png', 1.0);
+      link.click();
+    });
+  </script>
+</body>
+</html>
