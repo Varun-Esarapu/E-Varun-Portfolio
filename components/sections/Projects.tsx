@@ -45,7 +45,7 @@ const ProjectCard = ({
       style={{ scale: scaleProgress, opacity: opacityProgress }}
       className="h-full col-span-1"
     >
-      <div className="h-full flex flex-col rounded-[28px] bg-[#F8F8F8] border border-[#EBEBEB] hover:border-[#D6D6D6] overflow-hidden transition-all duration-300 group shadow-2xs hover:shadow-[0_16px_36px_-10px_rgba(0,0,0,0.06)]">
+      <div className="h-full flex flex-col rounded-2xl bg-[#F8F8F8] border border-[#EBEBEB] hover:border-[#D6D6D6] overflow-hidden transition-all duration-300 group shadow-2xs hover:shadow-[0_16px_36px_-10px_rgba(0,0,0,0.06)]">
         {/* Project Thumbnail Image with Clean Modern Framing */}
         <div className="relative bg-[#F0F0F0] overflow-hidden flex items-center justify-center shrink-0 h-56 border-b border-[#EBEBEB] w-full">
           <div

@@ -46,9 +46,7 @@ const AISparkIcon = ({ size = 28, className = "" }: { size?: number; className?:
   </motion.svg>
 );
 
-const formatMessage = (text: string, isUser: boolean) => {
-  if (!text) return null;
-
+const formatInline = (text: string, isUser: boolean) => {
   // Auto-normalize LinkedIn and GitHub to show Varun's exact usernames as clickable links
   const normalized = text
     .replace(/LinkedIn:\s*\[?LinkedIn\]?(\(https?:\/\/[^\s)]+\))?/gi, 'LinkedIn: [varunesarapu](https://www.linkedin.com/in/varunesarapu/)')
@@ -64,7 +62,6 @@ const formatMessage = (text: string, isUser: boolean) => {
       let label = linkMatch[1];
       const url = linkMatch[2];
 
-      // Smart format: display clean exact usernames for LinkedIn and GitHub
       if (label.toLowerCase() === 'linkedin' || url.includes('linkedin.com')) {
         label = 'varunesarapu';
       } else if (label.toLowerCase() === 'github' || url.includes('github.com')) {
@@ -77,7 +74,7 @@ const formatMessage = (text: string, isUser: boolean) => {
           href={url}
           target="_blank"
           rel="noopener noreferrer"
-          className={isUser ? "underline font-medium text-white" : "text-[#0A0A0A] underline underline-offset-4 hover:text-[#000000] font-semibold transition-colors cursor-pointer"}
+          className={isUser ? "underline font-medium text-white" : "text-[#0A0A0A] underline underline-offset-4 hover:text-[#5CA904] font-semibold transition-colors cursor-pointer"}
         >
           {label}
         </a>
@@ -102,7 +99,7 @@ const formatMessage = (text: string, isUser: boolean) => {
             href={url}
             target="_blank"
             rel="noopener noreferrer"
-            className={isUser ? "underline font-medium text-white" : "text-[#0A0A0A] underline underline-offset-4 hover:text-[#000000] font-semibold transition-colors cursor-pointer"}
+            className={isUser ? "underline font-medium text-white" : "text-[#0A0A0A] underline underline-offset-4 hover:text-[#5CA904] font-semibold transition-colors cursor-pointer"}
           >
             {label}
           </a>
@@ -124,7 +121,7 @@ const formatMessage = (text: string, isUser: boolean) => {
         <a
           key={i}
           href={`mailto:${emailMatch[1]}`}
-          className={isUser ? "underline font-medium text-white" : "text-[#0A0A0A] underline underline-offset-4 font-semibold transition-colors cursor-pointer"}
+          className={isUser ? "underline font-medium text-white" : "text-[#0A0A0A] underline underline-offset-4 hover:text-[#5CA904] font-semibold transition-colors cursor-pointer"}
         >
           {emailMatch[1]}
         </a>
@@ -133,6 +130,48 @@ const formatMessage = (text: string, isUser: boolean) => {
 
     return <span key={i}>{token}</span>;
   });
+};
+
+const formatMessage = (text: string, isUser: boolean) => {
+  if (!text) return null;
+  if (isUser) return <span>{text}</span>;
+
+  const lines = text.split('\n');
+  return (
+    <div className="space-y-2">
+      {lines.map((line, idx) => {
+        const trimmed = line.trim();
+        if (!trimmed) return <div key={idx} className="h-1" />;
+
+        if (trimmed.startsWith('- ') || trimmed.startsWith('• ')) {
+          return (
+            <div key={idx} className="flex items-start gap-2 pl-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#0A0A0A] mt-2 shrink-0" />
+              <div className="flex-1 leading-relaxed">{formatInline(trimmed.slice(2), false)}</div>
+            </div>
+          );
+        }
+
+        if (/^\d+\.\s/.test(trimmed)) {
+          const numMatch = trimmed.match(/^(\d+\.)\s+(.*)$/);
+          if (numMatch) {
+            return (
+              <div key={idx} className="flex items-start gap-2 pl-1">
+                <span className="font-semibold text-[#0A0A0A] shrink-0">{numMatch[1]}</span>
+                <div className="flex-1 leading-relaxed">{formatInline(numMatch[2], false)}</div>
+              </div>
+            );
+          }
+        }
+
+        return (
+          <p key={idx} className="leading-relaxed">
+            {formatInline(trimmed, false)}
+          </p>
+        );
+      })}
+    </div>
+  );
 };
 
 const getSuggestions = (text: string) => {

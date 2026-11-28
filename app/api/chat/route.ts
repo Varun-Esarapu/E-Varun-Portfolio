@@ -4,7 +4,7 @@ function getFallbackAnswer(lastMessage: string): string {
   const query = (lastMessage || '').toLowerCase();
 
   if (query.includes('experience') || query.includes('work') || query.includes('d square') || query.includes('xtransmatrix') || query.includes('job') || query.includes('career')) {
-    return "Varun serves as a **Jr. AI & ML Engineer** at **D Square Consulting Services** (Nov 2026 – Present, previously Apprentice May – Nov 2026), where he engineers end-to-end machine learning workflows spanning data ingestion, model prototyping, and cloud deployment. Prior to this, he was an **AI Operator Intern** at **Xtransmatrix Consulting Services** (Nov 2025 – Mar 2026), managing Human-in-the-Loop (HITL) dataset validation and LLM evaluation on a US healthcare AI platform. He holds a **B.E. degree** with an **8.71 / 10 CGPA**.";
+    return "Varun has completed **1 internship**, **1 apprenticeship**, and is now working **full-time**:\n- **Jr. AI & ML Engineer (Full-Time)** at **D Square Consulting Services Pvt Ltd** (Nov 2026 – Present; previously **Apprentice**, May – Nov 2026) — engineering end-to-end ML workflows spanning data ingestion, model prototyping, and cloud deployment.\n- **AI Operator Intern** at **Xtransmatrix Consulting Services Pvt Ltd** (Nov 2025 – Mar 2026) — managing Human-in-the-Loop (HITL) dataset validation and LLM output evaluation on a US-based healthcare AI platform.";
   }
 
   if (query.includes('project') || query.includes('ml') || query.includes('machine learning') || query.includes('auto-stair') || query.includes('stair') || query.includes('rag') || query.includes('vehicle') || query.includes('speech') || query.includes('recommendation') || query.includes('cinematch')) {
@@ -87,6 +87,7 @@ Key information about Varun:
 - Tone: Professional, concise, helpful, and confident.
 
 Strict Guardrails:
+- NEVER say Varun has "2 years" or "2+ years" of experience. Accurately state that he has completed 1 internship (AI Operator Intern at Xtransmatrix, Nov 2025 – Mar 2026), 1 apprenticeship (D Square Consulting, May – Nov 2026), and is now a full-time Jr. AI & ML Engineer at D Square Consulting (Nov 2026 – Present).
 - ONLY answer questions using the facts provided above. Do not hallucinate or guess any unprovided information.
 - ALWAYS format contact links using his exact username as the anchor text:
   Email: varunesarapu@gmail.com

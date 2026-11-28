@@ -36,14 +36,18 @@ export default function Education() {
                 <h3 className="text-2xl sm:text-3xl font-heading font-semibold text-[#0A0A0A] tracking-[-0.03em] mb-2">
                   B.E. in Electronics & Communication Engineering
                 </h3>
-                <p className="text-sm font-sans text-[#6F6F6F] flex items-center gap-1.5">
-                  <MapPin size={14} className="text-[#0A0A0A]" />
-                  HKBK College of Engineering, Bangalore, Karnataka
-                </p>
+                <div className="flex items-center gap-2.5 text-sm text-[#6F6F6F] font-sans">
+                  <img
+                    src="/logos/hkbk.png"
+                    alt="HKBK College of Engineering"
+                    className="w-9 h-9 object-contain rounded-full bg-white border border-[#E5E5E5] p-0.5 shrink-0"
+                  />
+                  <span>HKBK College of Engineering, Bangalore, Karnataka</span>
+                </div>
               </div>
 
               {/* CGPA Bento Stat Box with clean white & electric lime highlight */}
-              <div className="shrink-0 p-5 rounded-[22px] bg-white border border-[#E5E5E5] flex flex-col items-center justify-center min-w-[130px] shadow-2xs">
+              <div className="shrink-0 p-5 rounded-2xl bg-white border border-[#E5E5E5] flex flex-col items-center justify-center min-w-[130px] shadow-2xs">
                 <span className="text-[11px] font-sans uppercase tracking-wider text-[#6F6F6F] font-semibold">
                   Academic GPA
                 </span>

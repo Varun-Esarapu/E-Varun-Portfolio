@@ -3,7 +3,43 @@
 import { motion, Variants } from "framer-motion";
 import { certifications } from "@/data/certifications";
 import { SectionHeading, Badge } from "@/components/ui/AceternityUI";
-import { Award, ExternalLink, ShieldCheck } from "lucide-react";
+import { Award, ExternalLink } from "lucide-react";
+
+const CertIssuerLogo = ({ issuer }: { issuer: string }) => {
+  const lower = issuer.toLowerCase();
+
+  if (lower.includes("aws")) {
+    return (
+      <img
+        src="/logos/aws.jpg"
+        alt="AWS"
+        className="h-6 w-auto object-contain rounded-xs"
+      />
+    );
+  }
+
+  if (lower.includes("simplilearn")) {
+    return (
+      <img
+        src="/logos/simplilearn.png"
+        alt="Simplilearn"
+        className="h-5 w-auto object-contain"
+      />
+    );
+  }
+
+  if (lower.includes("freecodecamp")) {
+    return (
+      <img
+        src="/logos/freecodecamp.png"
+        alt="freeCodeCamp"
+        className="h-6 w-6 object-contain rounded-xs"
+      />
+    );
+  }
+
+  return <Award className="w-4 h-4 text-[#0A0A0A]" />;
+};
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -43,11 +79,11 @@ export default function Certifications() {
                   rel="noopener noreferrer"
                   className="block h-full group"
                 >
-                  <div className="p-7 rounded-[28px] bg-[#F8F8F8] border border-[#EBEBEB] hover:border-[#D6D6D6] h-full flex flex-col justify-between transition-all duration-300 shadow-2xs hover:shadow-[0_12px_32px_-8px_rgba(0,0,0,0.06)]">
+                  <div className="p-7 rounded-2xl bg-[#F8F8F8] border border-[#EBEBEB] hover:border-[#D6D6D6] h-full flex flex-col justify-between transition-all duration-300 shadow-2xs hover:shadow-[0_12px_32px_-8px_rgba(0,0,0,0.06)]">
                     <div>
                       <div className="flex items-center justify-between mb-4">
-                        <div className="p-2.5 rounded-full bg-white border border-[#E5E5E5] flex items-center justify-center shadow-2xs">
-                          <Award className="w-4 h-4 text-[#0A0A0A]" />
+                        <div className="px-3 py-1.5 rounded-full bg-white border border-[#E5E5E5] flex items-center justify-center shadow-2xs">
+                          <CertIssuerLogo issuer={cert.issuer} />
                         </div>
                         <span className="inline-flex items-center px-3 py-1 rounded-full bg-white border border-[#E5E5E5] text-xs font-sans font-medium text-[#0A0A0A]">
                           Verified
